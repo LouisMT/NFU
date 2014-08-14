@@ -214,5 +214,17 @@ namespace NFU.Properties {
                 this["Port"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TrustedHash {
+            get {
+                return ((string)(this["TrustedHash"]));
+            }
+            set {
+                this["TrustedHash"] = value;
+            }
+        }
     }
 }

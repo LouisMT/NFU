@@ -151,6 +151,11 @@ namespace NFU
                     numericUpDownPort.Enabled = false;
                     numericUpDownPort.Value = 0;
                     break;
+
+                case 3:
+                    numericUpDownPort.Enabled = true;
+                    numericUpDownPort.Value = 21;
+                    break;
             }
         }
     }

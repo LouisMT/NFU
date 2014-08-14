@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Net;
+using System.Net.Security;
 using System.Security.Principal;
 using System.Windows.Forms;
 
@@ -88,6 +89,7 @@ namespace NFU
             switch (Settings.Default.TransferType)
             {
                 case 0:
+                case 3:
                     try
                     {
                         byte[] Buffer = new byte[1024 * 10];
@@ -101,6 +103,12 @@ namespace NFU
                         else
                         {
                             FTPrequest = (FtpWebRequest)WebRequest.Create(String.Format("ftp://{0}:{1}/{2}", Settings.Default.Host, Settings.Default.Port, filename));
+                        }
+
+                        if (Settings.Default.TransferType == 3)
+                        {
+                            FTPrequest.EnableSsl = true;
+                            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(Misc.ValidateServerCertificate);
                         }
 
                         FTPrequest.KeepAlive = false;
@@ -128,7 +136,7 @@ namespace NFU
                     }
                     catch (Exception e)
                     {
-                        Misc.HandleError(e, "FTP");
+                        Misc.HandleError(e, "FTP(S)");
                     }
 
                     break;

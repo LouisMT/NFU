@@ -2,8 +2,10 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Net.Security;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -235,6 +237,26 @@ namespace NFU
                 HandleError(e, "Decrypt");
                 return null;
             }
+        }
+
+        public static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        {
+            bool validatedCertificate = true;
+
+            // Check if SSL errors occured and if certificate hash is not trusted
+            if (sslPolicyErrors != SslPolicyErrors.None && Properties.Settings.Default.TrustedHash != certificate.GetCertHashString())
+            {
+                if (MessageBox.Show(String.Format("Untrusted certificate!\n\nSubject:\n{0}\n\nIssuer:\n{1}\n\nHash:\n{2}\n\nContinue?", certificate.Subject, certificate.Issuer, certificate.GetCertHashString()), "Untrusted certificate", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                {
+                    Properties.Settings.Default.TrustedHash = certificate.GetCertHashString();
+                }
+                else
+                {
+                    validatedCertificate = false;
+                }
+            }
+
+            return validatedCertificate;
         }
     }
 }

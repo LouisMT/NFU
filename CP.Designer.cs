@@ -155,7 +155,8 @@
             this.comboBoxType.Items.AddRange(new object[] {
             "FTP",
             "SFTP",
-            "CIFS"});
+            "CIFS",
+            "FTPS (Explicit) (Alpha)"});
             this.comboBoxType.Location = new System.Drawing.Point(6, 6);
             this.comboBoxType.Name = "comboBoxType";
             this.comboBoxType.Size = new System.Drawing.Size(440, 21);
