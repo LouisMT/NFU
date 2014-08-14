@@ -132,7 +132,7 @@ namespace NFU
             switch (Settings.Default.Filename)
             {
                 case 0:
-                    aPath = Regex.Replace(aPath.Replace(' ', '_'), "^[a-zA-Z_.]*$", String.Empty).Trim();
+                    aPath = Regex.Replace(aPath.Replace(' ', '_'), "[^a-zA-Z_\\.]*$", String.Empty).Trim();
                     break;
 
                 case 1:
