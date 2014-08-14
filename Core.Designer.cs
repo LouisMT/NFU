@@ -70,7 +70,7 @@
             this.buttonFile.Name = "buttonFile";
             this.buttonFile.Size = new System.Drawing.Size(120, 23);
             this.buttonFile.TabIndex = 0;
-            this.buttonFile.Text = "File";
+            this.buttonFile.Text = "File(s)";
             this.buttonFile.Click += new System.EventHandler(this.buttonFileHandler);
             // 
             // buttonImport
@@ -100,7 +100,8 @@
             // 
             // openFileDialog
             // 
-            this.openFileDialog.Title = "Choose a file to upload";
+            this.openFileDialog.Title = "Choose one or more files to upload";
+            this.openFileDialog.Multiselect = true;
             // 
             // notifyIconNFU
             // 

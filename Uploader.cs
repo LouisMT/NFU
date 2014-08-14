@@ -19,6 +19,7 @@ namespace NFU
         private static bool success;
         private static string path, filename;
         private static BackgroundWorker uploadWorker = new BackgroundWorker();
+	    public static event EventHandler UploadCompleted;
 
         static Uploader()
         {
@@ -30,18 +31,20 @@ namespace NFU
             uploadWorker.RunWorkerCompleted += uploadWorkerCompletedHandler;
         }
 
-        /// <summary>
-        /// Upload a file to the remote server.
-        /// </summary>
-        /// <param name="aPath">Path to the local file.</param>
-        /// <returns>True on success; false on failure.</returns>
-        public static bool Upload(string aPath)
+	    /// <summary>
+	    /// Upload a file to the remote server.
+	    /// </summary>
+	    /// <param name="aPath">Path to the local file.</param>
+	    /// <param name="index">When uploading multiple files, this is the index of the current file</param>
+	    /// <param name="total">When uploading multiple files, this is the total number of files</param>
+	    /// <returns>True on success; false on failure.</returns>
+	    public static bool Upload(string aPath, int index = 1, int total = 1)
         {
             if (isBusy) return false;
 
             isBusy = true;
             Misc.SetControlStatus(false);
-            Program.CoreForm.toolStripStatus.Text = "Uploading...";
+			Program.CoreForm.toolStripStatus.Text = string.Format("Uploading... ({0}/{1})", index, total);
 
             path = aPath;
             success = false;
@@ -230,6 +233,9 @@ namespace NFU
             }
 
             isBusy = false;
+
+			if (UploadCompleted != null)
+		        UploadCompleted(null, EventArgs.Empty);
         }
     }
 }

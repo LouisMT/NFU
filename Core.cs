@@ -1,4 +1,5 @@
-﻿using NFU.Properties;
+﻿using System.Linq;
+using NFU.Properties;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -79,11 +80,26 @@ namespace NFU
             buttonImportHandler(null, null);
         }
 
-        private void buttonFileHandler(object sender, EventArgs e)
+        private async void buttonFileHandler(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                Uploader.Upload(openFileDialog.FileName);
+				// copy this list because it may change while uploading
+				var files = openFileDialog.FileNames.ToList();
+
+	            TaskCompletionSource<bool> tcs = null;
+	            EventHandler onComplete = (o, args) => tcs.TrySetResult(true);
+	            Uploader.UploadCompleted += onComplete;
+
+	            for (int index = 0; index < files.Count; index++)
+				{
+		            var file = files[index];
+					tcs = new TaskCompletionSource<bool>();
+					Uploader.Upload(file, index + 1, files.Count);
+		            await tcs.Task;
+	            }
+
+	            Uploader.UploadCompleted -= onComplete;
             }
         }
 
