@@ -105,7 +105,7 @@ namespace NFU
         {
             try
             {
-                if (Settings.Default.Debug) File.AppendAllText(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\NFU.log", String.Format("[{0}] [{1}] ({2}) -> {3}{4}", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), Name, Fatal, e.Message, Environment.NewLine));
+                if (Settings.Default.Debug) File.AppendAllText(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\NFU.log", String.Format("[{0}] [{1}] ({2}) -> {3}{4}", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), Name, Fatal, e != null ? e.Message : "", Environment.NewLine));
             }
             catch { }
 

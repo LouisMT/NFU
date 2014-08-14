@@ -99,7 +99,7 @@ namespace NFU
             }
             else
             {
-                Misc.HandleError(null, "Screenshot");
+                Misc.HandleError(new ArgumentException("No files selected"), "Screenshot");
             }
         }
 
@@ -150,7 +150,7 @@ namespace NFU
             }
             else
             {
-                Misc.HandleError(null, "Import");
+                Misc.HandleError(new ArgumentException("Cannot handle clipboard content of type(s)" + string.Join(",", Clipboard.GetDataObject().GetFormats())), "Import");
             }
         }
 
