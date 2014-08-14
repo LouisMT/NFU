@@ -1,4 +1,5 @@
-﻿using NFU.Properties;
+﻿using System.ComponentModel;
+using NFU.Properties;
 using System;
 using System.Drawing;
 using System.IO;
@@ -54,22 +55,28 @@ namespace NFU
         /// <param name="aMethod">The method.</param>
         /// <param name="aID">The bind ID.</param>
         /// <param name="aHandle">The handle.</param>
-        public static void RegisterHotKey(Keys aKey, Action aMethod, int aID, IntPtr aHandle)
+        public static bool RegisterHotKey(Keys aKey, Action aMethod, int aID, IntPtr aHandle)
         {
             HotKeyWndProc HotKeyWnd = new HotKeyWndProc();
 
-            if (!Misc.RegisterHotKey(aHandle, aID, 0, aKey)) return;
+            if (!Misc.RegisterHotKey(aHandle, aID, 0, aKey)) 
+			{
+				Misc.HandleError(new Win32Exception("RegisterHotkey failed for key " + aKey), "Misc.RegisterHotkey");
+	            return false;
+            }
 
             try
             {
                 HotKeyWnd.HotKeyPass = new HotKeyPass(aMethod);
                 HotKeyWnd.WParam = aID;
                 HotKeyWnd.AssignHandle(aHandle);
+	            return true;
             }
             catch
             {
                 HotKeyWnd.ReleaseHandle();
-            }
+				return false;
+			}
         }
 
         private class HotKeyWndProc : NativeWindow

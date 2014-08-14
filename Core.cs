@@ -16,13 +16,25 @@ namespace NFU
         public Core()
         {
             InitializeComponent();
-
-            buttonUpdate.FlatStyle = FlatStyle.System;
-            Misc.SendMessage(buttonUpdate.Handle, 0x160C, 0, 0xFFFFFFFF);
-
-            if (Settings.Default.HandlePause) Misc.RegisterHotKey(Keys.Pause, HotKeyPause, 10000, Handle);
-            if (Settings.Default.HandlePrintScreen) Misc.RegisterHotKey(Keys.PrintScreen, HotKeyPrintScreen, 20000, Handle);
         }
+
+		public void Setup() 
+		{
+			buttonUpdate.FlatStyle = FlatStyle.System;
+			Misc.SendMessage(buttonUpdate.Handle, 0x160C, 0, 0xFFFFFFFF);
+
+			if (Settings.Default.HandlePause && !Misc.RegisterHotKey(Keys.Pause, HotKeyPause, 10000, Handle)) 
+			{
+				MessageBox.Show("Pause hotkey could not be registered. Is it already in use?", 
+					"Failed to register hotkey", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+
+			if (Settings.Default.HandlePrintScreen && !Misc.RegisterHotKey(Keys.PrintScreen, HotKeyPrintScreen, 20000, Handle)) 
+			{
+				MessageBox.Show("PrintScreen hotkey could not be registered. Is it already in use?", 
+					"Failed to register hotkey", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+		}
 
         private void Core_Resize(object sender, EventArgs e)
         {
