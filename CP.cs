@@ -138,10 +138,12 @@ namespace NFU
             switch (comboBoxType.SelectedIndex)
             {
                 case 0:
+                    numericUpDownPort.Enabled = true;
                     numericUpDownPort.Value = 21;
                     break;
 
                 case 1:
+                    numericUpDownPort.Enabled = true;
                     numericUpDownPort.Value = 22;
                     break;
 
