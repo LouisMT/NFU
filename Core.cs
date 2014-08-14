@@ -160,24 +160,29 @@ namespace NFU
         static readonly string currentVersion = "v1.2\n";
         static WebClient checkVersion = new WebClient();
 
-        private void Core_Shown(object sender, EventArgs e)
+        private async void Core_Shown(object sender, EventArgs e)
         {
-            try
-            {
-                string latestVersion = checkVersion.DownloadString("https://u5r.nl/nfu/latest");
-
-                if (latestVersion != currentVersion)
-                {
-                    buttonUpdate.Enabled = true;
-                    labelUpdate.Text = "A new version of NFU is available";
-                    Misc.ShowInfo("NFU update available", "There is an update available for NFU");
-                }
-            }
-            catch (Exception err)
-            {
-                Misc.HandleError(err, "Update Check");
-            }
+			await Task.Run(() => CheckForUpdate());
         }
+
+		private async Task CheckForUpdate()
+		{
+			try 
+			{
+				string latestVersion = await checkVersion.DownloadStringTaskAsync(new Uri("https://u5r.nl/nfu/latest"));
+
+				if (latestVersion != currentVersion) 
+				{
+					buttonUpdate.Enabled = true;
+					labelUpdate.Text = "A new version of NFU is available";
+					Misc.ShowInfo("NFU update available", "There is an update available for NFU");
+				}
+			}
+			catch (Exception err) 
+			{
+				Misc.HandleError(err, "Update Check");
+			}
+		}
 
         private void button1_Click(object sender, EventArgs e)
         {
