@@ -256,6 +256,7 @@ namespace NFU
                 if (MessageBox.Show(String.Format("Untrusted certificate!\n\nSubject:\n{0}\n\nIssuer:\n{1}\n\nHash:\n{2}\n\nContinue?", certificate.Subject, certificate.Issuer, certificate.GetCertHashString()), "Untrusted certificate", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                 {
                     Properties.Settings.Default.TrustedHash = certificate.GetCertHashString();
+                    Properties.Settings.Default.Save();
                 }
                 else
                 {
