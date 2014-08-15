@@ -26,11 +26,18 @@ namespace NFU
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
 
+                    if (Settings.Default.NeedsUpgrade)
+                    {
+                        Settings.Default.Upgrade();
+                        Settings.Default.NeedsUpgrade = false;
+                        Settings.Default.Save();
+                    }
+
                     CoreForm = new Core();
                     AboutBox = new About();
                     ControlPanel = new CP();
 
-	                CoreForm.Setup();
+                    CoreForm.Setup();
 
                     if (Screen.AllScreens.Length > Settings.Default.Screen - 1) Settings.Default.Screen = 0;
 
@@ -51,7 +58,7 @@ namespace NFU
                     MessageBox.Show("NFU is already running. Please close the other instance of NFU.", "NFU Already Running", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MessageBox.Show(e.Message);
             }

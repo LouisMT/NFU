@@ -139,7 +139,6 @@ namespace NFU
             Application.Exit();
         }
 
-        static readonly string currentVersion = "v1.2\n";
         static WebClient checkVersion = new WebClient();
 
         private async void Core_Shown(object sender, EventArgs e)
@@ -153,7 +152,7 @@ namespace NFU
             {
                 string latestVersion = await checkVersion.DownloadStringTaskAsync(new Uri("https://u5r.nl/nfu/latest"));
 
-                if (latestVersion != currentVersion)
+                if (latestVersion != Application.ProductVersion)
                 {
                     buttonUpdate.Enabled = true;
                     labelUpdate.Text = "A new version of NFU is available";
