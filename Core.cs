@@ -80,27 +80,10 @@ namespace NFU
             buttonImportHandler(null, null);
         }
 
-        private async void buttonFileHandler(object sender, EventArgs e)
+        private void buttonFileHandler(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                // copy this list because it may change while uploading
-                var files = openFileDialog.FileNames.ToList();
-
-                TaskCompletionSource<bool> tcs = null;
-                EventHandler onComplete = (o, args) => tcs.TrySetResult(true);
-                Uploader.UploadCompleted += onComplete;
-
-                for (int index = 0; index < files.Count; index++)
-                {
-                    var file = files[index];
-                    tcs = new TaskCompletionSource<bool>();
-                    Uploader.Upload(file, index + 1, files.Count);
-                    await tcs.Task;
-                }
-
-                Uploader.UploadCompleted -= onComplete;
-            }
+                Uploader.Upload(openFileDialog.FileNames);
         }
 
         private void buttonScreenshotHandler(object sender, EventArgs e)
@@ -119,26 +102,13 @@ namespace NFU
             }
         }
 
-        private async void buttonImportHandler(object sender, EventArgs e)
+        private void buttonImportHandler(object sender, EventArgs e)
         {
             if (Clipboard.ContainsFileDropList())
             {
-                // copy this list because it may change while uploading
-                var files = Clipboard.GetFileDropList();
-
-                TaskCompletionSource<bool> tcs = null;
-                EventHandler onComplete = (o, args) => tcs.TrySetResult(true);
-                Uploader.UploadCompleted += onComplete;
-
-                for (int index = 0; index < files.Count; index++)
-                {
-                    var file = files[index];
-                    tcs = new TaskCompletionSource<bool>();
-                    Uploader.Upload(file, index + 1, files.Count);
-                    await tcs.Task;
-                }
-
-                Uploader.UploadCompleted -= onComplete;
+                string[] files = new string[Clipboard.GetFileDropList().Count];
+                Clipboard.GetFileDropList().CopyTo(files, 0);
+                Uploader.Upload(files);
             }
             else if (Clipboard.ContainsImage())
             {
