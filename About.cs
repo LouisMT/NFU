@@ -12,6 +12,7 @@ namespace NFU
         {
             InitializeComponent();
 
+            // 22 is the width of the scrollbar
             listViewLibraries.Columns[0].Width = listViewLibraries.Width / 3 - 22;
             listViewLibraries.Columns[1].Width = listViewLibraries.Width / 3;
             listViewLibraries.Columns[2].Width = listViewLibraries.Width / 3;
@@ -34,6 +35,11 @@ namespace NFU
             string filename = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\NFU.log";
 
             if (File.Exists(filename)) Process.Start(filename); else MessageBox.Show("The log could not be found.\n\nDid you enable debug mode?", "NFU log not found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void OpenSource(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/Naxiz/NFU");
         }
     }
 }

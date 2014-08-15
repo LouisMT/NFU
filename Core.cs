@@ -203,7 +203,7 @@ namespace NFU
                 string tempNFU = Path.GetTempFileName();
                 string tempCMD = Path.GetTempFileName() + ".cmd";
 
-                checkVersion.DownloadFile("https://u5r.nl/NFU/NFU.exe", tempNFU);
+                checkVersion.DownloadFile("https://u5r.nl/nfu/NFU.exe", tempNFU);
                 File.WriteAllText(tempCMD, String.Format("@ECHO OFF{0}TITLE NFU UPDATE{0}ECHO Waiting for NFU to exit...{0}TIMEOUT /T 5{0}ECHO.{0}ECHO Updating NFU...{0}COPY /B /Y \"{1}\" \"{2}\"{0}START \"\" \"{2}\"", Environment.NewLine, tempNFU, Application.ExecutablePath));
 
                 ProcessStartInfo startInfo = new ProcessStartInfo();

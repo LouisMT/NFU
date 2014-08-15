@@ -42,6 +42,7 @@
             this.separatorAbout = new NFU.LineSeparator();
             this.buttonOpenLog = new System.Windows.Forms.Button();
             this.lineSeparator1 = new NFU.LineSeparator();
+            this.linkLabelSource = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // listViewLibraries
@@ -130,7 +131,7 @@
             this.labelLibraries.AutoSize = true;
             this.labelLibraries.Location = new System.Drawing.Point(12, 99);
             this.labelLibraries.Name = "labelLibraries";
-            this.labelLibraries.Size = new System.Drawing.Size(223, 13);
+            this.labelLibraries.Size = new System.Drawing.Size(217, 13);
             this.labelLibraries.TabIndex = 9;
             this.labelLibraries.Text = "NFU uses the following third party resources:";
             // 
@@ -172,6 +173,17 @@
             this.lineSeparator1.Size = new System.Drawing.Size(435, 2);
             this.lineSeparator1.TabIndex = 13;
             // 
+            // linkLabelSource
+            // 
+            this.linkLabelSource.AutoSize = true;
+            this.linkLabelSource.Location = new System.Drawing.Point(171, 231);
+            this.linkLabelSource.Name = "linkLabelSource";
+            this.linkLabelSource.Size = new System.Drawing.Size(92, 13);
+            this.linkLabelSource.TabIndex = 14;
+            this.linkLabelSource.TabStop = true;
+            this.linkLabelSource.Text = "Source on GitHub";
+            this.linkLabelSource.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OpenSource);
+            // 
             // About
             // 
             this.AcceptButton = this.buttonClose;
@@ -179,6 +191,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonClose;
             this.ClientSize = new System.Drawing.Size(435, 261);
+            this.Controls.Add(this.linkLabelSource);
             this.Controls.Add(this.lineSeparator1);
             this.Controls.Add(this.buttonOpenLog);
             this.Controls.Add(this.buttonClose);
@@ -222,6 +235,7 @@
         private System.Windows.Forms.Button buttonOpenLog;
         private LineSeparator lineSeparator1;
         private System.Windows.Forms.ColumnHeader columnFor;
+        private System.Windows.Forms.LinkLabel linkLabelSource;
 
     }
 }
