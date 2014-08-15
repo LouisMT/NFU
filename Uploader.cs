@@ -96,7 +96,6 @@ namespace NFU
         /// </summary>
         static void UploadWorkerHandler(object sender, DoWorkEventArgs a)
         {
-            MessageBox.Show(Settings.Default.Count.ToString());
             foreach (KeyValuePair<string, string> file in filesDictionary)
             {
                 bool abort = false;
