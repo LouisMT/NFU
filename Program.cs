@@ -30,6 +30,8 @@ namespace NFU
                     AboutBox = new About();
                     ControlPanel = new CP();
 
+	                CoreForm.Setup();
+
                     if (Screen.AllScreens.Length > Settings.Default.Screen - 1) Settings.Default.Screen = 0;
 
                     if (Settings.Default.FirstRun) CoreForm.Load += (sender, e) =>

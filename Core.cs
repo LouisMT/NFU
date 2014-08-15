@@ -1,4 +1,5 @@
-﻿using NFU.Properties;
+﻿using System.Linq;
+using NFU.Properties;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -16,13 +17,25 @@ namespace NFU
         public Core()
         {
             InitializeComponent();
-
-            buttonUpdate.FlatStyle = FlatStyle.System;
-            Misc.SendMessage(buttonUpdate.Handle, 0x160C, 0, 0xFFFFFFFF);
-
-            if (Settings.Default.HandlePause) Misc.RegisterHotKey(Keys.Pause, HotKeyPause, 10000, Handle);
-            if (Settings.Default.HandlePrintScreen) Misc.RegisterHotKey(Keys.PrintScreen, HotKeyPrintScreen, 20000, Handle);
         }
+
+		public void Setup() 
+		{
+			buttonUpdate.FlatStyle = FlatStyle.System;
+			Misc.SendMessage(buttonUpdate.Handle, 0x160C, 0, 0xFFFFFFFF);
+
+			if (Settings.Default.HandlePause && !Misc.RegisterHotKey(Keys.Pause, HotKeyPause, 10000, Handle)) 
+			{
+				MessageBox.Show("Pause hotkey could not be registered. Is it already in use?", 
+					"Failed to register hotkey", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+
+			if (Settings.Default.HandlePrintScreen && !Misc.RegisterHotKey(Keys.PrintScreen, HotKeyPrintScreen, 20000, Handle)) 
+			{
+				MessageBox.Show("PrintScreen hotkey could not be registered. Is it already in use?", 
+					"Failed to register hotkey", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+		}
 
         private void Core_Resize(object sender, EventArgs e)
         {
@@ -67,11 +80,26 @@ namespace NFU
             buttonImportHandler(null, null);
         }
 
-        private void buttonFileHandler(object sender, EventArgs e)
+        private async void buttonFileHandler(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                Uploader.Upload(openFileDialog.FileName);
+				// copy this list because it may change while uploading
+				var files = openFileDialog.FileNames.ToList();
+
+	            TaskCompletionSource<bool> tcs = null;
+	            EventHandler onComplete = (o, args) => tcs.TrySetResult(true);
+	            Uploader.UploadCompleted += onComplete;
+
+	            for (int index = 0; index < files.Count; index++)
+				{
+		            var file = files[index];
+					tcs = new TaskCompletionSource<bool>();
+					Uploader.Upload(file, index + 1, files.Count);
+		            await tcs.Task;
+	            }
+
+	            Uploader.UploadCompleted -= onComplete;
             }
         }
 
@@ -87,7 +115,7 @@ namespace NFU
             }
             else
             {
-                Misc.HandleError(null, "Screenshot");
+                Misc.HandleError(new ArgumentException("No files selected"), "Screenshot");
             }
         }
 
@@ -138,7 +166,7 @@ namespace NFU
             }
             else
             {
-                Misc.HandleError(null, "Import");
+                Misc.HandleError(new ArgumentException("Cannot handle clipboard content of type(s)" + string.Join(",", Clipboard.GetDataObject().GetFormats())), "Import");
             }
         }
 
@@ -160,24 +188,29 @@ namespace NFU
         static readonly string currentVersion = "v1.2\n";
         static WebClient checkVersion = new WebClient();
 
-        private void Core_Shown(object sender, EventArgs e)
+        private async void Core_Shown(object sender, EventArgs e)
         {
-            try
-            {
-                string latestVersion = checkVersion.DownloadString("https://u5r.nl/nfu/latest");
-
-                if (latestVersion != currentVersion)
-                {
-                    buttonUpdate.Enabled = true;
-                    labelUpdate.Text = "A new version of NFU is available";
-                    Misc.ShowInfo("NFU update available", "There is an update available for NFU");
-                }
-            }
-            catch (Exception err)
-            {
-                Misc.HandleError(err, "Update Check");
-            }
+			await Task.Run(() => CheckForUpdate());
         }
+
+		private async Task CheckForUpdate()
+		{
+			try 
+			{
+				string latestVersion = await checkVersion.DownloadStringTaskAsync(new Uri("https://u5r.nl/nfu/latest"));
+
+				if (latestVersion != currentVersion) 
+				{
+					buttonUpdate.Enabled = true;
+					labelUpdate.Text = "A new version of NFU is available";
+					Misc.ShowInfo("NFU update available", "There is an update available for NFU");
+				}
+			}
+			catch (Exception err) 
+			{
+				Misc.HandleError(err, "Update Check");
+			}
+		}
 
         private void button1_Click(object sender, EventArgs e)
         {
