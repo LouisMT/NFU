@@ -19,23 +19,23 @@ namespace NFU
             InitializeComponent();
         }
 
-		public void Setup() 
-		{
-			buttonUpdate.FlatStyle = FlatStyle.System;
-			Misc.SendMessage(buttonUpdate.Handle, 0x160C, 0, 0xFFFFFFFF);
+        public void Setup()
+        {
+            buttonUpdate.FlatStyle = FlatStyle.System;
+            Misc.SendMessage(buttonUpdate.Handle, 0x160C, 0, 0xFFFFFFFF);
 
-			if (Settings.Default.HandlePause && !Misc.RegisterHotKey(Keys.Pause, HotKeyPause, 10000, Handle)) 
-			{
-				MessageBox.Show("Pause hotkey could not be registered. Is it already in use?", 
-					"Failed to register hotkey", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
+            if (Settings.Default.HandlePause && !Misc.RegisterHotKey(Keys.Pause, HotKeyPause, 10000, Handle))
+            {
+                MessageBox.Show("Pause hotkey could not be registered. Is it already in use?",
+                    "Failed to register hotkey", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
-			if (Settings.Default.HandlePrintScreen && !Misc.RegisterHotKey(Keys.PrintScreen, HotKeyPrintScreen, 20000, Handle)) 
-			{
-				MessageBox.Show("PrintScreen hotkey could not be registered. Is it already in use?", 
-					"Failed to register hotkey", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-		}
+            if (Settings.Default.HandlePrintScreen && !Misc.RegisterHotKey(Keys.PrintScreen, HotKeyPrintScreen, 20000, Handle))
+            {
+                MessageBox.Show("PrintScreen hotkey could not be registered. Is it already in use?",
+                    "Failed to register hotkey", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         private void Core_Resize(object sender, EventArgs e)
         {
@@ -52,7 +52,7 @@ namespace NFU
         }
         private void Core_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(e.CloseReason == CloseReason.UserClosing)
+            if (e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
                 WindowState = FormWindowState.Minimized;
@@ -84,22 +84,22 @@ namespace NFU
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-				// copy this list because it may change while uploading
-				var files = openFileDialog.FileNames.ToList();
+                // copy this list because it may change while uploading
+                var files = openFileDialog.FileNames.ToList();
 
-	            TaskCompletionSource<bool> tcs = null;
-	            EventHandler onComplete = (o, args) => tcs.TrySetResult(true);
-	            Uploader.UploadCompleted += onComplete;
+                TaskCompletionSource<bool> tcs = null;
+                EventHandler onComplete = (o, args) => tcs.TrySetResult(true);
+                Uploader.UploadCompleted += onComplete;
 
-	            for (int index = 0; index < files.Count; index++)
-				{
-		            var file = files[index];
-					tcs = new TaskCompletionSource<bool>();
-					Uploader.Upload(file, index + 1, files.Count);
-		            await tcs.Task;
-	            }
+                for (int index = 0; index < files.Count; index++)
+                {
+                    var file = files[index];
+                    tcs = new TaskCompletionSource<bool>();
+                    Uploader.Upload(file, index + 1, files.Count);
+                    await tcs.Task;
+                }
 
-	            Uploader.UploadCompleted -= onComplete;
+                Uploader.UploadCompleted -= onComplete;
             }
         }
 
@@ -119,42 +119,26 @@ namespace NFU
             }
         }
 
-        private void buttonImportHandler(object sender, EventArgs e)
+        private async void buttonImportHandler(object sender, EventArgs e)
         {
             if (Clipboard.ContainsFileDropList())
             {
-                if (Clipboard.GetFileDropList().Count > 1)
+                // copy this list because it may change while uploading
+                var files = Clipboard.GetFileDropList();
+
+                TaskCompletionSource<bool> tcs = null;
+                EventHandler onComplete = (o, args) => tcs.TrySetResult(true);
+                Uploader.UploadCompleted += onComplete;
+
+                for (int index = 0; index < files.Count; index++)
                 {
-
-                    System.Collections.Specialized.StringCollection jwz = Clipboard.GetFileDropList();
-                        
-                    Task.Factory.StartNew(() =>
-                        {
-
-                            string zipFile = Path.GetTempFileName() + ".zip";
-
-                            this.Invoke(new MethodInvoker(delegate  {progressUpload.Style = ProgressBarStyle.Marquee;} ));
-                            
-                            using (ZipArchive zip = ZipFile.Open(zipFile, ZipArchiveMode.Create))
-                            {
-                                foreach (string file in jwz)
-                                {
-                                    zip.CreateEntryFromFile(file, Path.GetFileName(file));
-                                }
-                            }
-                            this.Invoke(new MethodInvoker(delegate { progressUpload.Style = ProgressBarStyle.Continuous; }));
-                            Process.Start(zipFile);
-
-                            this.Invoke(new MethodInvoker(delegate { Uploader.Upload(zipFile); }));
-                        }
-                    );
-
-                    
+                    var file = files[index];
+                    tcs = new TaskCompletionSource<bool>();
+                    Uploader.Upload(file, index + 1, files.Count);
+                    await tcs.Task;
                 }
-                else
-                {
-                    Uploader.Upload(Clipboard.GetFileDropList()[0]);
-                }
+
+                Uploader.UploadCompleted -= onComplete;
             }
             else if (Clipboard.ContainsImage())
             {
@@ -166,7 +150,7 @@ namespace NFU
             }
             else
             {
-                Misc.HandleError(new ArgumentException("Cannot handle clipboard content of type(s)" + string.Join(",", Clipboard.GetDataObject().GetFormats())), "Import");
+                Misc.HandleError(new ArgumentException("Cannot handle clipboard content of type(s) " + string.Join(",", Clipboard.GetDataObject().GetFormats())), "Import");
             }
         }
 
@@ -190,27 +174,27 @@ namespace NFU
 
         private async void Core_Shown(object sender, EventArgs e)
         {
-			await Task.Run(() => CheckForUpdate());
+            await Task.Run(() => CheckForUpdate());
         }
 
-		private async Task CheckForUpdate()
-		{
-			try 
-			{
-				string latestVersion = await checkVersion.DownloadStringTaskAsync(new Uri("https://u5r.nl/nfu/latest"));
+        private async Task CheckForUpdate()
+        {
+            try
+            {
+                string latestVersion = await checkVersion.DownloadStringTaskAsync(new Uri("https://u5r.nl/nfu/latest"));
 
-				if (latestVersion != currentVersion) 
-				{
-					buttonUpdate.Enabled = true;
-					labelUpdate.Text = "A new version of NFU is available";
-					Misc.ShowInfo("NFU update available", "There is an update available for NFU");
-				}
-			}
-			catch (Exception err) 
-			{
-				Misc.HandleError(err, "Update Check");
-			}
-		}
+                if (latestVersion != currentVersion)
+                {
+                    buttonUpdate.Enabled = true;
+                    labelUpdate.Text = "A new version of NFU is available";
+                    Misc.ShowInfo("NFU update available", "There is an update available for NFU");
+                }
+            }
+            catch (Exception err)
+            {
+                Misc.HandleError(err, "Update Check");
+            }
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -218,7 +202,7 @@ namespace NFU
             {
                 string tempNFU = Path.GetTempFileName();
                 string tempCMD = Path.GetTempFileName() + ".cmd";
-                
+
                 checkVersion.DownloadFile("https://u5r.nl/NFU/NFU.exe", tempNFU);
                 File.WriteAllText(tempCMD, String.Format("@ECHO OFF{0}TITLE NFU UPDATE{0}ECHO Waiting for NFU to exit...{0}TIMEOUT /T 5{0}ECHO.{0}ECHO Updating NFU...{0}COPY /B /Y \"{1}\" \"{2}\"{0}START \"\" \"{2}\"", Environment.NewLine, tempNFU, Application.ExecutablePath));
 
