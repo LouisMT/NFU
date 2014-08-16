@@ -20,6 +20,7 @@ namespace NFU
             Paint += new PaintEventHandler(PaintLineSeparator);
             MaximumSize = new Size(2000, 2);
             MinimumSize = new Size(0, 2);
+            TabStop = false;
             Width = 350;
         }
 

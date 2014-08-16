@@ -55,7 +55,7 @@
             this.statusStripCore.Name = "statusStripCore";
             this.statusStripCore.Size = new System.Drawing.Size(400, 22);
             this.statusStripCore.SizingGrip = false;
-            this.statusStripCore.TabIndex = 0;
+            this.statusStripCore.TabIndex = 6;
             this.statusStripCore.Text = "statusStrip1";
             // 
             // toolStripStatus
@@ -100,8 +100,8 @@
             // 
             // openFileDialog
             // 
-            this.openFileDialog.Title = "Choose one or more files to upload";
             this.openFileDialog.Multiselect = true;
+            this.openFileDialog.Title = "Choose one or more files to upload";
             // 
             // notifyIconNFU
             // 
@@ -132,7 +132,7 @@
             this.label1.Location = new System.Drawing.Point(361, 124);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(18, 18);
-            this.label1.TabIndex = 6;
+            this.label1.TabIndex = 7;
             this.label1.Text = "a";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label1.Click += new System.EventHandler(this.openSettingsHandler);
@@ -143,7 +143,7 @@
             this.label2.Location = new System.Drawing.Point(380, 124);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(18, 18);
-            this.label2.TabIndex = 7;
+            this.label2.TabIndex = 8;
             this.label2.Text = "i";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label2.Click += new System.EventHandler(this.openAboutHandler);
@@ -154,7 +154,7 @@
             this.buttonUpdate.Location = new System.Drawing.Point(138, 83);
             this.buttonUpdate.Name = "buttonUpdate";
             this.buttonUpdate.Size = new System.Drawing.Size(124, 23);
-            this.buttonUpdate.TabIndex = 8;
+            this.buttonUpdate.TabIndex = 5;
             this.buttonUpdate.Text = "Update";
             this.buttonUpdate.UseVisualStyleBackColor = true;
             this.buttonUpdate.Click += new System.EventHandler(this.button1_Click);
@@ -164,7 +164,7 @@
             this.labelUpdate.Location = new System.Drawing.Point(12, 67);
             this.labelUpdate.Name = "labelUpdate";
             this.labelUpdate.Size = new System.Drawing.Size(376, 13);
-            this.labelUpdate.TabIndex = 9;
+            this.labelUpdate.TabIndex = 4;
             this.labelUpdate.Text = "You already have the latest version of NFU";
             this.labelUpdate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 

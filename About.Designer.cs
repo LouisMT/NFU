@@ -56,7 +56,7 @@
             this.listViewLibraries.Location = new System.Drawing.Point(12, 115);
             this.listViewLibraries.Name = "listViewLibraries";
             this.listViewLibraries.Size = new System.Drawing.Size(411, 97);
-            this.listViewLibraries.TabIndex = 0;
+            this.listViewLibraries.TabIndex = 8;
             this.listViewLibraries.UseCompatibleStateImageBehavior = false;
             this.listViewLibraries.View = System.Windows.Forms.View.Details;
             this.listViewLibraries.DoubleClick += new System.EventHandler(this.OpenLibraryURL);
@@ -79,7 +79,7 @@
             this.labelName.Location = new System.Drawing.Point(12, 9);
             this.labelName.Name = "labelName";
             this.labelName.Size = new System.Drawing.Size(38, 13);
-            this.labelName.TabIndex = 1;
+            this.labelName.TabIndex = 0;
             this.labelName.Text = "Name:";
             // 
             // textBoxName
@@ -88,7 +88,7 @@
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.ReadOnly = true;
             this.textBoxName.Size = new System.Drawing.Size(253, 20);
-            this.textBoxName.TabIndex = 2;
+            this.textBoxName.TabIndex = 1;
             this.textBoxName.Text = "NFU";
             // 
             // textBoxCopyright
@@ -97,7 +97,7 @@
             this.textBoxCopyright.Name = "textBoxCopyright";
             this.textBoxCopyright.ReadOnly = true;
             this.textBoxCopyright.Size = new System.Drawing.Size(411, 20);
-            this.textBoxCopyright.TabIndex = 4;
+            this.textBoxCopyright.TabIndex = 5;
             this.textBoxCopyright.Text = "Louis Matthijssen 2014";
             // 
             // labelCopyright
@@ -106,7 +106,7 @@
             this.labelCopyright.Location = new System.Drawing.Point(12, 48);
             this.labelCopyright.Name = "labelCopyright";
             this.labelCopyright.Size = new System.Drawing.Size(54, 13);
-            this.labelCopyright.TabIndex = 3;
+            this.labelCopyright.TabIndex = 4;
             this.labelCopyright.Text = "Copyright:";
             // 
             // textBoxVersion
@@ -115,7 +115,7 @@
             this.textBoxVersion.Name = "textBoxVersion";
             this.textBoxVersion.ReadOnly = true;
             this.textBoxVersion.Size = new System.Drawing.Size(150, 20);
-            this.textBoxVersion.TabIndex = 8;
+            this.textBoxVersion.TabIndex = 3;
             // 
             // labelVersion
             // 
@@ -123,7 +123,7 @@
             this.labelVersion.Location = new System.Drawing.Point(273, 9);
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(45, 13);
-            this.labelVersion.TabIndex = 7;
+            this.labelVersion.TabIndex = 2;
             this.labelVersion.Text = "Version:";
             // 
             // labelLibraries
@@ -132,7 +132,7 @@
             this.labelLibraries.Location = new System.Drawing.Point(12, 99);
             this.labelLibraries.Name = "labelLibraries";
             this.labelLibraries.Size = new System.Drawing.Size(217, 13);
-            this.labelLibraries.TabIndex = 9;
+            this.labelLibraries.TabIndex = 7;
             this.labelLibraries.Text = "NFU uses the following third party resources:";
             // 
             // buttonClose
@@ -141,7 +141,7 @@
             this.buttonClose.Location = new System.Drawing.Point(348, 226);
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(75, 23);
-            this.buttonClose.TabIndex = 11;
+            this.buttonClose.TabIndex = 12;
             this.buttonClose.Text = "&Close";
             this.buttonClose.UseVisualStyleBackColor = true;
             // 
@@ -152,14 +152,15 @@
             this.separatorAbout.MinimumSize = new System.Drawing.Size(0, 2);
             this.separatorAbout.Name = "separatorAbout";
             this.separatorAbout.Size = new System.Drawing.Size(435, 2);
-            this.separatorAbout.TabIndex = 10;
+            this.separatorAbout.TabIndex = 6;
+            this.separatorAbout.TabStop = false;
             // 
             // buttonOpenLog
             // 
             this.buttonOpenLog.Location = new System.Drawing.Point(12, 226);
             this.buttonOpenLog.Name = "buttonOpenLog";
             this.buttonOpenLog.Size = new System.Drawing.Size(100, 23);
-            this.buttonOpenLog.TabIndex = 12;
+            this.buttonOpenLog.TabIndex = 10;
             this.buttonOpenLog.Text = "Open log file";
             this.buttonOpenLog.UseVisualStyleBackColor = true;
             this.buttonOpenLog.Click += new System.EventHandler(this.OpenNFULog);
@@ -171,7 +172,8 @@
             this.lineSeparator1.MinimumSize = new System.Drawing.Size(0, 2);
             this.lineSeparator1.Name = "lineSeparator1";
             this.lineSeparator1.Size = new System.Drawing.Size(435, 2);
-            this.lineSeparator1.TabIndex = 13;
+            this.lineSeparator1.TabIndex = 9;
+            this.lineSeparator1.TabStop = false;
             // 
             // linkLabelSource
             // 
@@ -179,7 +181,7 @@
             this.linkLabelSource.Location = new System.Drawing.Point(171, 231);
             this.linkLabelSource.Name = "linkLabelSource";
             this.linkLabelSource.Size = new System.Drawing.Size(92, 13);
-            this.linkLabelSource.TabIndex = 14;
+            this.linkLabelSource.TabIndex = 11;
             this.linkLabelSource.TabStop = true;
             this.linkLabelSource.Text = "Source on GitHub";
             this.linkLabelSource.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OpenSource);
