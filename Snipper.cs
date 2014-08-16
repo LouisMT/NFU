@@ -126,34 +126,24 @@ namespace NFU
             if (Settings.Default.QuickScreenshots)
                 return Mode.New;
 
-            // Margin for a virtual border of 5 px
-            // (1 px real + 2 px on both sides)
+            // Margin to create a virtual border of 5 px
+            // 2px both sides + 1px real border
+            int size = 5;
             int margin = 2;
 
-            if (e.X >= rectangleSelection.X - margin &&
-                e.X <= rectangleSelection.X + margin)
-            {
+            if (new Rectangle(rectangleSelection.X - margin, rectangleSelection.Y, size, rectangleSelection.Height).Contains(e.Location))
                 return Mode.X;
-            }
-            else if (e.X >= rectangleSelection.X + rectangleSelection.Width - margin &&
-                e.X <= rectangleSelection.X + rectangleSelection.Width + margin)
-            {
+
+            if (new Rectangle(rectangleSelection.X + rectangleSelection.Width - margin, rectangleSelection.Y, size, rectangleSelection.Height).Contains(e.Location))
                 return Mode.Width;
-            }
-            else if (e.Y >= rectangleSelection.Y - margin &&
-                e.Y <= rectangleSelection.Y + margin)
-            {
+
+            if (new Rectangle(rectangleSelection.X, rectangleSelection.Y - margin, rectangleSelection.Width, size).Contains(e.Location))
                 return Mode.Y;
-            }
-            else if (e.Y >= rectangleSelection.Y + rectangleSelection.Height - margin &&
-                e.Y <= rectangleSelection.Y + rectangleSelection.Height + margin)
-            {
+
+            if (new Rectangle(rectangleSelection.X, rectangleSelection.Y + rectangleSelection.Height - margin, rectangleSelection.Width, size).Contains(e.Location))
                 return Mode.Height;
-            }
-            else
-            {
-                return Mode.New;
-            }
+
+            return Mode.New;
         }
 
         /// <summary>
