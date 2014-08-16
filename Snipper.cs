@@ -15,6 +15,7 @@ namespace NFU
 
         private Mode mode;
         private Image image;
+        private Cursor cursor;
         private Point pointStart;
         private Rectangle rectangle;
         private Rectangle rectangleSelection;
@@ -22,7 +23,7 @@ namespace NFU
         private ComboBox comboBoxScreen = new ComboBox();
 
         /// <summary>
-        /// Snip the image.
+        /// Snips the image.
         /// </summary>
         /// <returns>The image or null on failure.</returns>
         public static Image Snip()
@@ -52,6 +53,9 @@ namespace NFU
             return null;
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         private Snipper()
         {
             ShowInTaskbar = false;
@@ -88,6 +92,9 @@ namespace NFU
             Misc.SetForegroundWindow(Handle);
         }
 
+        /// <summary>
+        /// Handles changes in the screen selection.
+        /// </summary>
         void cc_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxScreen.SelectedIndex == 0) rectangle = SystemInformation.VirtualScreen;
@@ -108,6 +115,10 @@ namespace NFU
 
         enum Mode { New, X, Width, Y, Height };
 
+        /// <summary>
+        /// Get the current mode based on the position of the cursor.
+        /// </summary>
+        /// <returns>The current mode.</returns>
         private Mode getMode(MouseEventArgs e)
         {
             // Always return Mode.New if QuickScreenshots
@@ -145,6 +156,9 @@ namespace NFU
             }
         }
 
+        /// <summary>
+        /// Sets the current mode.
+        /// </summary>
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left)
@@ -153,11 +167,12 @@ namespace NFU
             mode = getMode(e);
 
             pointStart = e.Location;
-            Invalidate();
         }
 
-        private static Cursor cursor;
-
+        /// <summary>
+        /// Sets the cursor for the current mode.
+        /// Also creates the rectangle of the current selection.
+        /// </summary>
         protected override void OnMouseMove(MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left)
@@ -183,6 +198,7 @@ namespace NFU
                 return;
             }
 
+            // Set the cursor on every move to prevent flickering
             Cursor.Current = cursor;
 
             if (e.Button != MouseButtons.Left)
@@ -235,6 +251,10 @@ namespace NFU
             Invalidate();
         }
 
+        /// <summary>
+        /// Creates an image of the selection.
+        /// Also confirms if QuickScreenshots is enabled.
+        /// </summary>
         protected override void OnMouseUp(MouseEventArgs e)
         {
             if (rectangleSelection.Width <= 0 || rectangleSelection.Height <= 0) return;
@@ -248,6 +268,9 @@ namespace NFU
                 DialogResult = DialogResult.OK;
         }
 
+        /// <summary>
+        /// Paints the rectangle.
+        /// </summary>
         protected override void OnPaint(PaintEventArgs e)
         {
             using (Brush br = new SolidBrush(Color.FromArgb(120, Color.White)))
@@ -267,6 +290,9 @@ namespace NFU
             }
         }
 
+        /// <summary>
+        /// Processes the hotkeys.
+        /// </summary>
         protected override bool ProcessCmdKey(ref Message aMSG, Keys aKeyData)
         {
             if (aKeyData == Keys.Escape)
