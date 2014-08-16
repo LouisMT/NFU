@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NFU.Properties;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
@@ -12,6 +13,7 @@ namespace NFU
         private static Bitmap FSB;
         private static int offsetX, offsetY;
 
+        private Mode mode;
         private Image image;
         private Point pointStart;
         private Rectangle rectangle;
@@ -54,7 +56,7 @@ namespace NFU
         {
             ShowInTaskbar = false;
             DoubleBuffered = true;
-            Cursor = Cursors.Cross;
+            Cursor = Cursors.Arrow;
             FormBorderStyle = FormBorderStyle.None;
             StartPosition = FormStartPosition.Manual;
 
@@ -79,7 +81,7 @@ namespace NFU
             labelInfo.Font = new Font("Consolas", 8.25F);
             labelInfo.BorderStyle = BorderStyle.FixedSingle;
             labelInfo.MinimumSize = new Size(comboBoxScreen.Width, 0);
-            labelInfo.Text = "ESC - Cancel\nF   - Fullscreen\nC   - Controls";
+            labelInfo.Text = "ESC   - Cancel\nENTER - Confirm\nF     - Fullscreen\nC     - Controls";
 
             this.Controls.Add(labelInfo);
 
@@ -104,22 +106,132 @@ namespace NFU
             BackgroundImage = bmp;
         }
 
+        enum Mode { New, X, Width, Y, Height };
+
+        private Mode getMode(MouseEventArgs e)
+        {
+            // Always return Mode.New if QuickScreenshots
+            // is enabled
+            if (Settings.Default.QuickScreenshots)
+                return Mode.New;
+
+            // Margin for a virtual border of 5 px
+            // (1 px real + 2 px on both sides)
+            int margin = 2;
+
+            if (e.X >= rectangleSelection.X - margin &&
+                e.X <= rectangleSelection.X + margin)
+            {
+                return Mode.X;
+            }
+            else if (e.X >= rectangleSelection.X + rectangleSelection.Width - margin &&
+                e.X <= rectangleSelection.X + rectangleSelection.Width + margin)
+            {
+                return Mode.Width;
+            }
+            else if (e.Y >= rectangleSelection.Y - margin &&
+                e.Y <= rectangleSelection.Y + margin)
+            {
+                return Mode.Y;
+            }
+            else if (e.Y >= rectangleSelection.Y + rectangleSelection.Height - margin &&
+                e.Y <= rectangleSelection.Y + rectangleSelection.Height + margin)
+            {
+                return Mode.Height;
+            }
+            else
+            {
+                return Mode.New;
+            }
+        }
+
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left) return;
+            if (e.Button != MouseButtons.Left)
+                return;
+
+            mode = getMode(e);
+
             pointStart = e.Location;
-            rectangleSelection = new Rectangle(e.Location, new Size(0, 0));
             Invalidate();
         }
 
+        private static Cursor cursor;
+
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left) return;
-            int x1 = Math.Min(e.X, pointStart.X);
-            int y1 = Math.Min(e.Y, pointStart.Y);
-            int x2 = Math.Max(e.X, pointStart.X);
-            int y2 = Math.Max(e.Y, pointStart.Y);
-            rectangleSelection = new Rectangle(x1, y1, x2 - x1, y2 - y1);
+            if (e.Button != MouseButtons.Left)
+            {
+                switch (getMode(e))
+                {
+                    case Mode.X:
+                    case Mode.Width:
+                        cursor = Cursors.SizeWE;
+                        break;
+
+                    case Mode.Y:
+                    case Mode.Height:
+                        cursor = Cursors.SizeNS;
+                        break;
+
+                    case Mode.New:
+                        cursor = Cursors.Arrow;
+                        break;
+                }
+
+                Cursor.Current = cursor;
+                return;
+            }
+
+            Cursor.Current = cursor;
+
+            if (e.Button != MouseButtons.Left)
+                return;
+
+            int x = 0, y = 0, w = 0, h = 0;
+
+            switch (mode)
+            {
+                case Mode.X:
+                    x = e.X;
+                    y = rectangleSelection.Y;
+                    w = rectangleSelection.Width + (rectangleSelection.X - e.X);
+                    h = rectangleSelection.Height;
+                    break;
+
+                case Mode.Width:
+                    x = rectangleSelection.X;
+                    y = rectangleSelection.Y;
+                    w = e.X - rectangleSelection.X;
+                    h = rectangleSelection.Height;
+                    break;
+
+                case Mode.Y:
+                    x = rectangleSelection.X;
+                    y = e.Y;
+                    w = rectangleSelection.Width;
+                    h = rectangleSelection.Height + (rectangleSelection.Y - e.Y);
+                    break;
+
+                case Mode.Height:
+                    x = rectangleSelection.X;
+                    y = rectangleSelection.Y;
+                    w = rectangleSelection.Width;
+                    h = e.Y - rectangleSelection.Y;
+                    break;
+
+                case Mode.New:
+                    x = Math.Min(e.X, pointStart.X);
+                    y = Math.Min(e.Y, pointStart.Y);
+                    w = Math.Max(e.X, pointStart.X) - x;
+                    h = Math.Max(e.Y, pointStart.Y) - y;
+                    break;
+            }
+
+            if (w <= 10 || h <= 10)
+                return;
+
+            rectangleSelection = new Rectangle(x, y, w, h);
             Invalidate();
         }
 
@@ -131,7 +243,9 @@ namespace NFU
             {
                 gr.DrawImage(BackgroundImage, new Rectangle(0, 0, image.Width, image.Height), rectangleSelection, GraphicsUnit.Pixel);
             }
-            DialogResult = DialogResult.OK;
+
+            if (Settings.Default.QuickScreenshots)
+                DialogResult = DialogResult.OK;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -169,6 +283,13 @@ namespace NFU
             {
                 rectangleSelection = new Rectangle(0, 0, BackgroundImage.Width, BackgroundImage.Height);
                 OnMouseUp(null);
+                return true;
+            }
+            else if (aKeyData == Keys.Enter)
+            {
+                if (!Settings.Default.QuickScreenshots)
+                    DialogResult = DialogResult.OK;
+
                 return true;
             }
 

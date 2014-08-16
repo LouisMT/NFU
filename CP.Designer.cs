@@ -60,6 +60,7 @@
             this.buttonSave = new System.Windows.Forms.Button();
             this.labelHelpTitle = new System.Windows.Forms.Label();
             this.labelHelpText = new System.Windows.Forms.Label();
+            this.checkBoxQuickScreenshots = new System.Windows.Forms.CheckBox();
             this.tabControlCP.SuspendLayout();
             this.tabServer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).BeginInit();
@@ -303,6 +304,7 @@
             // 
             // tabNFU
             // 
+            this.tabNFU.Controls.Add(this.checkBoxQuickScreenshots);
             this.tabNFU.Controls.Add(this.checkBoxStartWindows);
             this.tabNFU.Controls.Add(this.checkBoxSytemTray);
             this.tabNFU.Controls.Add(this.comboBoxScreen);
@@ -417,6 +419,16 @@
             this.labelHelpText.TabIndex = 3;
             this.labelHelpText.Text = "Some settings may only take effect after a restart";
             // 
+            // checkBoxQuickScreenshots
+            // 
+            this.checkBoxQuickScreenshots.AutoSize = true;
+            this.checkBoxQuickScreenshots.Location = new System.Drawing.Point(6, 87);
+            this.checkBoxQuickScreenshots.Name = "checkBoxQuickScreenshots";
+            this.checkBoxQuickScreenshots.Size = new System.Drawing.Size(114, 17);
+            this.checkBoxQuickScreenshots.TabIndex = 10;
+            this.checkBoxQuickScreenshots.Text = "Quick screenshots";
+            this.checkBoxQuickScreenshots.UseVisualStyleBackColor = true;
+            // 
             // CP
             // 
             this.AcceptButton = this.buttonSave;
@@ -483,6 +495,7 @@
         private System.Windows.Forms.LinkLabel linkLabelReset;
         private System.Windows.Forms.Label labelCounter;
         private System.Windows.Forms.NumericUpDown numericUpDownPort;
+        private System.Windows.Forms.CheckBox checkBoxQuickScreenshots;
 
     }
 }

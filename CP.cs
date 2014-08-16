@@ -31,6 +31,7 @@ namespace NFU
             comboBoxScreen.SelectedIndex = Settings.Default.Screen;
             checkBoxPause.Checked = Settings.Default.HandlePause;
             checkBoxPrintScreen.Checked = Settings.Default.HandlePrintScreen;
+            checkBoxQuickScreenshots.Checked = Settings.Default.QuickScreenshots;
             checkBoxDebug.Checked = Settings.Default.Debug;
             checkBoxSytemTray.Checked = Settings.Default.MinimizeSystemTray;
 
@@ -56,6 +57,7 @@ namespace NFU
             Settings.Default.Screen = comboBoxScreen.SelectedIndex;
             Settings.Default.HandlePause = checkBoxPause.Checked;
             Settings.Default.HandlePrintScreen = checkBoxPrintScreen.Checked;
+            Settings.Default.QuickScreenshots = checkBoxQuickScreenshots.Checked;
             Settings.Default.Debug = checkBoxDebug.Checked;
             Settings.Default.MinimizeSystemTray = checkBoxSytemTray.Checked;
 
