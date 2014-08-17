@@ -45,6 +45,7 @@ namespace NFU
                 {
                     Misc.ShowInfo("NFU is still active", "Double click on this icon to open NFU");
                     Settings.Default.TooltipShown = true;
+                    Settings.Default.Save();
                 }
 
                 this.Hide();
@@ -56,10 +57,6 @@ namespace NFU
             {
                 e.Cancel = true;
                 WindowState = FormWindowState.Minimized;
-            }
-            else
-            {
-                Settings.Default.Save();
             }
         }
 

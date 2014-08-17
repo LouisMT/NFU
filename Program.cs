@@ -33,13 +33,16 @@ namespace NFU
                         Settings.Default.Save();
                     }
 
+                    if (Screen.AllScreens.Length > Settings.Default.Screen - 1)
+                        Settings.Default.Screen = 0;
+
+                    Settings.Default.Save();
+
                     CoreForm = new Core();
                     AboutBox = new About();
                     ControlPanel = new CP();
 
                     CoreForm.Setup();
-
-                    if (Screen.AllScreens.Length > Settings.Default.Screen - 1) Settings.Default.Screen = 0;
 
                     if (Settings.Default.FirstRun) CoreForm.Load += (sender, e) =>
                         {
@@ -47,9 +50,8 @@ namespace NFU
                         };
 
                     if (args.Length > 0)
-                    {
-                        if (args[0] == "minimized") CoreForm.WindowState = FormWindowState.Minimized;
-                    }
+                        if (args[0] == "minimized")
+                            CoreForm.WindowState = FormWindowState.Minimized;
 
                     Application.Run(CoreForm);
                 }

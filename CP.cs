@@ -132,6 +132,7 @@ namespace NFU
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Settings.Default.Count = 0;
+            Settings.Default.Save();
             labelCounter.Text = "Counter: 00000";
         }
 

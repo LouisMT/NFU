@@ -73,7 +73,7 @@ namespace NFU
             }
 
             comboBoxScreen.SelectedIndexChanged += cc_SelectedIndexChanged;
-            comboBoxScreen.SelectedIndex = Properties.Settings.Default.Screen;
+            comboBoxScreen.SelectedIndex = Settings.Default.Screen;
             comboBoxScreen.Visible = Settings.Default.ShowControls;
 
             this.Controls.Add(comboBoxScreen);
@@ -264,7 +264,7 @@ namespace NFU
             {
                 e.Graphics.DrawRectangle(pen, rectangleSelection);
             }
-            using (Brush bg = new SolidBrush(Color.FromArgb(210, Color.Black)))
+            using (Brush bg = new SolidBrush(Color.FromArgb(130, Color.Black)))
             using (Brush fg = new SolidBrush(Color.White))
             {
                 if (!Settings.Default.ShowControls)

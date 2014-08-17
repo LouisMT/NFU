@@ -42,7 +42,7 @@ namespace NFU
         private static extern bool RegisterHotKey(IntPtr aHandle, int aID, int aMode, Keys aKey);
 
         [DllImport("user32")]
-        public static extern UInt32 SendMessage (IntPtr aHandle, UInt32 aMSG, UInt32 aWParam, UInt32 aLParam);
+        public static extern UInt32 SendMessage(IntPtr aHandle, UInt32 aMSG, UInt32 aWParam, UInt32 aLParam);
 
         [DllImport("advapi32.dll")]
         public static extern bool LogonUser(string aUsername, string aDomain, string aPassword, int aLogonType, int aLogonProvider, ref IntPtr aToken);
@@ -60,10 +60,10 @@ namespace NFU
         {
             HotKeyWndProc HotKeyWnd = new HotKeyWndProc();
 
-            if (!Misc.RegisterHotKey(aHandle, aID, 0, aKey)) 
-			{
-				Misc.HandleError(new Win32Exception("RegisterHotkey failed for key " + aKey), "Misc.RegisterHotkey");
-	            return false;
+            if (!Misc.RegisterHotKey(aHandle, aID, 0, aKey))
+            {
+                Misc.HandleError(new Win32Exception("RegisterHotkey failed for key " + aKey), "Misc.RegisterHotkey");
+                return false;
             }
 
             try
@@ -71,13 +71,13 @@ namespace NFU
                 HotKeyWnd.HotKeyPass = new HotKeyPass(aMethod);
                 HotKeyWnd.WParam = aID;
                 HotKeyWnd.AssignHandle(aHandle);
-	            return true;
+                return true;
             }
             catch
             {
                 HotKeyWnd.ReleaseHandle();
-				return false;
-			}
+                return false;
+            }
         }
 
         private class HotKeyWndProc : NativeWindow
@@ -106,7 +106,8 @@ namespace NFU
         {
             try
             {
-                if (Settings.Default.Debug) File.AppendAllText(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\NFU.log", String.Format("[{0}] [{1}] ({2}) -> {3}{4}", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), Name, Fatal, e != null ? e.Message : "", Environment.NewLine));
+                if (Settings.Default.Debug)
+                    File.AppendAllText(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\NFU.log", String.Format("[{0}] [{1}] ({2}) -> {3}{4}", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), Name, Fatal, e != null ? e.Message : "", Environment.NewLine));
             }
             catch { }
 
@@ -137,8 +138,12 @@ namespace NFU
                     break;
 
                 case 1:
-                    if (Settings.Default.Count == 99999) Settings.Default.Count = 0;
+                    if (Settings.Default.Count == 99999)
+                        Settings.Default.Count = 0;
+
                     aPath = String.Format("{0}-{1}{2}", DateTime.Now.ToString("ddMMyyyy"), (++Settings.Default.Count).ToString("D5"), Path.GetExtension(aPath));
+
+                    Settings.Default.Save();
                     break;
             }
 
@@ -252,12 +257,12 @@ namespace NFU
             bool validatedCertificate = true;
 
             // Check if SSL errors occured and if certificate hash is not trusted
-            if (sslPolicyErrors != SslPolicyErrors.None && Properties.Settings.Default.TrustedHash != certificate.GetCertHashString())
+            if (sslPolicyErrors != SslPolicyErrors.None && Settings.Default.TrustedHash != certificate.GetCertHashString())
             {
                 if (MessageBox.Show(String.Format("Untrusted certificate!\n\nSubject:\n{0}\n\nIssuer:\n{1}\n\nHash:\n{2}\n\nContinue?", certificate.Subject, certificate.Issuer, certificate.GetCertHashString()), "Untrusted certificate", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                 {
-                    Properties.Settings.Default.TrustedHash = certificate.GetCertHashString();
-                    Properties.Settings.Default.Save();
+                    Settings.Default.TrustedHash = certificate.GetCertHashString();
+                    Settings.Default.Save();
                 }
                 else
                 {
