@@ -135,8 +135,8 @@
             this.textBoxURL.Name = "textBoxURL";
             this.textBoxURL.Size = new System.Drawing.Size(363, 20);
             this.textBoxURL.TabIndex = 13;
-            this.textBoxURL.Enter += new System.EventHandler(this.settingsHelperHandler);
-            this.textBoxURL.Leave += new System.EventHandler(this.settingsHelperClear);
+            this.textBoxURL.Enter += new System.EventHandler(this.SettingsHelper);
+            this.textBoxURL.Leave += new System.EventHandler(this.SettingsHelperClear);
             // 
             // checkBoxShowPassword
             // 
@@ -147,7 +147,7 @@
             this.checkBoxShowPassword.TabIndex = 11;
             this.checkBoxShowPassword.Text = "Show password";
             this.checkBoxShowPassword.UseVisualStyleBackColor = true;
-            this.checkBoxShowPassword.CheckedChanged += new System.EventHandler(this.checkBoxShowPasswordHandler);
+            this.checkBoxShowPassword.CheckedChanged += new System.EventHandler(this.CheckBoxShowPassword);
             // 
             // comboBoxType
             // 
@@ -162,7 +162,7 @@
             this.comboBoxType.Name = "comboBoxType";
             this.comboBoxType.Size = new System.Drawing.Size(440, 21);
             this.comboBoxType.TabIndex = 0;
-            this.comboBoxType.SelectedIndexChanged += new System.EventHandler(this.comboBoxType_SelectedIndexChanged);
+            this.comboBoxType.SelectedIndexChanged += new System.EventHandler(this.TypeIndexChanged);
             // 
             // textBoxPassword
             // 
@@ -171,8 +171,8 @@
             this.textBoxPassword.Size = new System.Drawing.Size(259, 20);
             this.textBoxPassword.TabIndex = 10;
             this.textBoxPassword.UseSystemPasswordChar = true;
-            this.textBoxPassword.Enter += new System.EventHandler(this.settingsHelperHandler);
-            this.textBoxPassword.Leave += new System.EventHandler(this.settingsHelperClear);
+            this.textBoxPassword.Enter += new System.EventHandler(this.SettingsHelper);
+            this.textBoxPassword.Leave += new System.EventHandler(this.SettingsHelperClear);
             // 
             // textBoxUsername
             // 
@@ -180,8 +180,8 @@
             this.textBoxUsername.Name = "textBoxUsername";
             this.textBoxUsername.Size = new System.Drawing.Size(363, 20);
             this.textBoxUsername.TabIndex = 8;
-            this.textBoxUsername.Enter += new System.EventHandler(this.settingsHelperHandler);
-            this.textBoxUsername.Leave += new System.EventHandler(this.settingsHelperClear);
+            this.textBoxUsername.Enter += new System.EventHandler(this.SettingsHelper);
+            this.textBoxUsername.Leave += new System.EventHandler(this.SettingsHelperClear);
             // 
             // textBoxDirectory
             // 
@@ -189,8 +189,8 @@
             this.textBoxDirectory.Name = "textBoxDirectory";
             this.textBoxDirectory.Size = new System.Drawing.Size(363, 20);
             this.textBoxDirectory.TabIndex = 6;
-            this.textBoxDirectory.Enter += new System.EventHandler(this.settingsHelperHandler);
-            this.textBoxDirectory.Leave += new System.EventHandler(this.settingsHelperClear);
+            this.textBoxDirectory.Enter += new System.EventHandler(this.SettingsHelper);
+            this.textBoxDirectory.Leave += new System.EventHandler(this.SettingsHelperClear);
             // 
             // textBoxHost
             // 
@@ -198,8 +198,8 @@
             this.textBoxHost.Name = "textBoxHost";
             this.textBoxHost.Size = new System.Drawing.Size(291, 20);
             this.textBoxHost.TabIndex = 3;
-            this.textBoxHost.Enter += new System.EventHandler(this.settingsHelperHandler);
-            this.textBoxHost.Leave += new System.EventHandler(this.settingsHelperClear);
+            this.textBoxHost.Enter += new System.EventHandler(this.SettingsHelper);
+            this.textBoxHost.Leave += new System.EventHandler(this.SettingsHelperClear);
             // 
             // labelPassword
             // 
@@ -260,7 +260,7 @@
             this.linkLabelReset.TabIndex = 3;
             this.linkLabelReset.TabStop = true;
             this.linkLabelReset.Text = "Reset";
-            this.linkLabelReset.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.linkLabelReset.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ResetCounter);
             // 
             // labelCounter
             // 
@@ -379,9 +379,9 @@
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 3;
-            this.buttonSave.Text = "Save";
+            this.buttonSave.Text = "&Save";
             this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSaveHandler);
+            this.buttonSave.Click += new System.EventHandler(this.ButtonSave);
             // 
             // labelHelpTitle
             // 
@@ -450,7 +450,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Settings";
-            this.Shown += new System.EventHandler(this.updateOnShown);
+            this.Shown += new System.EventHandler(this.CPShown);
             this.tabControlCP.ResumeLayout(false);
             this.tabServer.ResumeLayout(false);
             this.tabServer.PerformLayout();

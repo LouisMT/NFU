@@ -1,6 +1,6 @@
-﻿using System.ComponentModel;
-using NFU.Properties;
+﻿using NFU.Properties;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Net.Security;
@@ -15,6 +15,9 @@ namespace NFU
 {
     public partial class LineSeparator : UserControl
     {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public LineSeparator()
         {
             Paint += new PaintEventHandler(PaintLineSeparator);
@@ -24,6 +27,9 @@ namespace NFU
             Width = 350;
         }
 
+        /// <summary>
+        /// A simple seperator control.
+        /// </summary>
         private void PaintLineSeparator(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -34,6 +40,11 @@ namespace NFU
 
     public static class Misc
     {
+        private const int keySize = 128;
+        private const int passwordIterations = 2;
+        private const string initVector = "*lzk3&HMv7(uC&aH";
+        private const string saltValue = "[1uT@|:+k3dXmOf}2!(-Rc}*6g5eUMi9qO1{`4jgtx=5V_c-g :,S.Ica.77,_V$";
+        private const string passPhrase = "ZS9|:c3)Xkov%.Pp}1MYxX 0FphF),#5bUir6kt R_Q 8?**(b,zW{pxq$N+Khgh";
 
         [DllImport("user32.dll")]
         public static extern int SetForegroundWindow(IntPtr aHandle);
@@ -48,37 +59,6 @@ namespace NFU
         public static extern bool LogonUser(string aUsername, string aDomain, string aPassword, int aLogonType, int aLogonProvider, ref IntPtr aToken);
 
         private delegate void HotKeyPass();
-
-        /// <summary>
-        /// Bind a hotkey to a method.
-        /// </summary>
-        /// <param name="aKey">The key.</param>
-        /// <param name="aMethod">The method.</param>
-        /// <param name="aID">The bind ID.</param>
-        /// <param name="aHandle">The handle.</param>
-        public static bool RegisterHotKey(Keys aKey, Action aMethod, int aID, IntPtr aHandle)
-        {
-            HotKeyWndProc HotKeyWnd = new HotKeyWndProc();
-
-            if (!Misc.RegisterHotKey(aHandle, aID, 0, aKey))
-            {
-                Misc.HandleError(new Win32Exception("RegisterHotkey failed for key " + aKey), "Misc.RegisterHotkey");
-                return false;
-            }
-
-            try
-            {
-                HotKeyWnd.HotKeyPass = new HotKeyPass(aMethod);
-                HotKeyWnd.WParam = aID;
-                HotKeyWnd.AssignHandle(aHandle);
-                return true;
-            }
-            catch
-            {
-                HotKeyWnd.ReleaseHandle();
-                return false;
-            }
-        }
 
         private class HotKeyWndProc : NativeWindow
         {
@@ -97,106 +77,137 @@ namespace NFU
         }
 
         /// <summary>
+        /// Bind a hotkey to a method.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="method">The method.</param>
+        /// <param name="id">The bind ID.</param>
+        /// <param name="handle">The handle.</param>
+        public static bool RegisterHotKey(Keys key, Action method, int id, IntPtr handle)
+        {
+            HotKeyWndProc HotKeyWnd = new HotKeyWndProc();
+
+            if (!Misc.RegisterHotKey(handle, id, 0, key))
+            {
+                Misc.HandleError(new Win32Exception("RegisterHotkey failed for key " + key), "Misc.RegisterHotkey");
+                return false;
+            }
+
+            try
+            {
+                HotKeyWnd.HotKeyPass = new HotKeyPass(method);
+                HotKeyWnd.WParam = id;
+                HotKeyWnd.AssignHandle(handle);
+                return true;
+            }
+            catch
+            {
+                HotKeyWnd.ReleaseHandle();
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Handle an exception.
         /// </summary>
-        /// <param name="e">The exception.</param>
-        /// <param name="Name">Name of the exception.</param>
-        /// <param name="Fatal">Whether the exception is fatal or not.</param>
-        public static void HandleError(Exception e, string Name, bool Fatal = false)
+        /// <param name="err">The exception.</param>
+        /// <param name="name">Name of the exception.</param>
+        /// <param name="fatal">Whether the exception is fatal or not.</param>
+        public static void HandleError(Exception err, string name, bool fatal = false)
         {
             try
             {
                 if (Settings.Default.Debug)
-                    File.AppendAllText(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\NFU.log", String.Format("[{0}] [{1}] ({2}) -> {3}{4}", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), Name, Fatal, e != null ? e.Message : "", Environment.NewLine));
+                    File.AppendAllText(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\NFU.log",
+                        String.Format("[{0}] [{1}] ({2}) -> {3}{4}", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), name, fatal,
+                        err != null ? err.Message : "", Environment.NewLine));
             }
             catch { }
 
-            if (Fatal)
+            if (fatal)
             {
                 MessageBox.Show("A fatal error occured. NFU will exit.", "NFU Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
             else
             {
-                Program.CoreForm.toolStripStatus.Text = String.Format("{0} failed", Name);
+                Program.formCore.toolStripStatus.Text = String.Format("{0} failed", name);
             }
         }
 
         /// <summary>
         /// Get the remote filename.
         /// </summary>
-        /// <param name="aPath">The path to the local file.</param>
+        /// <param name="path">The path to the local file.</param>
         /// <returns>The remote filename.</returns>
-        public static string GetFilename(string aPath)
+        public static string GetFilename(string path)
         {
-            aPath = Path.GetFileName(aPath);
+            path = Path.GetFileName(path);
 
             switch (Settings.Default.Filename)
             {
                 case 0:
-                    aPath = Regex.Replace(aPath.Replace(' ', '_'), "[^a-zA-Z_\\.]*$", String.Empty).Trim();
+                    path = Regex.Replace(path.Replace(' ', '_'), "[^a-zA-Z_\\.]*$", String.Empty).Trim();
                     break;
 
                 case 1:
                     if (Settings.Default.Count == 99999)
                         Settings.Default.Count = 0;
 
-                    aPath = String.Format("{0}-{1}{2}", DateTime.Now.ToString("ddMMyyyy"), (++Settings.Default.Count).ToString("D5"), Path.GetExtension(aPath));
+                    path = String.Format("{0}-{1}{2}", DateTime.Now.ToString("ddMMyyyy"), (++Settings.Default.Count).ToString("D5"), Path.GetExtension(path));
 
                     Settings.Default.Save();
                     break;
             }
 
-            return aPath;
+            return path;
         }
 
         /// <summary>
         /// Get a path to a temporary file.
         /// </summary>
-        /// <param name="aExtension">The extension of the temporary file.</param>
+        /// <param name="extension">The extension of the temporary file.</param>
         /// <returns></returns>
-        public static string GetTempFileName(string aExtension)
+        public static string GetTempFileName(string extension)
         {
-            return String.Format("{0}{1}", Path.GetTempFileName(), aExtension);
+            return String.Format("{0}{1}", Path.GetTempFileName(), extension);
         }
 
         /// <summary>
         /// Enable or disable all controls except progressUpload on CoreForm.
         /// </summary>
-        /// <param name="status">True = enable, false = disable.</param>
-        public static void SetControlStatus(bool aStatus)
+        /// <param name="status">True to enable, false to disable.</param>
+        public static void SetControlStatus(bool status)
         {
-            foreach (Control CTRL in Program.CoreForm.Controls)
-            {
-                if (CTRL.Name != "progressUpload" && CTRL.Name != "buttonUpdate") CTRL.Enabled = aStatus;
-            }
+            foreach (Control control in Program.formCore.Controls)
+                if (control.Name != "progressUpload" && control.Name != "buttonUpdate") control.Enabled = status;
         }
 
+        /// <summary>
+        /// Show a balloon with some info.
+        /// </summary>
+        /// <param name="title">The title.</param>
+        /// <param name="text">The message.</param>
         public static void ShowInfo(string title, string text)
         {
-            if (Program.CoreForm.WindowState != FormWindowState.Minimized) return;
+            if (Program.formCore.WindowState != FormWindowState.Minimized)
+                return;
 
-            Program.CoreForm.notifyIconNFU.ShowBalloonTip(1000, title, text, ToolTipIcon.Info);
+            Program.formCore.notifyIconNFU.ShowBalloonTip(1000, title, text, ToolTipIcon.Info);
         }
-
-        private const int keySize = 128;
-        private const int passwordIterations = 2;
-        private const string initVector = "*lzk3&HMv7(uC&aH";
-        private const string saltValue = "[1uT@|:+k3dXmOf}2!(-Rc}*6g5eUMi9qO1{`4jgtx=5V_c-g :,S.Ica.77,_V$";
-        private const string passPhrase = "ZS9|:c3)Xkov%.Pp}1MYxX 0FphF),#5bUir6kt R_Q 8?**(b,zW{pxq$N+Khgh";
 
         /// <summary>
         /// Encrypt a password.
         /// </summary>
-        /// <param name="aPlainPassword">The password in plain text.</param>
+        /// <param name="plainPassword">The password in plain text.</param>
         /// <returns>The encrypted password.</returns>
-        public static string Encrypt(string aPlainPassword)
+        public static string Encrypt(string plainPassword)
         {
             try
             {
                 byte[] initVectorBytes = Encoding.ASCII.GetBytes(initVector);
                 byte[] saltValueBytes = Encoding.ASCII.GetBytes(saltValue);
-                byte[] plainTextBytes = Encoding.UTF8.GetBytes(aPlainPassword);
+                byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainPassword);
                 Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passPhrase, saltValueBytes, passwordIterations);
                 byte[] KeyBytes = password.GetBytes(keySize / 8);
                 RijndaelManaged symmetricKey = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7 };
@@ -222,15 +233,15 @@ namespace NFU
         /// <summary>
         /// Decrypt a password.
         /// </summary>
-        /// <param name="aEncryptedPassword">The encrypted password.</param>
+        /// <param name="encryptedPassword">The encrypted password.</param>
         /// <returns>The password in plain text.</returns>
-        public static string Decrypt(string aEncryptedPassword)
+        public static string Decrypt(string encryptedPassword)
         {
             try
             {
                 byte[] initVectorBytes = Encoding.ASCII.GetBytes(initVector);
                 byte[] saltValueBytes = Encoding.ASCII.GetBytes(saltValue);
-                byte[] cipherTextBytes = Convert.FromBase64String(aEncryptedPassword);
+                byte[] cipherTextBytes = Convert.FromBase64String(encryptedPassword);
                 Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passPhrase, saltValueBytes, passwordIterations);
                 byte[] KeyBytes = password.GetBytes(keySize / 8);
                 RijndaelManaged symmetricKey = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7 };
@@ -252,6 +263,14 @@ namespace NFU
             }
         }
 
+        /// <summary>
+        /// Check if a certificate is valid.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="certificate">The certificate.</param>
+        /// <param name="chain">The chain.</param>
+        /// <param name="sslPolicyErrors">The errors.</param>
+        /// <returns>True if valid, false if invalid.</returns>
         public static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
             bool validatedCertificate = true;

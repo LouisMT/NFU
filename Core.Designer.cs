@@ -39,8 +39,8 @@
             this.notifyIconNFU = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelSettings = new System.Windows.Forms.Label();
+            this.labelAbout = new System.Windows.Forms.Label();
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.labelUpdate = new System.Windows.Forms.Label();
             this.statusStripCore.SuspendLayout();
@@ -70,8 +70,8 @@
             this.buttonFile.Name = "buttonFile";
             this.buttonFile.Size = new System.Drawing.Size(120, 23);
             this.buttonFile.TabIndex = 0;
-            this.buttonFile.Text = "File(s)";
-            this.buttonFile.Click += new System.EventHandler(this.buttonFileHandler);
+            this.buttonFile.Text = "&File(s)";
+            this.buttonFile.Click += new System.EventHandler(this.ButtonFile);
             // 
             // buttonImport
             // 
@@ -79,8 +79,8 @@
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(120, 23);
             this.buttonImport.TabIndex = 2;
-            this.buttonImport.Text = "Import";
-            this.buttonImport.Click += new System.EventHandler(this.buttonImportHandler);
+            this.buttonImport.Text = "&Import";
+            this.buttonImport.Click += new System.EventHandler(this.ButtonImport);
             // 
             // buttonScreenshot
             // 
@@ -88,8 +88,8 @@
             this.buttonScreenshot.Name = "buttonScreenshot";
             this.buttonScreenshot.Size = new System.Drawing.Size(124, 23);
             this.buttonScreenshot.TabIndex = 1;
-            this.buttonScreenshot.Text = "Screenshot";
-            this.buttonScreenshot.Click += new System.EventHandler(this.buttonScreenshotHandler);
+            this.buttonScreenshot.Text = "&Screenshot";
+            this.buttonScreenshot.Click += new System.EventHandler(this.ButtonScreenshot);
             // 
             // progressUpload
             // 
@@ -109,7 +109,7 @@
             this.notifyIconNFU.Icon = global::NFU.Properties.Resources.NFU;
             this.notifyIconNFU.Text = "NFU";
             this.notifyIconNFU.Visible = true;
-            this.notifyIconNFU.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIconNFU_MouseDoubleClick);
+            this.notifyIconNFU.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIconNFUDoubleClick);
             // 
             // contextMenuMain
             // 
@@ -124,29 +124,29 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitNFUHandler);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitNFU);
             // 
-            // label1
+            // labelSettings
             // 
-            this.label1.Font = new System.Drawing.Font("Webdings", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.label1.Location = new System.Drawing.Point(361, 124);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(18, 18);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "a";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label1.Click += new System.EventHandler(this.openSettingsHandler);
+            this.labelSettings.Font = new System.Drawing.Font("Webdings", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.labelSettings.Location = new System.Drawing.Point(361, 124);
+            this.labelSettings.Name = "labelSettings";
+            this.labelSettings.Size = new System.Drawing.Size(18, 18);
+            this.labelSettings.TabIndex = 7;
+            this.labelSettings.Text = "a";
+            this.labelSettings.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelSettings.Click += new System.EventHandler(this.OpenSettings);
             // 
-            // label2
+            // labelAbout
             // 
-            this.label2.Font = new System.Drawing.Font("Webdings", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.label2.Location = new System.Drawing.Point(380, 124);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(18, 18);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "i";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label2.Click += new System.EventHandler(this.openAboutHandler);
+            this.labelAbout.Font = new System.Drawing.Font("Webdings", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.labelAbout.Location = new System.Drawing.Point(380, 124);
+            this.labelAbout.Name = "labelAbout";
+            this.labelAbout.Size = new System.Drawing.Size(18, 18);
+            this.labelAbout.TabIndex = 8;
+            this.labelAbout.Text = "i";
+            this.labelAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelAbout.Click += new System.EventHandler(this.OpenAbout);
             // 
             // buttonUpdate
             // 
@@ -155,9 +155,9 @@
             this.buttonUpdate.Name = "buttonUpdate";
             this.buttonUpdate.Size = new System.Drawing.Size(124, 23);
             this.buttonUpdate.TabIndex = 5;
-            this.buttonUpdate.Text = "Update";
+            this.buttonUpdate.Text = "&Update";
             this.buttonUpdate.UseVisualStyleBackColor = true;
-            this.buttonUpdate.Click += new System.EventHandler(this.button1_Click);
+            this.buttonUpdate.Click += new System.EventHandler(this.StartUpdate);
             // 
             // labelUpdate
             // 
@@ -175,8 +175,8 @@
             this.ClientSize = new System.Drawing.Size(400, 144);
             this.Controls.Add(this.labelUpdate);
             this.Controls.Add(this.buttonUpdate);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelAbout);
+            this.Controls.Add(this.labelSettings);
             this.Controls.Add(this.progressUpload);
             this.Controls.Add(this.buttonScreenshot);
             this.Controls.Add(this.buttonImport);
@@ -188,9 +188,9 @@
             this.Name = "Core";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NFU";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Core_FormClosing);
-            this.Shown += new System.EventHandler(this.Core_Shown);
-            this.Resize += new System.EventHandler(this.Core_Resize);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CoreFormClosing);
+            this.Shown += new System.EventHandler(this.CoreShown);
+            this.Resize += new System.EventHandler(this.CoreResize);
             this.statusStripCore.ResumeLayout(false);
             this.statusStripCore.PerformLayout();
             this.contextMenuMain.ResumeLayout(false);
@@ -208,8 +208,8 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         public System.Windows.Forms.ToolStripStatusLabel toolStripStatus;
         public System.Windows.Forms.ProgressBar progressUpload;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelSettings;
+        private System.Windows.Forms.Label labelAbout;
         private System.Windows.Forms.ContextMenuStrip contextMenuMain;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button buttonUpdate;

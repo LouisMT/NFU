@@ -7,11 +7,11 @@ namespace NFU
 {
     static class Program
     {
-        public static readonly Mutex Mtx = new Mutex(true, "NFU {537e6f56-11cb-461a-9983-634307543f5b}");
+        public static Core formCore;
+        public static About formAbout;
+        public static CP formCP;
 
-        public static Core CoreForm;
-        public static About AboutBox;
-        public static CP ControlPanel;
+        private static Mutex mutex = new Mutex(true, "NFU {537e6f56-11cb-461a-9983-634307543f5b}");
 
         /// <summary>
         /// The main entry point for the application.
@@ -19,13 +19,13 @@ namespace NFU
         [STAThread]
         static void Main(string[] args)
         {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
             try
             {
-                if (Mtx.WaitOne(TimeSpan.Zero, true))
+                if (mutex.WaitOne(TimeSpan.Zero, true))
                 {
-                    Application.EnableVisualStyles();
-                    Application.SetCompatibleTextRenderingDefault(false);
-
                     if (Settings.Default.NeedsUpgrade)
                     {
                         Settings.Default.Upgrade();
@@ -38,26 +38,27 @@ namespace NFU
 
                     Settings.Default.Save();
 
-                    CoreForm = new Core();
-                    AboutBox = new About();
-                    ControlPanel = new CP();
+                    formCore = new Core();
+                    formAbout = new About();
+                    formCP = new CP();
 
-                    CoreForm.Setup();
+                    formCore.Setup();
 
-                    if (Settings.Default.FirstRun) CoreForm.Load += (sender, e) =>
+                    if (Settings.Default.FirstRun) formCore.Load += (sender, e) =>
                         {
-                            Program.ControlPanel.ShowDialog();
+                            Program.formCP.ShowDialog();
                         };
 
                     if (args.Length > 0)
                         if (args[0] == "minimized")
-                            CoreForm.WindowState = FormWindowState.Minimized;
+                            formCore.WindowState = FormWindowState.Minimized;
 
-                    Application.Run(CoreForm);
+                    Application.Run(formCore);
                 }
                 else
                 {
-                    MessageBox.Show("NFU is already running. Please close the other instance of NFU.", "NFU Already Running", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("NFU is already running. Please close the other instance of NFU.",
+                        "NFU Already Running", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
             catch (Exception e)

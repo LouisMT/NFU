@@ -31,28 +31,28 @@ namespace NFU
             uploadWorker.WorkerSupportsCancellation = true;
 
             uploadWorker.DoWork += UploadWorkerHandler;
-            uploadWorker.ProgressChanged += UploadWorkerProgressHandler;
-            uploadWorker.RunWorkerCompleted += UploadWorkerCompletedHandler;
+            uploadWorker.ProgressChanged += UploadWorkerProgress;
+            uploadWorker.RunWorkerCompleted += UploadWorkerCompleted;
         }
 
         /// <summary>
         /// Upload one or more files to the remote server.
         /// </summary>
-        /// <param name="aPath">String array of paths to the local files.</param>
+        /// <param name="paths">String array of paths to the local files.</param>
         /// <returns>True on success; false on failure.</returns>
-        public static bool Upload(string[] aPath)
+        public static bool Upload(string[] paths)
         {
             if (isBusy)
                 return false;
 
-            currentIndex = 1;
             isBusy = true;
+            currentIndex = 1;
             uploadSuccess = true;
             filesDictionary.Clear();
             Misc.SetControlStatus(false);
 
-            foreach (string cPath in aPath)
-                filesDictionary.Add(cPath, Misc.GetFilename(cPath));
+            foreach (string path in paths)
+                filesDictionary.Add(path, Misc.GetFilename(path));
 
             uploadWorker.RunWorkerAsync();
 
@@ -62,12 +62,12 @@ namespace NFU
         /// <summary>
         /// Upload an image.
         /// </summary>
-        /// <param name="PNG">The image.</param>
+        /// <param name="image">The image.</param>
         /// <returns></returns>
-        public static bool UploadImage(Image aPNG)
+        public static bool UploadImage(Image image)
         {
             string Filename = Misc.GetTempFileName(".png");
-            aPNG.Save(Filename);
+            image.Save(Filename);
             return Uploader.Upload(new[] { Filename });
         }
 
@@ -76,10 +76,10 @@ namespace NFU
         /// </summary>
         /// <param name="Text">The text.</param>
         /// <returns></returns>
-        public static bool UploadText(string aText)
+        public static bool UploadText(string text)
         {
             string Filename = Misc.GetTempFileName(".txt");
-            File.WriteAllText(Filename, aText);
+            File.WriteAllText(Filename, text);
             return Uploader.Upload(new[] { Filename });
         }
 
@@ -107,18 +107,18 @@ namespace NFU
                 {
                     case 0:
                     case 3:
-                        abort = uploadFTP(path, filename);
+                        abort = UploadFTP(path, filename);
                         break;
 
                     case 1:
                         try
                         {
-                            abort = uploadSFTP(path, filename);
+                            abort = UploadSFTP(path, filename);
                         }
                         catch (Exception err)
                         {
-                            MessageBox.Show("NFU relies on the SSH.NET library for SFTP uploads.\nPlease download the DLL in the same directory as the NFU executable.\nThe download link can be found in the about box.",
-                                "Missing DLL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("NFU relies on the SSH.NET library for SFTP uploads.\nPlease download the DLL in the same directory as the NFU executable." + 
+                                "\nThe download link can be found in the about box.", "Missing DLL", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                             uploadSuccess = false;
                             Misc.HandleError(err, "SFTP");
@@ -127,7 +127,7 @@ namespace NFU
                         break;
 
                     case 2:
-                        abort = uploadCIFS(path, filename);
+                        abort = UploadCIFS(path, filename);
                         break;
                 }
 
@@ -144,7 +144,7 @@ namespace NFU
         /// <param name="path">The path of the local file.</param>
         /// <param name="filename">The filename of the remote file.</param>
         /// <returns>True on failure, false on success.</returns>
-        static bool uploadFTP(string path, string filename)
+        static bool UploadFTP(string path, string filename)
         {
             try
             {
@@ -204,7 +204,7 @@ namespace NFU
         /// <param name="path">The path of the local file.</param>
         /// <param name="filename">The filename of the remote file.</param>
         /// <returns>True on failure, false on success.</returns>
-        static bool uploadSFTP(string path, string filename)
+        static bool UploadSFTP(string path, string filename)
         {
             try
             {
@@ -245,7 +245,7 @@ namespace NFU
         /// <param name="path">The path of the local file.</param>
         /// <param name="filename">The filename of the remote file.</param>
         /// <returns>True on failure, false on success.</returns>
-        static bool uploadCIFS(string path, string filename)
+        static bool UploadCIFS(string path, string filename)
         {
             try
             {
@@ -255,7 +255,7 @@ namespace NFU
                 Misc.LogonUser(Settings.Default.Username, "NFU", Misc.Decrypt(Settings.Default.Password), 9, 0, ref Token);
                 WindowsIdentity Identity = new WindowsIdentity(Token);
 
-                string DestPath = (Settings.Default.Directory != null) ? String.Format(@"\\{0}\{1}\{2}", Settings.Default.Host, Settings.Default.Directory, filename) : String.Format(@"\\{0}\{1}", Settings.Default.Host, filename);
+                string DestPath = (!String.IsNullOrEmpty(Settings.Default.Directory)) ? String.Format(@"\\{0}\{1}\{2}", Settings.Default.Host, Settings.Default.Directory, filename) : String.Format(@"\\{0}\{1}", Settings.Default.Host, filename);
 
                 using (Identity.Impersonate())
                 using (FileStream inputStream = new FileStream(path, FileMode.Open, FileAccess.Read))
@@ -289,24 +289,24 @@ namespace NFU
         /// <summary>
         /// The progress handler for the upload
         /// </summary>
-        static void UploadWorkerProgressHandler(object sender, ProgressChangedEventArgs e)
+        static void UploadWorkerProgress(object sender, ProgressChangedEventArgs e)
         {
-            Program.CoreForm.progressUpload.Value = e.ProgressPercentage;
-            Program.CoreForm.toolStripStatus.Text = string.Format("Uploading... ({0}/{1})", currentIndex, filesDictionary.Count);
+            Program.formCore.progressUpload.Value = e.ProgressPercentage;
+            Program.formCore.toolStripStatus.Text = string.Format("Uploading... ({0}/{1})", currentIndex, filesDictionary.Count);
         }
 
         /// <summary>
         /// The handler for the completion of the upload
         /// </summary>
-        static void UploadWorkerCompletedHandler(object sender, RunWorkerCompletedEventArgs e)
+        static void UploadWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Misc.SetControlStatus(true);
-            Program.CoreForm.progressUpload.Value = 0;
+            Program.formCore.progressUpload.Value = 0;
 
             if (uploadSuccess)
             {
                 Misc.ShowInfo("NFU upload successful", "The file has been successfully uploaded");
-                Program.CoreForm.toolStripStatus.Text = "Upload successful";
+                Program.formCore.toolStripStatus.Text = "Upload successful";
 
                 List<string> clipboard = new List<string>();
 

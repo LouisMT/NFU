@@ -1,12 +1,9 @@
-﻿using System.Linq;
-using NFU.Properties;
+﻿using NFU.Properties;
 using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.IO.Compression;
 using System.Net;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,11 +11,19 @@ namespace NFU
 {
     public partial class Core : Form
     {
+        private WebClient updateClient = new WebClient();
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public Core()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Constructor extension.
+        /// </summary>
         public void Setup()
         {
             buttonUpdate.FlatStyle = FlatStyle.System;
@@ -37,7 +42,18 @@ namespace NFU
             }
         }
 
-        private void Core_Resize(object sender, EventArgs e)
+        /// <summary>
+        /// Start the update check.
+        /// </summary>
+        private async void CoreShown(object sender, EventArgs e)
+        {
+            await Task.Run(() => CheckForUpdate());
+        }
+
+        /// <summary>
+        /// Minimize to system tray.
+        /// </summary>
+        private void CoreResize(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized && Settings.Default.MinimizeSystemTray)
             {
@@ -51,7 +67,11 @@ namespace NFU
                 this.Hide();
             }
         }
-        private void Core_FormClosing(object sender, FormClosingEventArgs e)
+
+        /// <summary>
+        /// Minimize instead of close.
+        /// </summary>
+        private void CoreFormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
@@ -60,32 +80,48 @@ namespace NFU
             }
         }
 
-        private void notifyIconNFU_MouseDoubleClick(object sender, MouseEventArgs e)
+        /// <summary>
+        /// Restore window using System Tray.
+        /// </summary>
+        private void NotifyIconNFUDoubleClick(object sender, MouseEventArgs e)
         {
             this.Show();
-
             this.WindowState = FormWindowState.Normal;
         }
 
+
+        /// <summary>
+        /// Handler for the PrintScreen key.
+        /// </summary>
         private void HotKeyPrintScreen()
         {
-            buttonScreenshotHandler(null, null);
+            ButtonScreenshot(null, null);
         }
 
+        /// <summary>
+        /// Handler for the Pause key.
+        /// </summary>
         private void HotKeyPause()
         {
-            buttonImportHandler(null, null);
+            ButtonImport(null, null);
         }
 
-        private void buttonFileHandler(object sender, EventArgs e)
+        /// <summary>
+        /// Select file(s) to upload.
+        /// </summary>
+        private void ButtonFile(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
                 Uploader.Upload(openFileDialog.FileNames);
         }
 
-        private void buttonScreenshotHandler(object sender, EventArgs e)
+        /// <summary>
+        /// Take a screenshot to upload.
+        /// </summary>
+        private void ButtonScreenshot(object sender, EventArgs e)
         {
-            if (Snipper.isActive) return;
+            if (Snipper.isActive)
+                return;
 
             Image PNG = Snipper.Snip();
 
@@ -99,7 +135,10 @@ namespace NFU
             }
         }
 
-        private void buttonImportHandler(object sender, EventArgs e)
+        /// <summary>
+        /// Import data from the clipboard to upload.
+        /// </summary>
+        private void ButtonImport(object sender, EventArgs e)
         {
             if (Clipboard.ContainsFileDropList())
             {
@@ -117,37 +156,43 @@ namespace NFU
             }
             else
             {
-                Misc.HandleError(new ArgumentException("Cannot handle clipboard content of type(s) " + string.Join(",", Clipboard.GetDataObject().GetFormats())), "Import");
+                Misc.HandleError(new ArgumentException("Cannot handle clipboard content of type(s) " +
+                    string.Join(",", Clipboard.GetDataObject().GetFormats())), "Import");
             }
         }
 
-        private void openSettingsHandler(object sender, EventArgs e)
+        /// <summary>
+        /// Open the settings dialog.
+        /// </summary>
+        private void OpenSettings(object sender, EventArgs e)
         {
-            Program.ControlPanel.ShowDialog();
+            Program.formCP.ShowDialog();
         }
 
-        private void openAboutHandler(object sender, EventArgs e)
+        /// <summary>
+        /// Open the about dialog.
+        /// </summary>
+        private void OpenAbout(object sender, EventArgs e)
         {
-            Program.AboutBox.ShowDialog();
+            Program.formAbout.ShowDialog();
         }
 
-        private void exitNFUHandler(object sender, EventArgs e)
+        /// <summary>
+        /// Exit NFU.
+        /// </summary>
+        private void ExitNFU(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        static WebClient checkVersion = new WebClient();
-
-        private async void Core_Shown(object sender, EventArgs e)
-        {
-            await Task.Run(() => CheckForUpdate());
-        }
-
+        /// <summary>
+        /// Check for NFU updates.
+        /// </summary>
         private async Task CheckForUpdate()
         {
             try
             {
-                string latestVersion = await checkVersion.DownloadStringTaskAsync(new Uri("https://u5r.nl/nfu/latest"));
+                string latestVersion = await updateClient.DownloadStringTaskAsync(new Uri("https://u5r.nl/nfu/latest"));
 
                 if (latestVersion != Application.ProductVersion)
                 {
@@ -162,15 +207,19 @@ namespace NFU
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Update NFU.
+        /// </summary>
+        private void StartUpdate(object sender, EventArgs e)
         {
             try
             {
                 string tempNFU = Path.GetTempFileName();
                 string tempCMD = Path.GetTempFileName() + ".cmd";
 
-                checkVersion.DownloadFile("https://u5r.nl/nfu/NFU.exe", tempNFU);
-                File.WriteAllText(tempCMD, String.Format("@ECHO OFF{0}TITLE NFU UPDATE{0}ECHO Waiting for NFU to exit...{0}TIMEOUT /T 5{0}ECHO.{0}ECHO Updating NFU...{0}COPY /B /Y \"{1}\" \"{2}\"{0}START \"\" \"{2}\"", Environment.NewLine, tempNFU, Application.ExecutablePath));
+                updateClient.DownloadFile("https://u5r.nl/nfu/NFU.exe", tempNFU);
+                File.WriteAllText(tempCMD, String.Format("@ECHO OFF{0}TITLE NFU UPDATE{0}ECHO Waiting for NFU to exit...{0}TIMEOUT /T 5{0}ECHO." +
+                    "{0}ECHO Updating NFU...{0}COPY /B /Y \"{1}\" \"{2}\"{0}START \"\" \"{2}\"", Environment.NewLine, tempNFU, Application.ExecutablePath));
 
                 ProcessStartInfo startInfo = new ProcessStartInfo();
 

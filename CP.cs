@@ -7,8 +7,11 @@ namespace NFU
 {
     public partial class CP : Form
     {
-        private readonly RegistryKey autoStartKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+        private RegistryKey autoStartKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
 
+        /// <summary>
+        /// Read all the settings back into the GUI.
+        /// </summary>
         public CP()
         {
             InitializeComponent();
@@ -16,9 +19,7 @@ namespace NFU
             comboBoxScreen.Items.Add("Merge screens");
 
             for (int i = 0; i < Screen.AllScreens.Length; i++)
-            {
                 comboBoxScreen.Items.Add(String.Format("Screen {0}", i + 1));
-            }
 
             comboBoxType.SelectedIndex = Settings.Default.TransferType;
             textBoxHost.Text = Settings.Default.Host;
@@ -44,7 +45,15 @@ namespace NFU
             comboBoxFilename.SelectedIndex = Settings.Default.Filename;
         }
 
-        private void buttonSaveHandler(object sender, EventArgs e)
+        /// <summary>
+        /// Reload the file counter.
+        /// </summary>
+        private void CPShown(object sender, EventArgs e)
+        {
+            labelCounter.Text = String.Format("Counter: {0}", Settings.Default.Count.ToString("D5"));
+        }
+
+        private void ButtonSave(object sender, EventArgs e)
         {
             Settings.Default.TransferType = comboBoxType.SelectedIndex;
             Settings.Default.Host = textBoxHost.Text;
@@ -63,7 +72,14 @@ namespace NFU
 
             try
             {
-                if (checkBoxStartWindows.Checked) autoStartKey.SetValue("NFU", String.Format("\"{0}\" {1}", Application.ExecutablePath, "minimized")); else autoStartKey.DeleteValue("NFU");
+                if (checkBoxStartWindows.Checked)
+                {
+                    autoStartKey.SetValue("NFU", String.Format("\"{0}\" {1}", Application.ExecutablePath, "minimized"));
+                }
+                else
+                {
+                    autoStartKey.DeleteValue("NFU");
+                }
             }
             catch { }
 
@@ -76,17 +92,18 @@ namespace NFU
             Close();
         }
 
-        private void updateOnShown(object sender, EventArgs e)
-        {
-            labelCounter.Text = String.Format("Counter: {0}", Settings.Default.Count.ToString("D5"));
-        }
-
-        private void checkBoxShowPasswordHandler(object sender, EventArgs e)
+        /// <summary>
+        /// Show or hide the password.
+        /// </summary>
+        private void CheckBoxShowPassword(object sender, EventArgs e)
         {
             textBoxPassword.UseSystemPasswordChar = !checkBoxShowPassword.Checked;
         }
 
-        private void settingsHelperHandler(object sender, EventArgs e)
+        /// <summary>
+        /// Show help text if available.
+        /// </summary>
+        private void SettingsHelper(object sender, EventArgs e)
         {
             TextBox textBox = (TextBox)sender;
             string infoTitle = "", infoText = "";
@@ -123,20 +140,29 @@ namespace NFU
             labelHelpText.Text = infoText;
         }
 
-        private void settingsHelperClear(object sender, EventArgs e)
+        /// <summary>
+        /// Clear the help text.
+        /// </summary>
+        private void SettingsHelperClear(object sender, EventArgs e)
         {
             labelHelpTitle.Text = "Warning";
             labelHelpText.Text = "Some settings may only take effect after a restart";
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        /// <summary>
+        /// Reset the file counter.
+        /// </summary>
+        private void ResetCounter(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Settings.Default.Count = 0;
             Settings.Default.Save();
             labelCounter.Text = "Counter: 00000";
         }
 
-        private void comboBoxType_SelectedIndexChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Set the default port for the selected protocol.
+        /// </summary>
+        private void TypeIndexChanged(object sender, EventArgs e)
         {
             switch (comboBoxType.SelectedIndex)
             {

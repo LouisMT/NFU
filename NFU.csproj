@@ -122,6 +122,9 @@
     <EmbeddedResource Include="CP.resx">
       <DependentUpon>CP.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Snipper.resx">
+      <DependentUpon>Snipper.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

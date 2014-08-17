@@ -1,7 +1,6 @@
 ﻿using NFU.Properties;
 using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 namespace NFU
@@ -10,8 +9,10 @@ namespace NFU
     {
         public static bool isActive;
 
-        private static Bitmap FSB;
+        private static Bitmap bitmapFullScreen;
         private static int offsetX, offsetY;
+
+        private enum Mode { New, X, Width, Y, Height };
 
         private Mode mode;
         private Image image;
@@ -29,21 +30,21 @@ namespace NFU
         {
             isActive = true;
 
-            Program.CoreForm.Opacity = 0;
+            Program.formCore.Opacity = 0;
 
-            Rectangle FSR = SystemInformation.VirtualScreen;
-            Bitmap bmp = new Bitmap(FSR.Width, FSR.Height);
-            offsetX = (FSR.X < 0) ? FSR.X * -1 : 0;
-            offsetY = (FSR.Y < 0) ? FSR.Y * -1 : 0;
+            Rectangle rectangleFullScreen = SystemInformation.VirtualScreen;
+            Bitmap bitmap = new Bitmap(rectangleFullScreen.Width, rectangleFullScreen.Height);
+            offsetX = (rectangleFullScreen.X < 0) ? rectangleFullScreen.X * -1 : 0;
+            offsetY = (rectangleFullScreen.Y < 0) ? rectangleFullScreen.Y * -1 : 0;
 
-            using (Graphics gr = Graphics.FromImage(bmp)) gr.CopyFromScreen(FSR.X, FSR.Y, 0, 0, bmp.Size);
+            using (Graphics gr = Graphics.FromImage(bitmap)) gr.CopyFromScreen(rectangleFullScreen.X, rectangleFullScreen.Y, 0, 0, bitmap.Size);
 
-            FSB = bmp;
+            bitmapFullScreen = bitmap;
 
             using (Snipper snipper = new Snipper())
             {
                 DialogResult result = snipper.ShowDialog();
-                Program.CoreForm.Opacity = 1;
+                Program.formCore.Opacity = 1;
                 isActive = false;
 
                 if (result == DialogResult.OK) return snipper.image;
@@ -72,7 +73,7 @@ namespace NFU
                 comboBoxScreen.Items.Add(String.Format("Screen {0}", i + 1));
             }
 
-            comboBoxScreen.SelectedIndexChanged += cc_SelectedIndexChanged;
+            comboBoxScreen.SelectedIndexChanged += ScreenIndexChanged;
             comboBoxScreen.SelectedIndex = Settings.Default.Screen;
             comboBoxScreen.Visible = Settings.Default.ShowControls;
 
@@ -84,31 +85,35 @@ namespace NFU
         /// <summary>
         /// Handles changes in the screen selection.
         /// </summary>
-        void cc_SelectedIndexChanged(object sender, EventArgs e)
+        private void ScreenIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxScreen.SelectedIndex == 0) rectangle = SystemInformation.VirtualScreen;
-            else rectangle = Screen.AllScreens[comboBoxScreen.SelectedIndex - 1].Bounds;
+            if (comboBoxScreen.SelectedIndex == 0)
+            {
+                rectangle = SystemInformation.VirtualScreen;
+            }
+            else
+            {
+                rectangle = Screen.AllScreens[comboBoxScreen.SelectedIndex - 1].Bounds;
+            }
 
             Size = rectangle.Size;
             Location = rectangle.Location;
 
-            Bitmap bmp = new Bitmap(rectangle.Width, rectangle.Height);
+            Bitmap bitmap = new Bitmap(rectangle.Width, rectangle.Height);
 
-            using (Graphics gr = Graphics.FromImage(bmp))
+            using (Graphics gr = Graphics.FromImage(bitmap))
             {
-                gr.DrawImage(FSB, new Rectangle(0, 0, bmp.Width, bmp.Height), new Rectangle(rectangle.X + offsetX, rectangle.Y + offsetY, rectangle.Width, rectangle.Height), GraphicsUnit.Pixel);
+                gr.DrawImage(bitmapFullScreen, new Rectangle(0, 0, bitmap.Width, bitmap.Height), new Rectangle(rectangle.X + offsetX, rectangle.Y + offsetY, rectangle.Width, rectangle.Height), GraphicsUnit.Pixel);
             }
 
-            BackgroundImage = bmp;
+            BackgroundImage = bitmap;
         }
-
-        enum Mode { New, X, Width, Y, Height };
 
         /// <summary>
         /// Get the current mode based on the position of the cursor.
         /// </summary>
         /// <returns>The current mode.</returns>
-        private Mode getMode(MouseEventArgs e)
+        private Mode GetMode(MouseEventArgs e)
         {
             // Always return Mode.New if QuickScreenshots
             // is enabled
@@ -143,7 +148,7 @@ namespace NFU
             if (e.Button != MouseButtons.Left)
                 return;
 
-            mode = getMode(e);
+            mode = GetMode(e);
 
             pointStart = e.Location;
         }
@@ -156,7 +161,7 @@ namespace NFU
         {
             if (e.Button != MouseButtons.Left)
             {
-                switch (getMode(e))
+                switch (GetMode(e))
                 {
                     case Mode.X:
                     case Mode.Width:
@@ -233,8 +238,11 @@ namespace NFU
         /// </summary>
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            if (rectangleSelection.Width <= 0 || rectangleSelection.Height <= 0) return;
+            if (rectangleSelection.Width <= 0 || rectangleSelection.Height <= 0)
+                return;
+
             image = new Bitmap(rectangleSelection.Width, rectangleSelection.Height);
+
             using (Graphics gr = Graphics.FromImage(image))
             {
                 gr.DrawImage(BackgroundImage, new Rectangle(0, 0, image.Width, image.Height), rectangleSelection, GraphicsUnit.Pixel);
@@ -282,14 +290,14 @@ namespace NFU
         /// <summary>
         /// Processes the hotkeys.
         /// </summary>
-        protected override bool ProcessCmdKey(ref Message aMSG, Keys aKeyData)
+        protected override bool ProcessCmdKey(ref Message message, Keys keyData)
         {
-            if (aKeyData == Keys.Escape)
+            if (keyData == Keys.Escape)
             {
                 DialogResult = DialogResult.Cancel;
                 return true;
             }
-            else if (aKeyData == Keys.C)
+            else if (keyData == Keys.C)
             {
                 Settings.Default.ShowControls = !Settings.Default.ShowControls;
                 comboBoxScreen.Visible = Settings.Default.ShowControls;
@@ -297,13 +305,13 @@ namespace NFU
                 Invalidate();
                 return true;
             }
-            else if (aKeyData == Keys.F)
+            else if (keyData == Keys.F)
             {
                 rectangleSelection = new Rectangle(0, 0, BackgroundImage.Width, BackgroundImage.Height);
                 OnMouseUp(null);
                 return true;
             }
-            else if (aKeyData == Keys.Enter)
+            else if (keyData == Keys.Enter)
             {
                 if (!Settings.Default.QuickScreenshots)
                     DialogResult = DialogResult.OK;
@@ -311,7 +319,7 @@ namespace NFU
                 return true;
             }
 
-            return base.ProcessCmdKey(ref aMSG, aKeyData);
+            return base.ProcessCmdKey(ref message, keyData);
         }
     }
 }
