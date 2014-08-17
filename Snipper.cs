@@ -19,7 +19,6 @@ namespace NFU
         private Point pointStart;
         private Rectangle rectangle;
         private Rectangle rectangleSelection;
-        private Label labelInfo = new Label();
         private ComboBox comboBoxScreen = new ComboBox();
 
         /// <summary>
@@ -65,7 +64,7 @@ namespace NFU
             StartPosition = FormStartPosition.Manual;
 
             comboBoxScreen.Items.Add("Merge screens");
-            comboBoxScreen.Location = new Point(12, 12);
+            comboBoxScreen.Location = new Point(3, 3);
             comboBoxScreen.DropDownStyle = ComboBoxStyle.DropDownList;
 
             for (int i = 0; i < Screen.AllScreens.Length; i++)
@@ -75,19 +74,9 @@ namespace NFU
 
             comboBoxScreen.SelectedIndexChanged += cc_SelectedIndexChanged;
             comboBoxScreen.SelectedIndex = Properties.Settings.Default.Screen;
+            comboBoxScreen.Visible = Settings.Default.ShowControls;
 
             this.Controls.Add(comboBoxScreen);
-
-            labelInfo.AutoSize = true;
-            labelInfo.BackColor = Color.Black;
-            labelInfo.ForeColor = Color.White;
-            labelInfo.Location = new Point(12, 33);
-            labelInfo.Font = new Font("Consolas", 8.25F);
-            labelInfo.BorderStyle = BorderStyle.FixedSingle;
-            labelInfo.MinimumSize = new Size(comboBoxScreen.Width, 0);
-            labelInfo.Text = "ESC   - Cancel\nENTER - Confirm\nF     - Fullscreen\nC     - Controls";
-
-            this.Controls.Add(labelInfo);
 
             Misc.SetForegroundWindow(Handle);
         }
@@ -191,9 +180,6 @@ namespace NFU
             // Set the cursor on every move to prevent flickering
             Cursor.Current = cursor;
 
-            if (e.Button != MouseButtons.Left)
-                return;
-
             int x = 0, y = 0, w = 0, h = 0;
 
             switch (mode)
@@ -278,6 +264,19 @@ namespace NFU
             {
                 e.Graphics.DrawRectangle(pen, rectangleSelection);
             }
+            using (Brush bg = new SolidBrush(Color.FromArgb(210, Color.Black)))
+            using (Brush fg = new SolidBrush(Color.White))
+            {
+                if (!Settings.Default.ShowControls)
+                    return;
+
+                Rectangle rectangleDisplay = new Rectangle(0, 0, Width, 27);
+                e.Graphics.FillRectangle(bg, rectangleDisplay);
+                e.Graphics.DrawString(String.Format("X: {0} Y: {1} W: {2} H: {3}\n{4}",
+                    rectangleSelection.X, rectangleSelection.Y, rectangleSelection.Width, rectangleSelection.Height,
+                    "ESC - Cancel, ENTER - Confirm, F - Fullscreen, C - Toggle controls"),
+                    new Font("Consolas", 8.25F), fg, rectangleDisplay, new StringFormat() { Alignment = StringAlignment.Center });
+            }
         }
 
         /// <summary>
@@ -292,7 +291,10 @@ namespace NFU
             }
             else if (aKeyData == Keys.C)
             {
-                foreach (Control ctrl in Controls) ctrl.Visible = !ctrl.Visible;
+                Settings.Default.ShowControls = !Settings.Default.ShowControls;
+                comboBoxScreen.Visible = Settings.Default.ShowControls;
+                Settings.Default.Save();
+                Invalidate();
                 return true;
             }
             else if (aKeyData == Keys.F)
