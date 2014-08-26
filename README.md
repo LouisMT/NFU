@@ -8,7 +8,7 @@ Source code is published under MIT, license is available [here](https://github.c
 
 * SSH.NET Library  
   [BSD](http://sshnet.codeplex.com)
-* IcoMoon
+* IcoMoon  
   [GPL / CC BY 3.0](https://icomoon.io)
 
 ##Build instructions
