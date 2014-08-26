@@ -59,7 +59,7 @@ namespace NFU
             {
                 if (!Settings.Default.TooltipShown)
                 {
-                    Misc.ShowInfo("NFU is still active", "Double click on this icon to open NFU");
+                    Misc.ShowInfo("NFU is still active", "Click on this icon to open NFU or right click to exit.");
                     Settings.Default.TooltipShown = true;
                     Settings.Default.Save();
                 }
@@ -83,10 +83,20 @@ namespace NFU
         /// <summary>
         /// Restore window using System Tray.
         /// </summary>
-        private void NotifyIconNFUDoubleClick(object sender, MouseEventArgs e)
+        private void NotifyIconNFUClick(object sender, MouseEventArgs e)
         {
-            this.Show();
-            this.WindowState = FormWindowState.Normal;
+            if (e.Button != MouseButtons.Left)
+                return;
+
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                this.WindowState = FormWindowState.Minimized;
+            }
+            else
+            {
+                this.Show();
+                this.WindowState = FormWindowState.Normal;
+            }
         }
 
 

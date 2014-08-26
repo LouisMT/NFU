@@ -111,7 +111,7 @@
             this.notifyIconNFU.Icon = global::NFU.Properties.Resources.NFU;
             this.notifyIconNFU.Text = "NFU";
             this.notifyIconNFU.Visible = true;
-            this.notifyIconNFU.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIconNFUDoubleClick);
+            this.notifyIconNFU.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIconNFUClick);
             // 
             // contextMenuMain
             // 
