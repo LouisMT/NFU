@@ -24,13 +24,13 @@ namespace NFU
 
             ListViewItem sshNet = new ListViewItem(new string[] {
                 "SSH.NET",
-                "https://sshnet.codeplex.com/",
+                "https://sshnet.codeplex.com",
                 "SFTP uploads"
             });
             ListViewItem iconPack = new ListViewItem(new string[] {
-                "Freecns Cumulus",
-                "https://www.iconfinder.com/iconsets/freecns-cumulus",
-                "NFU & exit icon"
+                "IcoMoon",
+                "https://icomoon.io",
+                "All icons"
             });
 
             listViewLibraries.Items.AddRange(new ListViewItem[] {

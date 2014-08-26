@@ -39,12 +39,14 @@
             this.notifyIconNFU = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.labelSettings = new System.Windows.Forms.Label();
-            this.labelAbout = new System.Windows.Forms.Label();
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.labelUpdate = new System.Windows.Forms.Label();
+            this.pictureBoxAbout = new System.Windows.Forms.PictureBox();
+            this.pictureBoxSettings = new System.Windows.Forms.PictureBox();
             this.statusStripCore.SuspendLayout();
             this.contextMenuMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAbout)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSettings)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStripCore
@@ -126,28 +128,6 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitNFU);
             // 
-            // labelSettings
-            // 
-            this.labelSettings.Font = new System.Drawing.Font("Webdings", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.labelSettings.Location = new System.Drawing.Point(361, 124);
-            this.labelSettings.Name = "labelSettings";
-            this.labelSettings.Size = new System.Drawing.Size(18, 18);
-            this.labelSettings.TabIndex = 7;
-            this.labelSettings.Text = "a";
-            this.labelSettings.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelSettings.Click += new System.EventHandler(this.OpenSettings);
-            // 
-            // labelAbout
-            // 
-            this.labelAbout.Font = new System.Drawing.Font("Webdings", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.labelAbout.Location = new System.Drawing.Point(380, 124);
-            this.labelAbout.Name = "labelAbout";
-            this.labelAbout.Size = new System.Drawing.Size(18, 18);
-            this.labelAbout.TabIndex = 8;
-            this.labelAbout.Text = "i";
-            this.labelAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelAbout.Click += new System.EventHandler(this.OpenAbout);
-            // 
             // buttonUpdate
             // 
             this.buttonUpdate.Enabled = false;
@@ -168,15 +148,37 @@
             this.labelUpdate.Text = "You already have the latest version of NFU";
             this.labelUpdate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // pictureBoxAbout
+            // 
+            this.pictureBoxAbout.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBoxAbout.Image = global::NFU.Properties.Resources.About;
+            this.pictureBoxAbout.Location = new System.Drawing.Point(364, 126);
+            this.pictureBoxAbout.Name = "pictureBoxAbout";
+            this.pictureBoxAbout.Size = new System.Drawing.Size(14, 14);
+            this.pictureBoxAbout.TabIndex = 9;
+            this.pictureBoxAbout.TabStop = false;
+            this.pictureBoxAbout.Click += new System.EventHandler(this.OpenAbout);
+            // 
+            // pictureBoxSettings
+            // 
+            this.pictureBoxSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBoxSettings.Image = global::NFU.Properties.Resources.Settings;
+            this.pictureBoxSettings.Location = new System.Drawing.Point(382, 126);
+            this.pictureBoxSettings.Name = "pictureBoxSettings";
+            this.pictureBoxSettings.Size = new System.Drawing.Size(14, 14);
+            this.pictureBoxSettings.TabIndex = 10;
+            this.pictureBoxSettings.TabStop = false;
+            this.pictureBoxSettings.Click += new System.EventHandler(this.OpenSettings);
+            // 
             // Core
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(400, 144);
+            this.Controls.Add(this.pictureBoxSettings);
+            this.Controls.Add(this.pictureBoxAbout);
             this.Controls.Add(this.labelUpdate);
             this.Controls.Add(this.buttonUpdate);
-            this.Controls.Add(this.labelAbout);
-            this.Controls.Add(this.labelSettings);
             this.Controls.Add(this.progressUpload);
             this.Controls.Add(this.buttonScreenshot);
             this.Controls.Add(this.buttonImport);
@@ -194,6 +196,8 @@
             this.statusStripCore.ResumeLayout(false);
             this.statusStripCore.PerformLayout();
             this.contextMenuMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAbout)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSettings)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -208,13 +212,13 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         public System.Windows.Forms.ToolStripStatusLabel toolStripStatus;
         public System.Windows.Forms.ProgressBar progressUpload;
-        private System.Windows.Forms.Label labelSettings;
-        private System.Windows.Forms.Label labelAbout;
         private System.Windows.Forms.ContextMenuStrip contextMenuMain;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button buttonUpdate;
         private System.Windows.Forms.Label labelUpdate;
         public System.Windows.Forms.NotifyIcon notifyIconNFU;
+        private System.Windows.Forms.PictureBox pictureBoxAbout;
+        private System.Windows.Forms.PictureBox pictureBoxSettings;
 
 
 
