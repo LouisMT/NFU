@@ -47,16 +47,16 @@ namespace NFU
         private const string passPhrase = "ZS9|:c3)Xkov%.Pp}1MYxX 0FphF),#5bUir6kt R_Q 8?**(b,zW{pxq$N+Khgh";
 
         [DllImport("user32.dll")]
-        public static extern int SetForegroundWindow(IntPtr aHandle);
+        public static extern int SetForegroundWindow(IntPtr handle);
 
         [DllImport("user32.dll")]
-        private static extern bool RegisterHotKey(IntPtr aHandle, int aID, int aMode, Keys aKey);
+        private static extern bool RegisterHotKey(IntPtr handle, int id, int mode, Keys key);
 
         [DllImport("user32")]
-        public static extern UInt32 SendMessage(IntPtr aHandle, UInt32 aMSG, UInt32 aWParam, UInt32 aLParam);
+        public static extern UInt32 SendMessage(IntPtr handle, UInt32 msg, UInt32 wParam, UInt32 lParam);
 
         [DllImport("advapi32.dll")]
-        public static extern bool LogonUser(string aUsername, string aDomain, string aPassword, int aLogonType, int aLogonProvider, ref IntPtr aToken);
+        public static extern bool LogonUser(string username, string domain, string password, int logonType, int logonProvider, ref IntPtr token);
 
         private delegate void HotKeyPass();
 
@@ -65,14 +65,14 @@ namespace NFU
             public HotKeyPass HotKeyPass;
             public int WParam = 10000;
 
-            protected override void WndProc(ref Message aM)
+            protected override void WndProc(ref Message m)
             {
-                if (aM.Msg == 0x0312 && aM.WParam.ToInt32() == WParam)
+                if (m.Msg == 0x0312 && m.WParam.ToInt32() == WParam)
                 {
                     if (HotKeyPass != null) HotKeyPass.Invoke();
                 }
 
-                base.WndProc(ref aM);
+                base.WndProc(ref m);
             }
         }
 
@@ -188,12 +188,13 @@ namespace NFU
         /// </summary>
         /// <param name="title">The title.</param>
         /// <param name="text">The message.</param>
-        public static void ShowInfo(string title, string text)
+        /// <param name="icon">The icon.</param>
+        public static void ShowInfo(string title, string text, ToolTipIcon icon = ToolTipIcon.Info)
         {
             if (Program.formCore.WindowState != FormWindowState.Minimized)
                 return;
 
-            Program.formCore.notifyIconNFU.ShowBalloonTip(1000, title, text, ToolTipIcon.Info);
+            Program.formCore.notifyIconNFU.ShowBalloonTip(1000, title, text, icon);
         }
 
         /// <summary>

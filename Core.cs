@@ -208,7 +208,7 @@ namespace NFU
                 {
                     buttonUpdate.Enabled = true;
                     labelUpdate.Text = "A new version of NFU is available";
-                    Misc.ShowInfo("NFU update available", "There is an update available for NFU");
+                    Misc.ShowInfo("NFU update available", "There is an update available for NFU.");
                 }
             }
             catch (Exception err)

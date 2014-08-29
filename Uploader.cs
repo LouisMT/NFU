@@ -305,7 +305,7 @@ namespace NFU
 
             if (uploadSuccess)
             {
-                Misc.ShowInfo("NFU upload successful", "The file has been successfully uploaded");
+                Misc.ShowInfo("NFU upload successful", "The file has been successfully uploaded.");
                 Program.formCore.toolStripStatus.Text = "Upload successful";
 
                 List<string> clipboard = new List<string>();
@@ -314,6 +314,10 @@ namespace NFU
                     clipboard.Add(Settings.Default.URL + file.Value);
 
                 Clipboard.SetText(String.Join(Environment.NewLine, clipboard));
+            }
+            else
+            {
+                Misc.ShowInfo("NFU upload failed", "The file failed to upload.", ToolTipIcon.Error);
             }
 
             isBusy = false;
