@@ -35,6 +35,7 @@
             this.textBoxURL = new System.Windows.Forms.TextBox();
             this.checkBoxShowPassword = new System.Windows.Forms.CheckBox();
             this.comboBoxType = new System.Windows.Forms.ComboBox();
+            this.seperatorServer = new NFU.LineSeparator();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.textBoxUsername = new System.Windows.Forms.TextBox();
             this.textBoxDirectory = new System.Windows.Forms.TextBox();
@@ -47,6 +48,7 @@
             this.linkLabelReset = new System.Windows.Forms.LinkLabel();
             this.labelCounter = new System.Windows.Forms.Label();
             this.comboBoxFilename = new System.Windows.Forms.ComboBox();
+            this.separatorNFU = new NFU.LineSeparator();
             this.tabNFU = new System.Windows.Forms.TabPage();
             this.checkBoxQuickScreenshots = new System.Windows.Forms.CheckBox();
             this.checkBoxStartWindows = new System.Windows.Forms.CheckBox();
@@ -55,12 +57,10 @@
             this.checkBoxPause = new System.Windows.Forms.CheckBox();
             this.checkBoxPrintScreen = new System.Windows.Forms.CheckBox();
             this.checkBoxDebug = new System.Windows.Forms.CheckBox();
+            this.seperatorNFU = new NFU.LineSeparator();
             this.buttonSave = new System.Windows.Forms.Button();
             this.labelHelpTitle = new System.Windows.Forms.Label();
             this.labelHelpText = new System.Windows.Forms.Label();
-            this.seperatorServer = new NFU.LineSeparator();
-            this.separatorNFU = new NFU.LineSeparator();
-            this.seperatorNFU = new NFU.LineSeparator();
             this.tabControlCP.SuspendLayout();
             this.tabServer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).BeginInit();
@@ -155,14 +155,25 @@
             this.comboBoxType.FormattingEnabled = true;
             this.comboBoxType.Items.AddRange(new object[] {
             "FTP",
+            "FTPS (Explicit)",
             "SFTP",
-            "CIFS",
-            "FTPS (Explicit) (Alpha)"});
+            "SFTP (SSH Keys)",
+            "CIFS"});
             this.comboBoxType.Location = new System.Drawing.Point(6, 6);
             this.comboBoxType.Name = "comboBoxType";
             this.comboBoxType.Size = new System.Drawing.Size(440, 21);
             this.comboBoxType.TabIndex = 0;
             this.comboBoxType.SelectedIndexChanged += new System.EventHandler(this.TypeIndexChanged);
+            // 
+            // seperatorServer
+            // 
+            this.seperatorServer.Location = new System.Drawing.Point(0, 33);
+            this.seperatorServer.MaximumSize = new System.Drawing.Size(2000, 2);
+            this.seperatorServer.MinimumSize = new System.Drawing.Size(0, 2);
+            this.seperatorServer.Name = "seperatorServer";
+            this.seperatorServer.Size = new System.Drawing.Size(450, 2);
+            this.seperatorServer.TabIndex = 1;
+            this.seperatorServer.TabStop = false;
             // 
             // textBoxPassword
             // 
@@ -284,6 +295,16 @@
             this.comboBoxFilename.Size = new System.Drawing.Size(440, 21);
             this.comboBoxFilename.TabIndex = 0;
             // 
+            // separatorNFU
+            // 
+            this.separatorNFU.Location = new System.Drawing.Point(0, 33);
+            this.separatorNFU.MaximumSize = new System.Drawing.Size(2000, 2);
+            this.separatorNFU.MinimumSize = new System.Drawing.Size(0, 2);
+            this.separatorNFU.Name = "separatorNFU";
+            this.separatorNFU.Size = new System.Drawing.Size(450, 2);
+            this.separatorNFU.TabIndex = 1;
+            this.separatorNFU.TabStop = false;
+            // 
             // tabNFU
             // 
             this.tabNFU.Controls.Add(this.checkBoxQuickScreenshots);
@@ -373,6 +394,16 @@
             this.checkBoxDebug.Text = "Debug";
             this.checkBoxDebug.UseVisualStyleBackColor = true;
             // 
+            // seperatorNFU
+            // 
+            this.seperatorNFU.Location = new System.Drawing.Point(0, 33);
+            this.seperatorNFU.MaximumSize = new System.Drawing.Size(2000, 2);
+            this.seperatorNFU.MinimumSize = new System.Drawing.Size(0, 2);
+            this.seperatorNFU.Name = "seperatorNFU";
+            this.seperatorNFU.Size = new System.Drawing.Size(450, 2);
+            this.seperatorNFU.TabIndex = 1;
+            this.seperatorNFU.TabStop = false;
+            // 
             // buttonSave
             // 
             this.buttonSave.Location = new System.Drawing.Point(397, 215);
@@ -401,36 +432,6 @@
             this.labelHelpText.Size = new System.Drawing.Size(236, 13);
             this.labelHelpText.TabIndex = 2;
             this.labelHelpText.Text = "Some settings may only take effect after a restart";
-            // 
-            // seperatorServer
-            // 
-            this.seperatorServer.Location = new System.Drawing.Point(0, 33);
-            this.seperatorServer.MaximumSize = new System.Drawing.Size(2000, 2);
-            this.seperatorServer.MinimumSize = new System.Drawing.Size(0, 2);
-            this.seperatorServer.Name = "seperatorServer";
-            this.seperatorServer.Size = new System.Drawing.Size(450, 2);
-            this.seperatorServer.TabIndex = 1;
-            this.seperatorServer.TabStop = false;
-            // 
-            // separatorNFU
-            // 
-            this.separatorNFU.Location = new System.Drawing.Point(0, 33);
-            this.separatorNFU.MaximumSize = new System.Drawing.Size(2000, 2);
-            this.separatorNFU.MinimumSize = new System.Drawing.Size(0, 2);
-            this.separatorNFU.Name = "separatorNFU";
-            this.separatorNFU.Size = new System.Drawing.Size(450, 2);
-            this.separatorNFU.TabIndex = 1;
-            this.separatorNFU.TabStop = false;
-            // 
-            // seperatorNFU
-            // 
-            this.seperatorNFU.Location = new System.Drawing.Point(0, 33);
-            this.seperatorNFU.MaximumSize = new System.Drawing.Size(2000, 2);
-            this.seperatorNFU.MinimumSize = new System.Drawing.Size(0, 2);
-            this.seperatorNFU.Name = "seperatorNFU";
-            this.seperatorNFU.Size = new System.Drawing.Size(450, 2);
-            this.seperatorNFU.TabIndex = 1;
-            this.seperatorNFU.TabStop = false;
             // 
             // CP
             // 

@@ -5,6 +5,15 @@ using System.Windows.Forms;
 
 namespace NFU
 {
+    public enum TransferType
+    {
+        FTP,
+        FTPSExplicit,
+        SFTP,
+        SFTPKeys,
+        CIFS
+    }
+
     static class Program
     {
         public static Core formCore;

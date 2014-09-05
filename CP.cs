@@ -121,8 +121,16 @@ namespace NFU
                     break;
 
                 case "textBoxPassword":
-                    infoTitle = "Password for the server, empty for anonymous";
-                    infoText = "example123!";
+                    if (comboBoxType.SelectedIndex == (int)TransferType.SFTPKeys)
+                    {
+                        infoTitle = "Absolute path to the public SSH Key (OpenSSH format)";
+                        infoText = @"C:\SSH\Keys\id_rsa";
+                    }
+                    else
+                    {
+                        infoTitle = "Password for the server, empty for anonymous";
+                        infoText = "example123!";
+                    }
                     break;
 
                 case "textBoxDirectory":
@@ -166,20 +174,37 @@ namespace NFU
         {
             switch (comboBoxType.SelectedIndex)
             {
-                case 0:
-                case 3:
+                case (int)TransferType.FTP:
+                case (int)TransferType.FTPSExplicit:
                     numericUpDownPort.Enabled = true;
                     numericUpDownPort.Value = 21;
+                    labelPassword.Text = "Password:";
+                    checkBoxShowPassword.Enabled = true;
+                    textBoxPassword.UseSystemPasswordChar = true;
                     break;
 
-                case 1:
+                case (int)TransferType.SFTP:
                     numericUpDownPort.Enabled = true;
                     numericUpDownPort.Value = 22;
+                    labelPassword.Text = "Password:";
+                    checkBoxShowPassword.Enabled = true;
+                    textBoxPassword.UseSystemPasswordChar = true;
                     break;
 
-                case 2:
+                case (int)TransferType.SFTPKeys:
+                    numericUpDownPort.Enabled = true;
+                    numericUpDownPort.Value = 22;
+                    labelPassword.Text = "Key path:";
+                    checkBoxShowPassword.Enabled = false;
+                    textBoxPassword.UseSystemPasswordChar = false;
+                    break;
+
+                case (int)TransferType.CIFS:
                     numericUpDownPort.Enabled = false;
                     numericUpDownPort.Value = 0;
+                    labelPassword.Text = "Password:";
+                    checkBoxShowPassword.Enabled = true;
+                    textBoxPassword.UseSystemPasswordChar = true;
                     break;
             }
         }

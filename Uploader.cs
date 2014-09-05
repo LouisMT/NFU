@@ -105,19 +105,20 @@ namespace NFU
 
                 switch (Settings.Default.TransferType)
                 {
-                    case 0:
-                    case 3:
+                    case (int)TransferType.FTP:
+                    case (int)TransferType.FTPSExplicit:
                         abort = UploadFTP(path, filename);
                         break;
 
-                    case 1:
+                    case (int)TransferType.SFTP:
+                    case (int)TransferType.SFTPKeys:
                         try
                         {
                             abort = UploadSFTP(path, filename);
                         }
                         catch (Exception err)
                         {
-                            MessageBox.Show("NFU relies on the SSH.NET library for SFTP uploads.\nPlease download the DLL in the same directory as the NFU executable." + 
+                            MessageBox.Show("NFU relies on the SSH.NET library for SFTP uploads.\nPlease download the DLL in the same directory as the NFU executable." +
                                 "\nThe download link can be found in the about box.", "Missing DLL", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                             uploadSuccess = false;
@@ -126,7 +127,7 @@ namespace NFU
                         }
                         break;
 
-                    case 2:
+                    case (int)TransferType.CIFS:
                         abort = UploadCIFS(path, filename);
                         break;
                 }
@@ -161,7 +162,7 @@ namespace NFU
                     FTPrequest = (FtpWebRequest)WebRequest.Create(String.Format("ftp://{0}:{1}/{2}", Settings.Default.Host, Settings.Default.Port, filename));
                 }
 
-                if (Settings.Default.TransferType == 3)
+                if (Settings.Default.TransferType == (int)TransferType.FTPSExplicit)
                 {
                     FTPrequest.EnableSsl = true;
                     ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(Misc.ValidateServerCertificate);
@@ -208,8 +209,19 @@ namespace NFU
         {
             try
             {
+                SftpClient client;
+
+                if (Settings.Default.TransferType == (int)TransferType.SFTPKeys)
+                {
+                    client = new SftpClient(Settings.Default.Host, Settings.Default.Port, Settings.Default.Username, new PrivateKeyFile(Misc.Decrypt(Settings.Default.Password)));
+                }
+                else
+                {
+                    client = new SftpClient(Settings.Default.Host, Settings.Default.Port, Settings.Default.Username, Misc.Decrypt(Settings.Default.Password));
+                }
+
                 using (FileStream inputStream = new FileStream(path, FileMode.Open))
-                using (SftpClient outputStream = new SftpClient(Settings.Default.Host, Settings.Default.Port, Settings.Default.Username, Misc.Decrypt(Settings.Default.Password)))
+                using (SftpClient outputStream = client)
                 {
                     outputStream.Connect();
 
