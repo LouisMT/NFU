@@ -8,6 +8,8 @@ namespace NFU
     public class Snipper : Form
     {
         public static bool isActive;
+        public static returnTypes returnType;
+        public enum returnTypes { Default, ToClipboard };
 
         private static Bitmap bitmapFullScreen;
         private static int offsetX, offsetY;
@@ -248,6 +250,8 @@ namespace NFU
                 gr.DrawImage(BackgroundImage, new Rectangle(0, 0, image.Width, image.Height), rectangleSelection, GraphicsUnit.Pixel);
             }
 
+            returnType = (Control.ModifierKeys == Keys.Control) ? returnTypes.ToClipboard : returnTypes.Default;
+
             if (Settings.Default.QuickScreenshots)
                 DialogResult = DialogResult.OK;
         }
@@ -282,7 +286,7 @@ namespace NFU
                 e.Graphics.FillRectangle(bg, rectangleDisplay);
                 e.Graphics.DrawString(String.Format("X: {0} Y: {1} W: {2} H: {3}\n{4}",
                     rectangleSelection.X, rectangleSelection.Y, rectangleSelection.Width, rectangleSelection.Height,
-                    "ESC - Cancel, ENTER - Confirm, F - Fullscreen, C - Toggle controls"),
+                    "ESC - Cancel, ENTER - Confirm, F - Fullscreen, C - Toggle controls, Hold CTRL - To clipboard"),
                     new Font("Consolas", 8.25F), fg, rectangleDisplay, new StringFormat() { Alignment = StringAlignment.Center });
             }
         }
@@ -292,12 +296,16 @@ namespace NFU
         /// </summary>
         protected override bool ProcessCmdKey(ref Message message, Keys keyData)
         {
-            if (keyData == Keys.Escape)
+            returnType = (Control.ModifierKeys == Keys.Control) ? returnTypes.Default : returnTypes.ToClipboard;
+            // Remove the control modifier from the keys
+            var keys = (keyData &~ Keys.Control);
+
+            if (keys == Keys.Escape)
             {
                 DialogResult = DialogResult.Cancel;
                 return true;
             }
-            else if (keyData == Keys.C)
+            else if (keys == Keys.C)
             {
                 Settings.Default.ShowControls = !Settings.Default.ShowControls;
                 comboBoxScreen.Visible = Settings.Default.ShowControls;
@@ -305,13 +313,13 @@ namespace NFU
                 Invalidate();
                 return true;
             }
-            else if (keyData == Keys.F)
+            else if (keys == Keys.F)
             {
                 rectangleSelection = new Rectangle(0, 0, BackgroundImage.Width, BackgroundImage.Height);
                 OnMouseUp(null);
                 return true;
             }
-            else if (keyData == Keys.Enter)
+            else if (keys == Keys.Enter)
             {
                 if (!Settings.Default.QuickScreenshots)
                     DialogResult = DialogResult.OK;
@@ -319,7 +327,7 @@ namespace NFU
                 return true;
             }
 
-            return base.ProcessCmdKey(ref message, keyData);
+            return true;
         }
     }
 }

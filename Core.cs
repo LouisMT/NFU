@@ -137,7 +137,16 @@ namespace NFU
 
             if (PNG != null)
             {
-                Uploader.UploadImage(PNG);
+                switch(Snipper.returnType)
+                {
+                    case Snipper.returnTypes.Default:
+                        Uploader.UploadImage(PNG);
+                        break;
+
+                    case Snipper.returnTypes.ToClipboard:
+                        Clipboard.SetImage(PNG);
+                        break;
+                }
             }
             else
             {
