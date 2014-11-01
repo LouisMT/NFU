@@ -12,6 +12,7 @@ namespace NFU
     public partial class Core : Form
     {
         private WebClient updateClient = new WebClient();
+        private Image screenshot;
 
         /// <summary>
         /// Constructor.
@@ -133,18 +134,21 @@ namespace NFU
             if (Snipper.isActive)
                 return;
 
-            Image PNG = Snipper.Snip();
+            screenshot = Snipper.Snip();
 
-            if (PNG != null)
+            if (screenshot != null)
             {
-                switch(Snipper.returnType)
+                reuploadScreenshotToolStripMenuItem.Enabled = true;
+
+                switch (Snipper.returnType)
                 {
                     case Snipper.returnTypes.Default:
-                        Uploader.UploadImage(PNG);
+                        Uploader.UploadImage(screenshot);
                         break;
 
                     case Snipper.returnTypes.ToClipboard:
-                        Clipboard.SetImage(PNG);
+                        Clipboard.SetImage(screenshot);
+                        Misc.ShowInfo("NFU screenshot copied", "The screenshot has been copied to the clipboard.");
                         break;
                 }
             }
@@ -152,6 +156,14 @@ namespace NFU
             {
                 Misc.HandleError(new ArgumentException("No files selected"), "Screenshot");
             }
+        }
+
+        /// <summary>
+        /// Reupload the last screenshot.
+        /// </summary>
+        private void ReuploadScreenshot(object sender, EventArgs e)
+        {
+            Uploader.UploadImage(screenshot);
         }
 
         /// <summary>

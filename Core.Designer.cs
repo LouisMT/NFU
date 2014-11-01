@@ -38,6 +38,8 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.notifyIconNFU = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuMain = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.reuploadScreenshotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.labelUpdate = new System.Windows.Forms.Label();
@@ -116,15 +118,30 @@
             // contextMenuMain
             // 
             this.contextMenuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.reuploadScreenshotToolStripMenuItem,
+            this.toolStripSeparator,
             this.exitToolStripMenuItem});
             this.contextMenuMain.Name = "contextMenuMain";
-            this.contextMenuMain.Size = new System.Drawing.Size(93, 26);
+            this.contextMenuMain.Size = new System.Drawing.Size(185, 76);
+            // 
+            // reuploadScreenshotToolStripMenuItem
+            // 
+            this.reuploadScreenshotToolStripMenuItem.Enabled = false;
+            this.reuploadScreenshotToolStripMenuItem.Name = "reuploadScreenshotToolStripMenuItem";
+            this.reuploadScreenshotToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.reuploadScreenshotToolStripMenuItem.Text = "Reupload screenshot";
+            this.reuploadScreenshotToolStripMenuItem.Click += new System.EventHandler(this.ReuploadScreenshot);
+            // 
+            // toolStripSeparator
+            // 
+            this.toolStripSeparator.Name = "toolStripSeparator";
+            this.toolStripSeparator.Size = new System.Drawing.Size(163, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = global::NFU.Properties.Resources.Exit;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitNFU);
             // 
@@ -219,6 +236,8 @@
         public System.Windows.Forms.NotifyIcon notifyIconNFU;
         private System.Windows.Forms.PictureBox pictureBoxAbout;
         private System.Windows.Forms.PictureBox pictureBoxSettings;
+        private System.Windows.Forms.ToolStripMenuItem reuploadScreenshotToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
 
 
 
