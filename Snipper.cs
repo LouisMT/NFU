@@ -36,13 +36,18 @@ namespace NFU
             Program.formCore.Opacity = 0;
 
             Rectangle rectangleFullScreen = SystemInformation.VirtualScreen;
-            Bitmap bitmap = new Bitmap(rectangleFullScreen.Width, rectangleFullScreen.Height, PixelFormat.Format32bppRgb);
+            bitmapFullScreen = new Bitmap(rectangleFullScreen.Width, rectangleFullScreen.Height, PixelFormat.Format32bppRgb);
             offsetX = (rectangleFullScreen.X < 0) ? rectangleFullScreen.X * -1 : 0;
             offsetY = (rectangleFullScreen.Y < 0) ? rectangleFullScreen.Y * -1 : 0;
 
-            using (Graphics gr = Graphics.FromImage(bitmap)) gr.CopyFromScreen(rectangleFullScreen.X, rectangleFullScreen.Y, 0, 0, bitmap.Size);
-
-            bitmapFullScreen = bitmap;
+            using (Graphics gr = Graphics.FromImage(bitmapFullScreen))
+            {
+                // TODO: Fix this hack
+                // Somehow, the color #0D0B0C (13, 11, 12) becomes a transparent pixel, or a black pixel if there is no alpha channel
+                // This doesn't happen if the graphics object is cleared using this color first, however, this is a bit hacky (why only this color)
+                gr.Clear(Color.FromArgb(13, 11, 12));
+                gr.CopyFromScreen(rectangleFullScreen.X, rectangleFullScreen.Y, 0, 0, bitmapFullScreen.Size);
+            }
 
             using (Snipper snipper = new Snipper())
             {
@@ -102,7 +107,7 @@ namespace NFU
             Size = rectangle.Size;
             Location = rectangle.Location;
 
-            Bitmap bitmap = new Bitmap(rectangle.Width, rectangle.Height);
+            Bitmap bitmap = new Bitmap(rectangle.Width, rectangle.Height, PixelFormat.Format32bppRgb);
 
             using (Graphics gr = Graphics.FromImage(bitmap))
             {
@@ -244,7 +249,7 @@ namespace NFU
             if (rectangleSelection.Width <= 0 || rectangleSelection.Height <= 0)
                 return;
 
-            image = new Bitmap(rectangleSelection.Width, rectangleSelection.Height);
+            image = new Bitmap(rectangleSelection.Width, rectangleSelection.Height, PixelFormat.Format32bppRgb);
 
             using (Graphics gr = Graphics.FromImage(image))
             {
@@ -299,7 +304,7 @@ namespace NFU
         {
             returnType = (Control.ModifierKeys == Keys.Control) ? returnTypes.Default : returnTypes.ToClipboard;
             // Remove the control modifier from the keys
-            var keys = (keyData &~ Keys.Control);
+            var keys = (keyData & ~Keys.Control);
 
             if (keys == Keys.Escape)
             {
