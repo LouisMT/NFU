@@ -1,6 +1,7 @@
 ﻿using NFU.Properties;
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 namespace NFU
@@ -35,7 +36,7 @@ namespace NFU
             Program.formCore.Opacity = 0;
 
             Rectangle rectangleFullScreen = SystemInformation.VirtualScreen;
-            Bitmap bitmap = new Bitmap(rectangleFullScreen.Width, rectangleFullScreen.Height);
+            Bitmap bitmap = new Bitmap(rectangleFullScreen.Width, rectangleFullScreen.Height, PixelFormat.Format32bppRgb);
             offsetX = (rectangleFullScreen.X < 0) ? rectangleFullScreen.X * -1 : 0;
             offsetY = (rectangleFullScreen.Y < 0) ? rectangleFullScreen.Y * -1 : 0;
 
