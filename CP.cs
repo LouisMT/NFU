@@ -38,7 +38,7 @@ namespace NFU
 
             try
             {
-                checkBoxStartWindows.Checked = autoStartKey.GetValue(Settings.Default.RunKeyValue) != null;
+                checkBoxStartWindows.Checked = autoStartKey.GetValue(Settings.Default.RunKey) != null;
             }
             catch { }
 
@@ -74,11 +74,11 @@ namespace NFU
             {
                 if (checkBoxStartWindows.Checked)
                 {
-                    autoStartKey.SetValue(Settings.Default.RunKeyValue, String.Format("\"{0}\" {1}", Application.ExecutablePath, "minimized"));
+                    autoStartKey.SetValue(Settings.Default.RunKey, String.Format("\"{0}\" {1}", Application.ExecutablePath, "minimized"));
                 }
                 else
                 {
-                    autoStartKey.DeleteValue(Settings.Default.RunKeyValue);
+                    autoStartKey.DeleteValue(Settings.Default.RunKey);
                 }
             }
             catch { }

@@ -74,7 +74,7 @@
     <Setting Name="RunSubKey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">SOFTWARE\Microsoft\Windows\CurrentVersion\Run</Value>
     </Setting>
-    <Setting Name="RunKeyValue" Type="System.String" Scope="Application">
+    <Setting Name="RunKey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">NFU</Value>
     </Setting>
     <Setting Name="IV" Type="System.String" Scope="Application">

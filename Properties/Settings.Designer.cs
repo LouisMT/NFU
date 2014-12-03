@@ -302,9 +302,9 @@ namespace NFU.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("NFU")]
-        public string RunKeyValue {
+        public string RunKey {
             get {
-                return ((string)(this["RunKeyValue"]));
+                return ((string)(this["RunKey"]));
             }
         }
         
