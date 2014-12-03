@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NFU.Properties;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -23,14 +24,14 @@ namespace NFU
             textBoxVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
             ListViewItem sshNet = new ListViewItem(new string[] {
-                "SSH.NET",
-                "https://sshnet.codeplex.com",
-                "SFTP uploads"
+                Resources.About_SshNetName,
+                Resources.About_SshNetUrl,
+                Resources.About_SshNetUsedFor
             });
             ListViewItem iconPack = new ListViewItem(new string[] {
-                "IcoMoon",
-                "https://icomoon.io",
-                "All icons"
+                Resources.About_IcoMoonName,
+                Resources.About_IcoMoonUrl,
+                Resources.About_IcoMoonUsedFor
             });
 
             listViewLibraries.Items.AddRange(new ListViewItem[] {
@@ -53,7 +54,7 @@ namespace NFU
         /// </summary>
         private void OpenChangelog(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/Naxiz/NFU/commits/master");
+            Process.Start(Resources.About_ChangeLogUrl);
         }
 
         /// <summary>
@@ -61,7 +62,7 @@ namespace NFU
         /// </summary>
         private void OpenContributors(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/Naxiz/NFU/graphs/contributors");
+            Process.Start(Resources.About_ContributorsUrl);
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace NFU
         /// </summary>
         private void OpenIssues(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/Naxiz/NFU/issues");
+            Process.Start(Resources.About_IssuesUrl);
         }
 
         /// <summary>
@@ -77,7 +78,7 @@ namespace NFU
         /// </summary>
         private void OpenLicense(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/naxiz/NFU/blob/master/LICENSE");
+            Process.Start(Resources.About_LicenseUrl);
         }
 
         /// <summary>
@@ -85,10 +86,10 @@ namespace NFU
         /// </summary>
         private void OpenNFULog(object sender, EventArgs e)
         {
-            string filename = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\NFU.log";
+            string filename = String.Format(@"{0}\{1}", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Settings.Default.LogFileName);
 
-            if (File.Exists(filename)) Process.Start(filename); else MessageBox.Show("The log could not be found.\n\nDid you enable debug mode?",
-                "NFU log not found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (File.Exists(filename)) Process.Start(filename); else MessageBox.Show(Resources.About_LogFileNotFound,
+                Resources.About_LogFileNotFoundTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         /// <summary>
@@ -96,7 +97,7 @@ namespace NFU
         /// </summary>
         private void OpenSource(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://github.com/Naxiz/NFU");
+            Process.Start(Resources.About_SourceUrl);
         }
     }
 }

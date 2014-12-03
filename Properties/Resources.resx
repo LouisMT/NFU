@@ -130,4 +130,407 @@
   <data name="Settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="About_ButtonChangeLog" xml:space="preserve">
+    <value>C&amp;hangelog</value>
+  </data>
+  <data name="About_ButtonClose" xml:space="preserve">
+    <value>&amp;Close</value>
+  </data>
+  <data name="About_ButtonContributors" xml:space="preserve">
+    <value>Co&amp;ntributors</value>
+  </data>
+  <data name="About_ButtonIssues" xml:space="preserve">
+    <value>&amp;Issues</value>
+  </data>
+  <data name="About_ButtonLicense" xml:space="preserve">
+    <value>&amp;License</value>
+  </data>
+  <data name="About_ButtonOpenLog" xml:space="preserve">
+    <value>&amp;Open log file</value>
+  </data>
+  <data name="About_ChangeLogUrl" xml:space="preserve">
+    <value>https://github.com/Naxiz/NFU/commits/master</value>
+  </data>
+  <data name="About_ContributorsUrl" xml:space="preserve">
+    <value>https://github.com/Naxiz/NFU/graphs/contributors</value>
+  </data>
+  <data name="About_Copyright" xml:space="preserve">
+    <value>Copyright</value>
+  </data>
+  <data name="About_IcoMoonName" xml:space="preserve">
+    <value>IcoMoon</value>
+  </data>
+  <data name="About_IcoMoonUrl" xml:space="preserve">
+    <value>https://icomoon.io</value>
+  </data>
+  <data name="About_IcoMoonUsedFor" xml:space="preserve">
+    <value>All icons</value>
+  </data>
+  <data name="About_IssuesUrl" xml:space="preserve">
+    <value>https://github.com/Naxiz/NFU/issues</value>
+  </data>
+  <data name="About_LicenseUrl" xml:space="preserve">
+    <value>https://github.com/naxiz/NFU/blob/master/LICENSE</value>
+  </data>
+  <data name="About_LogFileNotFound" xml:space="preserve">
+    <value>The log could not be found.
+
+Did you enable debug mode?</value>
+  </data>
+  <data name="About_LogFileNotFoundTitle" xml:space="preserve">
+    <value>NFU log not found</value>
+  </data>
+  <data name="About_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="About_Source" xml:space="preserve">
+    <value>Source on GitHub</value>
+  </data>
+  <data name="About_SourceUrl" xml:space="preserve">
+    <value>https://github.com/Naxiz/NFU</value>
+  </data>
+  <data name="About_SshNetName" xml:space="preserve">
+    <value>SSH.NET</value>
+  </data>
+  <data name="About_SshNetUrl" xml:space="preserve">
+    <value>https://sshnet.codeplex.com</value>
+  </data>
+  <data name="About_SshNetUsedFor" xml:space="preserve">
+    <value>SFTP uploads</value>
+  </data>
+  <data name="About_ThirdParty" xml:space="preserve">
+    <value>NFU uses the following third party resources (double click to visit)</value>
+  </data>
+  <data name="About_Title" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="About_Url" xml:space="preserve">
+    <value>URL</value>
+  </data>
+  <data name="About_UsedFor" xml:space="preserve">
+    <value>Used for</value>
+  </data>
+  <data name="About_Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Core_ButtonFiles" xml:space="preserve">
+    <value>&amp;File(s)</value>
+  </data>
+  <data name="Core_ButtonImport" xml:space="preserve">
+    <value>&amp;Import</value>
+  </data>
+  <data name="Core_ButtonScreenShot" xml:space="preserve">
+    <value>&amp;Screenshot</value>
+  </data>
+  <data name="Core_ButtonUpdate" xml:space="preserve">
+    <value>&amp;Update</value>
+  </data>
+  <data name="Core_CannotHandleTypes" xml:space="preserve">
+    <value>Cannot handle clipboard content of type(s) {0}</value>
+  </data>
+  <data name="Core_Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Core_FilesTitle" xml:space="preserve">
+    <value>Choose one or more files to upload</value>
+  </data>
+  <data name="Core_HotKeyNotRegisteredTitle" xml:space="preserve">
+    <value>Failed to register hotkey</value>
+  </data>
+  <data name="Core_Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Core_LatestVersion" xml:space="preserve">
+    <value>You already have the latest version of NFU</value>
+  </data>
+  <data name="Core_NewVersion" xml:space="preserve">
+    <value>A new version of NFU is available</value>
+  </data>
+  <data name="Core_NoFilesSelected" xml:space="preserve">
+    <value>No files selected</value>
+  </data>
+  <data name="Core_NotifiyIconTitle" xml:space="preserve">
+    <value>NFU</value>
+  </data>
+  <data name="Core_PauseHotKeyNotRegistered" xml:space="preserve">
+    <value>Pause hotkey could not be registered. Is it already in use?</value>
+  </data>
+  <data name="Core_PrintScreenHotKeyNotRegistered" xml:space="preserve">
+    <value>PrintScreen hotkey could not be registered. Is it already in use?</value>
+  </data>
+  <data name="Core_Ready" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="Core_ReUploadScreenShot" xml:space="preserve">
+    <value>Reupload screenshot</value>
+  </data>
+  <data name="Core_ScreenShot" xml:space="preserve">
+    <value>Screenshot</value>
+  </data>
+  <data name="Core_ScreenShotCopied" xml:space="preserve">
+    <value>The screenshot has been copied to the clipboard.</value>
+  </data>
+  <data name="Core_ScreenShotCopiedTitle" xml:space="preserve">
+    <value>NFU screenshot copied</value>
+  </data>
+  <data name="Core_StillActive" xml:space="preserve">
+    <value>Click on this icon to open NFU or right click to exit.</value>
+  </data>
+  <data name="Core_StillActiveTitle" xml:space="preserve">
+    <value>NFU is still active</value>
+  </data>
+  <data name="Core_Title" xml:space="preserve">
+    <value>NFU</value>
+  </data>
+  <data name="Core_Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Core_UpdateAvailable" xml:space="preserve">
+    <value>There is an update available for NFU.</value>
+  </data>
+  <data name="Core_UpdateAvailableTitle" xml:space="preserve">
+    <value>NFU update available</value>
+  </data>
+  <data name="Core_UpdateCheck" xml:space="preserve">
+    <value>Update Check</value>
+  </data>
+  <data name="Core_UpdateTitle" xml:space="preserve">
+    <value>NFU UPDATE</value>
+  </data>
+  <data name="Core_Updating" xml:space="preserve">
+    <value>Updating NFU...</value>
+  </data>
+  <data name="Core_WaitingToExit" xml:space="preserve">
+    <value>Waiting for NFU to exit...</value>
+  </data>
+  <data name="CP_ButtonSave" xml:space="preserve">
+    <value>&amp;Save</value>
+  </data>
+  <data name="CP_Cifs" xml:space="preserve">
+    <value>CIFS</value>
+  </data>
+  <data name="CP_Counter" xml:space="preserve">
+    <value>Counter: {0}</value>
+  </data>
+  <data name="CP_Debug" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="CP_Directory" xml:space="preserve">
+    <value>Directory</value>
+  </data>
+  <data name="CP_EffectAfterRestart" xml:space="preserve">
+    <value>Some settings may only take effect after a restart</value>
+  </data>
+  <data name="CP_Ftp" xml:space="preserve">
+    <value>FTP</value>
+  </data>
+  <data name="CP_FtpsExplicit" xml:space="preserve">
+    <value>FTPS (Explicit)</value>
+  </data>
+  <data name="CP_GeneratedFileName" xml:space="preserve">
+    <value>Use generated filename</value>
+  </data>
+  <data name="CP_HandlePauseKey" xml:space="preserve">
+    <value>Handle the Pause key</value>
+  </data>
+  <data name="CP_HandlePrintScreenKey" xml:space="preserve">
+    <value>Handle the Print Screen key</value>
+  </data>
+  <data name="CP_HostFqdn" xml:space="preserve">
+    <value>Host (FQDN)</value>
+  </data>
+  <data name="CP_HostFqdnFormat" xml:space="preserve">
+    <value>Host in FQDN format</value>
+  </data>
+  <data name="CP_HostFqdnFormatExample" xml:space="preserve">
+    <value>example.com</value>
+  </data>
+  <data name="CP_KeyPath" xml:space="preserve">
+    <value>Key path</value>
+  </data>
+  <data name="CP_MergeScreens" xml:space="preserve">
+    <value>Merge screens</value>
+  </data>
+  <data name="CP_MinimizeToSystemTray" xml:space="preserve">
+    <value>Minimize to system tray</value>
+  </data>
+  <data name="CP_Nfu" xml:space="preserve">
+    <value>NFU</value>
+  </data>
+  <data name="CP_OriginalFileName" xml:space="preserve">
+    <value>Use original filename</value>
+  </data>
+  <data name="CP_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="CP_QuickScreenShots" xml:space="preserve">
+    <value>Quick screenshots</value>
+  </data>
+  <data name="CP_Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="CP_Screen" xml:space="preserve">
+    <value>Screen {0}</value>
+  </data>
+  <data name="CP_Server" xml:space="preserve">
+    <value>Server</value>
+  </data>
+  <data name="CP_ServerDirectory" xml:space="preserve">
+    <value>Absolute path for SFTP, relative path for FTP and CIFS</value>
+  </data>
+  <data name="CP_ServerDirectoryExample" xml:space="preserve">
+    <value>/home/example.com/files (absolute) example.com/files (relative)</value>
+  </data>
+  <data name="CP_ServerKey" xml:space="preserve">
+    <value>Absolute path to the public SSH Key (OpenSSH format)</value>
+  </data>
+  <data name="CP_ServerKeyExample" xml:space="preserve">
+    <value>C:\SSH\Keys\id_rsa</value>
+  </data>
+  <data name="CP_ServerPassword" xml:space="preserve">
+    <value>Password for the server, empty for anonymous</value>
+  </data>
+  <data name="CP_ServerPasswordExample" xml:space="preserve">
+    <value>example123!</value>
+  </data>
+  <data name="CP_ServerPublicUrl" xml:space="preserve">
+    <value>Public URL pointing to your upload folder</value>
+  </data>
+  <data name="CP_ServerPublicUrlExample" xml:space="preserve">
+    <value>http://example.com/files/</value>
+  </data>
+  <data name="CP_ServerUserName" xml:space="preserve">
+    <value>Username for the server, empty for anonymous</value>
+  </data>
+  <data name="CP_ServerUserNameExample" xml:space="preserve">
+    <value>root</value>
+  </data>
+  <data name="CP_Sftp" xml:space="preserve">
+    <value>SFTP</value>
+  </data>
+  <data name="CP_SftpSshKeys" xml:space="preserve">
+    <value>SFTP (SSH Keys)</value>
+  </data>
+  <data name="CP_ShowPassword" xml:space="preserve">
+    <value>Show password</value>
+  </data>
+  <data name="CP_StartWithWindows" xml:space="preserve">
+    <value>Start with Windows</value>
+  </data>
+  <data name="CP_Title" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="CP_Upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="CP_Url" xml:space="preserve">
+    <value>URL</value>
+  </data>
+  <data name="CP_UserName" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="CP_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Misc_Decrypt" xml:space="preserve">
+    <value>Decrypt</value>
+  </data>
+  <data name="Misc_Encrypt" xml:space="preserve">
+    <value>Encrypt</value>
+  </data>
+  <data name="Misc_Failed" xml:space="preserve">
+    <value>{0} failed</value>
+  </data>
+  <data name="Misc_FatalError" xml:space="preserve">
+    <value>A fatal error occured. NFU will exit.</value>
+  </data>
+  <data name="Misc_FatalErrorTitle" xml:space="preserve">
+    <value>NFU error</value>
+  </data>
+  <data name="Misc_RegisterHotKey" xml:space="preserve">
+    <value>Misc.RegisterHotKey</value>
+  </data>
+  <data name="Misc_RegisterHotKeyFailed" xml:space="preserve">
+    <value>RegisterHotKey failed for key {0}</value>
+  </data>
+  <data name="Misc_UntrustedCertificate" xml:space="preserve">
+    <value>Untrusted certificate!
+
+Subject:
+{0}
+
+Issuer:
+{1}
+
+Hash:
+{2}
+
+Continue?</value>
+  </data>
+  <data name="Misc_UntrustedCertificateTitle" xml:space="preserve">
+    <value>Untrusted certificate</value>
+  </data>
+  <data name="Program_AlreadyRunning" xml:space="preserve">
+    <value>NFU is already running. Please close the other instance of NFU.</value>
+  </data>
+  <data name="Program_AlreadyRunningTitle" xml:space="preserve">
+    <value>NFU Already Running</value>
+  </data>
+  <data name="Snipper_Coordinates" xml:space="preserve">
+    <value>X: {0} Y: {1} W: {2} H: {3}
+{4}</value>
+  </data>
+  <data name="Snipper_HotKeys" xml:space="preserve">
+    <value>ESC - Cancel, ENTER - Confirm, F - Fullscreen, C - Toggle controls, Hold CTRL - To clipboard</value>
+  </data>
+  <data name="Snipper_MergeScreens" xml:space="preserve">
+    <value>Merge screens</value>
+  </data>
+  <data name="Snipper_Screen" xml:space="preserve">
+    <value>Screen {0}</value>
+  </data>
+  <data name="Uploader_Cifs" xml:space="preserve">
+    <value>CIFS</value>
+  </data>
+  <data name="Uploader_Ftps" xml:space="preserve">
+    <value>FTP(S)</value>
+  </data>
+  <data name="Uploader_Nfu" xml:space="preserve">
+    <value>NFU</value>
+  </data>
+  <data name="Uploader_Sftp" xml:space="preserve">
+    <value>SFTP</value>
+  </data>
+  <data name="Uploader_SshNetMissing" xml:space="preserve">
+    <value>NFU relies on the SSH.NET library for SFTP uploads.
+Please download the DLL in the same directory as the NFU executable.
+The download link can be found in the about box.</value>
+  </data>
+  <data name="Uploader_SshNetMissingTitle" xml:space="preserve">
+    <value>Missing DLL</value>
+  </data>
+  <data name="Uploader_UploadFailed" xml:space="preserve">
+    <value>The file failed to upload.</value>
+  </data>
+  <data name="Uploader_UploadFailedTitle" xml:space="preserve">
+    <value>NFU upload failed</value>
+  </data>
+  <data name="Uploader_Uploading" xml:space="preserve">
+    <value>Uploading... ({0}/{1})</value>
+  </data>
+  <data name="Uploader_UploadSuccessful" xml:space="preserve">
+    <value>The file has been successfully uploaded.</value>
+  </data>
+  <data name="Uploader_UploadSuccessfulStatus" xml:space="preserve">
+    <value>Upload successful</value>
+  </data>
+  <data name="Uploader_UploadSuccessfulTitle" xml:space="preserve">
+    <value>Upload successful</value>
+  </data>
+  <data name="About_CopyrightText" xml:space="preserve">
+    <value>Louis Matthijssen 2014</value>
+  </data>
+  <data name="About_Nfu" xml:space="preserve">
+    <value>NFU</value>
+  </data>
 </root>

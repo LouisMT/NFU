@@ -72,13 +72,13 @@ namespace NFU
             FormBorderStyle = FormBorderStyle.None;
             StartPosition = FormStartPosition.Manual;
 
-            comboBoxScreen.Items.Add("Merge screens");
+            comboBoxScreen.Items.Add(Resources.Snipper_MergeScreens);
             comboBoxScreen.Location = new Point(3, 3);
             comboBoxScreen.DropDownStyle = ComboBoxStyle.DropDownList;
 
             for (int i = 0; i < Screen.AllScreens.Length; i++)
             {
-                comboBoxScreen.Items.Add(String.Format("Screen {0}", i + 1));
+                comboBoxScreen.Items.Add(String.Format(Resources.Snipper_Screen, i + 1));
             }
 
             comboBoxScreen.SelectedIndexChanged += ScreenIndexChanged;
@@ -290,9 +290,8 @@ namespace NFU
 
                 Rectangle rectangleDisplay = new Rectangle(0, 0, Width, 27);
                 e.Graphics.FillRectangle(bg, rectangleDisplay);
-                e.Graphics.DrawString(String.Format("X: {0} Y: {1} W: {2} H: {3}\n{4}",
-                    rectangleSelection.X, rectangleSelection.Y, rectangleSelection.Width, rectangleSelection.Height,
-                    "ESC - Cancel, ENTER - Confirm, F - Fullscreen, C - Toggle controls, Hold CTRL - To clipboard"),
+                e.Graphics.DrawString(String.Format(Resources.Snipper_Coordinates,
+                    rectangleSelection.X, rectangleSelection.Y, rectangleSelection.Width, rectangleSelection.Height, Resources.Snipper_HotKeys),
                     new Font("Consolas", 8.25F), fg, rectangleDisplay, new StringFormat() { Alignment = StringAlignment.Center });
             }
         }

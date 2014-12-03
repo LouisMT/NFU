@@ -32,14 +32,14 @@ namespace NFU
 
             if (Settings.Default.HandlePause && !Misc.RegisterHotKey(Keys.Pause, HotKeyPause, 10000, Handle))
             {
-                MessageBox.Show("Pause hotkey could not be registered. Is it already in use?",
-                    "Failed to register hotkey", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Resources.Core_PauseHotKeyNotRegistered,
+                    Resources.Core_HotKeyNotRegisteredTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             if (Settings.Default.HandlePrintScreen && !Misc.RegisterHotKey(Keys.PrintScreen, HotKeyPrintScreen, 20000, Handle))
             {
-                MessageBox.Show("PrintScreen hotkey could not be registered. Is it already in use?",
-                    "Failed to register hotkey", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Resources.Core_PrintScreenHotKeyNotRegistered,
+                    Resources.Core_HotKeyNotRegisteredTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -60,7 +60,7 @@ namespace NFU
             {
                 if (!Settings.Default.TooltipShown)
                 {
-                    Misc.ShowInfo("NFU is still active", "Click on this icon to open NFU or right click to exit.");
+                    Misc.ShowInfo(Resources.Core_StillActiveTitle, Resources.Core_StillActive);
                     Settings.Default.TooltipShown = true;
                     Settings.Default.Save();
                 }
@@ -148,13 +148,13 @@ namespace NFU
 
                     case Snipper.returnTypes.ToClipboard:
                         Clipboard.SetImage(screenshot);
-                        Misc.ShowInfo("NFU screenshot copied", "The screenshot has been copied to the clipboard.");
+                        Misc.ShowInfo(Resources.Core_ScreenShotCopiedTitle, Resources.Core_ScreenShotCopied);
                         break;
                 }
             }
             else
             {
-                Misc.HandleError(new ArgumentException("No files selected"), "Screenshot");
+                Misc.HandleError(new ArgumentException(Resources.Core_NoFilesSelected), Resources.Core_ScreenShot);
             }
         }
 
@@ -187,8 +187,8 @@ namespace NFU
             }
             else
             {
-                Misc.HandleError(new ArgumentException("Cannot handle clipboard content of type(s) " +
-                    string.Join(",", Clipboard.GetDataObject().GetFormats())), "Import");
+                Misc.HandleError(new ArgumentException(String.Format(Resources.Core_CannotHandleTypes,
+                    String.Join(",", Clipboard.GetDataObject().GetFormats()))), Resources.Core_Import);
             }
         }
 
@@ -223,18 +223,18 @@ namespace NFU
         {
             try
             {
-                string latestVersion = await updateClient.DownloadStringTaskAsync(new Uri("https://u5r.nl/nfu/latest"));
+                string latestVersion = await updateClient.DownloadStringTaskAsync(new Uri(Settings.Default.VersionUrl));
 
                 if (latestVersion != Application.ProductVersion)
                 {
                     buttonUpdate.Enabled = true;
-                    labelUpdate.Text = "A new version of NFU is available";
-                    Misc.ShowInfo("NFU update available", "There is an update available for NFU.");
+                    labelUpdate.Text = Resources.Core_NewVersion;
+                    Misc.ShowInfo(Resources.Core_UpdateAvailableTitle, Resources.Core_UpdateAvailable);
                 }
             }
             catch (Exception err)
             {
-                Misc.HandleError(err, "Update Check");
+                Misc.HandleError(err, Resources.Core_UpdateCheck);
             }
         }
 
@@ -248,9 +248,9 @@ namespace NFU
                 string tempNFU = Path.GetTempFileName();
                 string tempCMD = Path.GetTempFileName() + ".cmd";
 
-                updateClient.DownloadFile("https://u5r.nl/nfu/NFU.exe", tempNFU);
-                File.WriteAllText(tempCMD, String.Format("@ECHO OFF{0}TITLE NFU UPDATE{0}ECHO Waiting for NFU to exit...{0}TIMEOUT /T 5{0}ECHO." +
-                    "{0}ECHO Updating NFU...{0}COPY /B /Y \"{1}\" \"{2}\"{0}START \"\" \"{2}\"", Environment.NewLine, tempNFU, Application.ExecutablePath));
+                updateClient.DownloadFile(Settings.Default.ExecutableUrl, tempNFU);
+                File.WriteAllText(tempCMD, String.Format("@ECHO OFF{3}TITLE {0}{3}ECHO {1}{3}TIMEOUT /T 5{3}ECHO." +
+                    "{3}ECHO {2}{3}COPY /B /Y \"{4}\" \"{5}\"{3}START \"\" \"{5}\"", Resources.Core_UpdateTitle, Resources.Core_WaitingToExit, Resources.Core_Updating, Environment.NewLine, tempNFU, Application.ExecutablePath));
 
                 ProcessStartInfo startInfo = new ProcessStartInfo();
 
@@ -264,7 +264,7 @@ namespace NFU
             }
             catch (Exception err)
             {
-                Misc.HandleError(err, "Update");
+                Misc.HandleError(err, Resources.Core_Update);
             }
         }
     }

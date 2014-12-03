@@ -66,8 +66,8 @@ namespace NFU
                 }
                 else
                 {
-                    MessageBox.Show("NFU is already running. Please close the other instance of NFU.",
-                        "NFU Already Running", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(Resources.Program_AlreadyRunning,
+                        Resources.Program_AlreadyRunningTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
             catch (Exception e)

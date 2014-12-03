@@ -62,5 +62,35 @@
     <Setting Name="ShowControls" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="LogFileName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">NFU.log</Value>
+    </Setting>
+    <Setting Name="VersionUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://u5r.nl/nfu/latest</Value>
+    </Setting>
+    <Setting Name="ExecutableUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://u5r.nl/nfu/NFU.exe</Value>
+    </Setting>
+    <Setting Name="RunSubKey" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SOFTWARE\Microsoft\Windows\CurrentVersion\Run</Value>
+    </Setting>
+    <Setting Name="RunKeyValue" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">NFU</Value>
+    </Setting>
+    <Setting Name="IV" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">*lzk3&amp;HMv7(uC&amp;aH</Value>
+    </Setting>
+    <Setting Name="SaltValue" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">[1uT@|:+k3dXmOf}2!(-Rc}*6g5eUMi9qO1{`4jgtx=5V_c-g :,S.Ica.77,_V$</Value>
+    </Setting>
+    <Setting Name="PassPhrase" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ZS9|:c3)Xkov%.Pp}1MYxX 0FphF),#5bUir6kt R_Q 8?**(b,zW{pxq$N+Khgh</Value>
+    </Setting>
+    <Setting Name="KeySize" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">128</Value>
+    </Setting>
+    <Setting Name="PasswordIterations" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -118,11 +118,10 @@ namespace NFU
                         }
                         catch (Exception err)
                         {
-                            MessageBox.Show("NFU relies on the SSH.NET library for SFTP uploads.\nPlease download the DLL in the same directory as the NFU executable." +
-                                "\nThe download link can be found in the about box.", "Missing DLL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(Resources.Uploader_SshNetMissing, Resources.Uploader_SshNetMissingTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                             uploadSuccess = false;
-                            Misc.HandleError(err, "SFTP");
+                            Misc.HandleError(err, Resources.Uploader_Sftp);
                             abort = true;
                         }
                         break;
@@ -194,7 +193,7 @@ namespace NFU
             catch (Exception e)
             {
                 uploadSuccess = false;
-                Misc.HandleError(e, "FTP(S)");
+                Misc.HandleError(e, Resources.Uploader_Ftps);
                 return true;
             }
         }
@@ -245,7 +244,7 @@ namespace NFU
             catch (Exception e)
             {
                 uploadSuccess = false;
-                Misc.HandleError(e, "SFTP");
+                Misc.HandleError(e, Resources.CP_Sftp);
                 return true;
             }
         }
@@ -264,7 +263,7 @@ namespace NFU
                 byte[] Buffer = new byte[1024 * 10];
 
                 IntPtr Token = IntPtr.Zero;
-                Misc.LogonUser(Settings.Default.Username, "NFU", Misc.Decrypt(Settings.Default.Password), 9, 0, ref Token);
+                Misc.LogonUser(Settings.Default.Username, Resources.Uploader_Nfu, Misc.Decrypt(Settings.Default.Password), 9, 0, ref Token);
                 WindowsIdentity Identity = new WindowsIdentity(Token);
 
                 string DestPath = (!String.IsNullOrEmpty(Settings.Default.Directory)) ? String.Format(@"\\{0}\{1}\{2}", Settings.Default.Host, Settings.Default.Directory, filename) : String.Format(@"\\{0}\{1}", Settings.Default.Host, filename);
@@ -293,7 +292,7 @@ namespace NFU
             catch (Exception e)
             {
                 uploadSuccess = false;
-                Misc.HandleError(e, "CIFS");
+                Misc.HandleError(e, Resources.Uploader_Cifs);
                 return true;
             }
         }
@@ -304,7 +303,7 @@ namespace NFU
         static void UploadWorkerProgress(object sender, ProgressChangedEventArgs e)
         {
             Program.formCore.progressUpload.Value = e.ProgressPercentage;
-            Program.formCore.toolStripStatus.Text = string.Format("Uploading... ({0}/{1})", currentIndex, filesDictionary.Count);
+            Program.formCore.toolStripStatus.Text = String.Format(Resources.Uploader_Uploading, currentIndex, filesDictionary.Count);
         }
 
         /// <summary>
@@ -317,8 +316,8 @@ namespace NFU
 
             if (uploadSuccess)
             {
-                Misc.ShowInfo("NFU upload successful", "The file has been successfully uploaded.");
-                Program.formCore.toolStripStatus.Text = "Upload successful";
+                Misc.ShowInfo(Resources.Uploader_UploadSuccessfulTitle, Resources.Uploader_UploadSuccessful);
+                Program.formCore.toolStripStatus.Text = Resources.Uploader_UploadSuccessfulStatus;
 
                 List<string> clipboard = new List<string>();
 
@@ -329,7 +328,7 @@ namespace NFU
             }
             else
             {
-                Misc.ShowInfo("NFU upload failed", "The file failed to upload.", ToolTipIcon.Error);
+                Misc.ShowInfo(Resources.Uploader_UploadFailedTitle, Resources.Uploader_UploadFailed, ToolTipIcon.Error);
             }
 
             isBusy = false;

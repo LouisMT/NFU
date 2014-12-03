@@ -1,4 +1,6 @@
-﻿namespace NFU
+﻿using NFU.Properties;
+using System;
+namespace NFU
 {
     partial class CP
     {
@@ -100,7 +102,7 @@
             this.tabServer.Padding = new System.Windows.Forms.Padding(3);
             this.tabServer.Size = new System.Drawing.Size(452, 171);
             this.tabServer.TabIndex = 0;
-            this.tabServer.Text = "Server";
+            this.tabServer.Text = Resources.CP_Server;
             this.tabServer.UseVisualStyleBackColor = true;
             // 
             // numericUpDownPort
@@ -127,7 +129,7 @@
             this.labelURL.Name = "labelURL";
             this.labelURL.Size = new System.Drawing.Size(32, 13);
             this.labelURL.TabIndex = 12;
-            this.labelURL.Text = "URL:";
+            this.labelURL.Text = Resources.CP_Url;
             // 
             // textBoxURL
             // 
@@ -145,7 +147,7 @@
             this.checkBoxShowPassword.Name = "checkBoxShowPassword";
             this.checkBoxShowPassword.Size = new System.Drawing.Size(101, 17);
             this.checkBoxShowPassword.TabIndex = 11;
-            this.checkBoxShowPassword.Text = "Show password";
+            this.checkBoxShowPassword.Text = Resources.CP_ShowPassword;
             this.checkBoxShowPassword.UseVisualStyleBackColor = true;
             this.checkBoxShowPassword.CheckedChanged += new System.EventHandler(this.CheckBoxShowPassword);
             // 
@@ -154,11 +156,11 @@
             this.comboBoxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxType.FormattingEnabled = true;
             this.comboBoxType.Items.AddRange(new object[] {
-            "FTP",
-            "FTPS (Explicit)",
-            "SFTP",
-            "SFTP (SSH Keys)",
-            "CIFS"});
+            Resources.CP_Ftp,
+            Resources.CP_FtpsExplicit,
+            Resources.CP_Sftp,
+            Resources.CP_SftpSshKeys,
+            Resources.CP_Cifs});
             this.comboBoxType.Location = new System.Drawing.Point(6, 6);
             this.comboBoxType.Name = "comboBoxType";
             this.comboBoxType.Size = new System.Drawing.Size(440, 21);
@@ -219,7 +221,7 @@
             this.labelPassword.Name = "labelPassword";
             this.labelPassword.Size = new System.Drawing.Size(56, 13);
             this.labelPassword.TabIndex = 9;
-            this.labelPassword.Text = "Password:";
+            this.labelPassword.Text = Resources.CP_Password;
             // 
             // labelDirectory
             // 
@@ -228,7 +230,7 @@
             this.labelDirectory.Name = "labelDirectory";
             this.labelDirectory.Size = new System.Drawing.Size(52, 13);
             this.labelDirectory.TabIndex = 5;
-            this.labelDirectory.Text = "Directory:";
+            this.labelDirectory.Text = Resources.CP_Directory;
             // 
             // labelUsername
             // 
@@ -237,7 +239,7 @@
             this.labelUsername.Name = "labelUsername";
             this.labelUsername.Size = new System.Drawing.Size(58, 13);
             this.labelUsername.TabIndex = 7;
-            this.labelUsername.Text = "Username:";
+            this.labelUsername.Text = Resources.CP_UserName;
             // 
             // labelHost
             // 
@@ -246,7 +248,7 @@
             this.labelHost.Name = "labelHost";
             this.labelHost.Size = new System.Drawing.Size(71, 13);
             this.labelHost.TabIndex = 2;
-            this.labelHost.Text = "Host (FQDN):";
+            this.labelHost.Text = Resources.CP_HostFqdn;
             // 
             // tabUpload
             // 
@@ -258,7 +260,7 @@
             this.tabUpload.Name = "tabUpload";
             this.tabUpload.Size = new System.Drawing.Size(452, 171);
             this.tabUpload.TabIndex = 1;
-            this.tabUpload.Text = "Upload";
+            this.tabUpload.Text = Resources.CP_Upload;
             this.tabUpload.UseVisualStyleBackColor = true;
             // 
             // linkLabelReset
@@ -270,7 +272,7 @@
             this.linkLabelReset.Size = new System.Drawing.Size(37, 13);
             this.linkLabelReset.TabIndex = 3;
             this.linkLabelReset.TabStop = true;
-            this.linkLabelReset.Text = "Reset";
+            this.linkLabelReset.Text = Resources.CP_Reset;
             this.linkLabelReset.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ResetCounter);
             // 
             // labelCounter
@@ -281,15 +283,15 @@
             this.labelCounter.Name = "labelCounter";
             this.labelCounter.Size = new System.Drawing.Size(91, 13);
             this.labelCounter.TabIndex = 2;
-            this.labelCounter.Text = "Counter: 00000";
+            this.labelCounter.Text = String.Format(Resources.CP_Counter, "00000");
             // 
             // comboBoxFilename
             // 
             this.comboBoxFilename.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFilename.FormattingEnabled = true;
             this.comboBoxFilename.Items.AddRange(new object[] {
-            "Use original filename",
-            "Use generated filename"});
+            Resources.CP_OriginalFileName,
+            Resources.CP_GeneratedFileName});
             this.comboBoxFilename.Location = new System.Drawing.Point(6, 6);
             this.comboBoxFilename.Name = "comboBoxFilename";
             this.comboBoxFilename.Size = new System.Drawing.Size(440, 21);
@@ -320,7 +322,7 @@
             this.tabNFU.Padding = new System.Windows.Forms.Padding(3);
             this.tabNFU.Size = new System.Drawing.Size(452, 171);
             this.tabNFU.TabIndex = 2;
-            this.tabNFU.Text = "NFU";
+            this.tabNFU.Text = Resources.CP_Nfu;
             this.tabNFU.UseVisualStyleBackColor = true;
             // 
             // checkBoxQuickScreenshots
@@ -330,7 +332,7 @@
             this.checkBoxQuickScreenshots.Name = "checkBoxQuickScreenshots";
             this.checkBoxQuickScreenshots.Size = new System.Drawing.Size(114, 17);
             this.checkBoxQuickScreenshots.TabIndex = 4;
-            this.checkBoxQuickScreenshots.Text = "Quick screenshots";
+            this.checkBoxQuickScreenshots.Text = Resources.CP_QuickScreenShots;
             this.checkBoxQuickScreenshots.UseVisualStyleBackColor = true;
             // 
             // checkBoxStartWindows
@@ -340,7 +342,7 @@
             this.checkBoxStartWindows.Name = "checkBoxStartWindows";
             this.checkBoxStartWindows.Size = new System.Drawing.Size(117, 17);
             this.checkBoxStartWindows.TabIndex = 7;
-            this.checkBoxStartWindows.Text = "Start with Windows";
+            this.checkBoxStartWindows.Text = Resources.CP_StartWithWindows;
             this.checkBoxStartWindows.UseVisualStyleBackColor = true;
             // 
             // checkBoxSytemTray
@@ -351,7 +353,7 @@
             this.checkBoxSytemTray.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.checkBoxSytemTray.Size = new System.Drawing.Size(133, 17);
             this.checkBoxSytemTray.TabIndex = 6;
-            this.checkBoxSytemTray.Text = "Minimize to system tray";
+            this.checkBoxSytemTray.Text = Resources.CP_MinimizeToSystemTray;
             this.checkBoxSytemTray.UseVisualStyleBackColor = true;
             // 
             // comboBoxScreen
@@ -370,7 +372,7 @@
             this.checkBoxPause.Name = "checkBoxPause";
             this.checkBoxPause.Size = new System.Drawing.Size(131, 17);
             this.checkBoxPause.TabIndex = 2;
-            this.checkBoxPause.Text = "Handle the Pause key";
+            this.checkBoxPause.Text = Resources.CP_HandlePauseKey;
             this.checkBoxPause.UseVisualStyleBackColor = true;
             // 
             // checkBoxPrintScreen
@@ -380,7 +382,7 @@
             this.checkBoxPrintScreen.Name = "checkBoxPrintScreen";
             this.checkBoxPrintScreen.Size = new System.Drawing.Size(159, 17);
             this.checkBoxPrintScreen.TabIndex = 3;
-            this.checkBoxPrintScreen.Text = "Handle the Print Screen key";
+            this.checkBoxPrintScreen.Text = Resources.CP_HandlePrintScreenKey;
             this.checkBoxPrintScreen.UseVisualStyleBackColor = true;
             // 
             // checkBoxDebug
@@ -391,7 +393,7 @@
             this.checkBoxDebug.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.checkBoxDebug.Size = new System.Drawing.Size(58, 17);
             this.checkBoxDebug.TabIndex = 5;
-            this.checkBoxDebug.Text = "Debug";
+            this.checkBoxDebug.Text = Resources.CP_Debug;
             this.checkBoxDebug.UseVisualStyleBackColor = true;
             // 
             // seperatorNFU
@@ -410,7 +412,7 @@
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 3;
-            this.buttonSave.Text = "&Save";
+            this.buttonSave.Text = Resources.CP_ButtonSave;
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.ButtonSave);
             // 
@@ -422,7 +424,7 @@
             this.labelHelpTitle.Name = "labelHelpTitle";
             this.labelHelpTitle.Size = new System.Drawing.Size(54, 13);
             this.labelHelpTitle.TabIndex = 1;
-            this.labelHelpTitle.Text = "Warning";
+            this.labelHelpTitle.Text = Resources.CP_Warning;
             // 
             // labelHelpText
             // 
@@ -431,7 +433,7 @@
             this.labelHelpText.Name = "labelHelpText";
             this.labelHelpText.Size = new System.Drawing.Size(236, 13);
             this.labelHelpText.TabIndex = 2;
-            this.labelHelpText.Text = "Some settings may only take effect after a restart";
+            this.labelHelpText.Text = Resources.CP_EffectAfterRestart;
             // 
             // CP
             // 
@@ -450,7 +452,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Settings";
+            this.Text = Resources.CP_Title;
             this.Shown += new System.EventHandler(this.CPShown);
             this.tabControlCP.ResumeLayout(false);
             this.tabServer.ResumeLayout(false);

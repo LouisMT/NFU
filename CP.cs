@@ -7,7 +7,7 @@ namespace NFU
 {
     public partial class CP : Form
     {
-        private RegistryKey autoStartKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+        private RegistryKey autoStartKey = Registry.CurrentUser.OpenSubKey(Settings.Default.RunSubKey, true);
 
         /// <summary>
         /// Read all the settings back into the GUI.
@@ -16,10 +16,10 @@ namespace NFU
         {
             InitializeComponent();
 
-            comboBoxScreen.Items.Add("Merge screens");
+            comboBoxScreen.Items.Add(Resources.CP_MergeScreens);
 
             for (int i = 0; i < Screen.AllScreens.Length; i++)
-                comboBoxScreen.Items.Add(String.Format("Screen {0}", i + 1));
+                comboBoxScreen.Items.Add(String.Format(Resources.CP_Screen, i + 1));
 
             comboBoxType.SelectedIndex = Settings.Default.TransferType;
             textBoxHost.Text = Settings.Default.Host;
@@ -38,7 +38,7 @@ namespace NFU
 
             try
             {
-                checkBoxStartWindows.Checked = autoStartKey.GetValue("NFU") != null;
+                checkBoxStartWindows.Checked = autoStartKey.GetValue(Settings.Default.RunKeyValue) != null;
             }
             catch { }
 
@@ -50,7 +50,7 @@ namespace NFU
         /// </summary>
         private void CPShown(object sender, EventArgs e)
         {
-            labelCounter.Text = String.Format("Counter: {0}", Settings.Default.Count.ToString("D5"));
+            labelCounter.Text = String.Format(Resources.CP_Counter, Settings.Default.Count.ToString("D5"));
         }
 
         private void ButtonSave(object sender, EventArgs e)
@@ -74,11 +74,11 @@ namespace NFU
             {
                 if (checkBoxStartWindows.Checked)
                 {
-                    autoStartKey.SetValue("NFU", String.Format("\"{0}\" {1}", Application.ExecutablePath, "minimized"));
+                    autoStartKey.SetValue(Settings.Default.RunKeyValue, String.Format("\"{0}\" {1}", Application.ExecutablePath, "minimized"));
                 }
                 else
                 {
-                    autoStartKey.DeleteValue("NFU");
+                    autoStartKey.DeleteValue(Settings.Default.RunKeyValue);
                 }
             }
             catch { }
@@ -111,36 +111,36 @@ namespace NFU
             switch (textBox.Name)
             {
                 case "textBoxHost":
-                    infoTitle = "Host in FQDN format";
-                    infoText = "example.com";
+                    infoTitle = Resources.CP_HostFqdnFormat;
+                    infoText = Resources.CP_HostFqdnFormatExample;
                     break;
 
                 case "textBoxUsername":
-                    infoTitle = "Username for the server, empty for anonymous";
-                    infoText = "root";
+                    infoTitle = Resources.CP_ServerUserName;
+                    infoText = Resources.CP_ServerUserNameExample;
                     break;
 
                 case "textBoxPassword":
                     if (comboBoxType.SelectedIndex == (int)TransferType.SFTPKeys)
                     {
-                        infoTitle = "Absolute path to the public SSH Key (OpenSSH format)";
-                        infoText = @"C:\SSH\Keys\id_rsa";
+                        infoTitle = Resources.CP_ServerKey;
+                        infoText = Resources.CP_ServerKeyExample;
                     }
                     else
                     {
-                        infoTitle = "Password for the server, empty for anonymous";
-                        infoText = "example123!";
+                        infoTitle = Resources.CP_ServerPassword;
+                        infoText = Resources.CP_ServerPasswordExample;
                     }
                     break;
 
                 case "textBoxDirectory":
-                    infoTitle = "Absolute path for SFTP, relative path for FTP and CIFS";
-                    infoText = "/home/example.com/files (absolute) example.com/files (relative)";
+                    infoTitle = Resources.CP_ServerDirectory;
+                    infoText = Resources.CP_ServerDirectoryExample;
                     break;
 
                 case "textBoxURL":
-                    infoTitle = "Public URL pointing to your upload folder";
-                    infoText = "http://example.com/files/";
+                    infoTitle = Resources.CP_ServerPublicUrl;
+                    infoText = Resources.CP_ServerPublicUrlExample;
                     break;
             }
 
@@ -153,8 +153,8 @@ namespace NFU
         /// </summary>
         private void SettingsHelperClear(object sender, EventArgs e)
         {
-            labelHelpTitle.Text = "Warning";
-            labelHelpText.Text = "Some settings may only take effect after a restart";
+            labelHelpTitle.Text = Resources.CP_Warning;
+            labelHelpText.Text = Resources.CP_EffectAfterRestart;
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace NFU
         {
             Settings.Default.Count = 0;
             Settings.Default.Save();
-            labelCounter.Text = "Counter: 00000";
+            labelCounter.Text = String.Format(Resources.CP_Counter, "00000");
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace NFU
                 case (int)TransferType.FTPSExplicit:
                     numericUpDownPort.Enabled = true;
                     numericUpDownPort.Value = 21;
-                    labelPassword.Text = "Password:";
+                    labelPassword.Text = Resources.CP_Password;
                     checkBoxShowPassword.Enabled = true;
                     textBoxPassword.UseSystemPasswordChar = true;
                     break;
@@ -186,7 +186,7 @@ namespace NFU
                 case (int)TransferType.SFTP:
                     numericUpDownPort.Enabled = true;
                     numericUpDownPort.Value = 22;
-                    labelPassword.Text = "Password:";
+                    labelPassword.Text = Resources.CP_Password;
                     checkBoxShowPassword.Enabled = true;
                     textBoxPassword.UseSystemPasswordChar = true;
                     break;
@@ -194,7 +194,7 @@ namespace NFU
                 case (int)TransferType.SFTPKeys:
                     numericUpDownPort.Enabled = true;
                     numericUpDownPort.Value = 22;
-                    labelPassword.Text = "Key path:";
+                    labelPassword.Text = Resources.CP_KeyPath;
                     checkBoxShowPassword.Enabled = false;
                     textBoxPassword.UseSystemPasswordChar = false;
                     break;
@@ -202,7 +202,7 @@ namespace NFU
                 case (int)TransferType.CIFS:
                     numericUpDownPort.Enabled = false;
                     numericUpDownPort.Value = 0;
-                    labelPassword.Text = "Password:";
+                    labelPassword.Text = Resources.CP_Password;
                     checkBoxShowPassword.Enabled = true;
                     textBoxPassword.UseSystemPasswordChar = true;
                     break;

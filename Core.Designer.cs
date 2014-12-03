@@ -1,4 +1,5 @@
-﻿namespace NFU
+﻿using NFU.Properties;
+namespace NFU
 {
     partial class Core
     {
@@ -66,7 +67,7 @@
             // 
             this.toolStripStatus.Name = "toolStripStatus";
             this.toolStripStatus.Size = new System.Drawing.Size(39, 17);
-            this.toolStripStatus.Text = "Ready";
+            this.toolStripStatus.Text = Resources.Core_Ready;
             // 
             // buttonFile
             // 
@@ -74,7 +75,7 @@
             this.buttonFile.Name = "buttonFile";
             this.buttonFile.Size = new System.Drawing.Size(120, 23);
             this.buttonFile.TabIndex = 0;
-            this.buttonFile.Text = "&File(s)";
+            this.buttonFile.Text = Resources.Core_ButtonFiles;
             this.buttonFile.Click += new System.EventHandler(this.ButtonFile);
             // 
             // buttonImport
@@ -83,7 +84,7 @@
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(120, 23);
             this.buttonImport.TabIndex = 2;
-            this.buttonImport.Text = "&Import";
+            this.buttonImport.Text = Resources.Core_ButtonImport;
             this.buttonImport.Click += new System.EventHandler(this.ButtonImport);
             // 
             // buttonScreenshot
@@ -92,7 +93,7 @@
             this.buttonScreenshot.Name = "buttonScreenshot";
             this.buttonScreenshot.Size = new System.Drawing.Size(124, 23);
             this.buttonScreenshot.TabIndex = 1;
-            this.buttonScreenshot.Text = "&Screenshot";
+            this.buttonScreenshot.Text = Resources.Core_ButtonScreenShot;
             this.buttonScreenshot.Click += new System.EventHandler(this.ButtonScreenshot);
             // 
             // progressUpload
@@ -105,13 +106,13 @@
             // openFileDialog
             // 
             this.openFileDialog.Multiselect = true;
-            this.openFileDialog.Title = "Choose one or more files to upload";
+            this.openFileDialog.Title = Resources.Core_FilesTitle;
             // 
             // notifyIconNFU
             // 
             this.notifyIconNFU.ContextMenuStrip = this.contextMenuMain;
             this.notifyIconNFU.Icon = global::NFU.Properties.Resources.NFU;
-            this.notifyIconNFU.Text = "NFU";
+            this.notifyIconNFU.Text = Resources.Core_NotifiyIconTitle;
             this.notifyIconNFU.Visible = true;
             this.notifyIconNFU.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIconNFUClick);
             // 
@@ -129,7 +130,7 @@
             this.reuploadScreenshotToolStripMenuItem.Enabled = false;
             this.reuploadScreenshotToolStripMenuItem.Name = "reuploadScreenshotToolStripMenuItem";
             this.reuploadScreenshotToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.reuploadScreenshotToolStripMenuItem.Text = "Reupload screenshot";
+            this.reuploadScreenshotToolStripMenuItem.Text = Resources.Core_ReUploadScreenShot;
             this.reuploadScreenshotToolStripMenuItem.Click += new System.EventHandler(this.ReuploadScreenshot);
             // 
             // toolStripSeparator
@@ -142,7 +143,7 @@
             this.exitToolStripMenuItem.Image = global::NFU.Properties.Resources.Exit;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Text = Resources.Core_Exit;
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitNFU);
             // 
             // buttonUpdate
@@ -152,7 +153,7 @@
             this.buttonUpdate.Name = "buttonUpdate";
             this.buttonUpdate.Size = new System.Drawing.Size(124, 23);
             this.buttonUpdate.TabIndex = 5;
-            this.buttonUpdate.Text = "&Update";
+            this.buttonUpdate.Text = Resources.Core_ButtonUpdate;
             this.buttonUpdate.UseVisualStyleBackColor = true;
             this.buttonUpdate.Click += new System.EventHandler(this.StartUpdate);
             // 
@@ -162,7 +163,7 @@
             this.labelUpdate.Name = "labelUpdate";
             this.labelUpdate.Size = new System.Drawing.Size(376, 13);
             this.labelUpdate.TabIndex = 4;
-            this.labelUpdate.Text = "You already have the latest version of NFU";
+            this.labelUpdate.Text = Resources.Core_LatestVersion;
             this.labelUpdate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBoxAbout
@@ -206,7 +207,7 @@
             this.MaximizeBox = false;
             this.Name = "Core";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "NFU";
+            this.Text = Resources.Core_Title;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CoreFormClosing);
             this.Shown += new System.EventHandler(this.CoreShown);
             this.Resize += new System.EventHandler(this.CoreResize);

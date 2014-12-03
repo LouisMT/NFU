@@ -40,12 +40,6 @@ namespace NFU
 
     public static class Misc
     {
-        private const int keySize = 128;
-        private const int passwordIterations = 2;
-        private const string initVector = "*lzk3&HMv7(uC&aH";
-        private const string saltValue = "[1uT@|:+k3dXmOf}2!(-Rc}*6g5eUMi9qO1{`4jgtx=5V_c-g :,S.Ica.77,_V$";
-        private const string passPhrase = "ZS9|:c3)Xkov%.Pp}1MYxX 0FphF),#5bUir6kt R_Q 8?**(b,zW{pxq$N+Khgh";
-
         [DllImport("user32.dll")]
         public static extern int SetForegroundWindow(IntPtr handle);
 
@@ -89,7 +83,7 @@ namespace NFU
 
             if (!Misc.RegisterHotKey(handle, id, 0, key))
             {
-                Misc.HandleError(new Win32Exception("RegisterHotkey failed for key " + key), "Misc.RegisterHotkey");
+                Misc.HandleError(new Win32Exception(String.Format(Resources.Misc_RegisterHotKeyFailed, key)), Resources.Misc_RegisterHotKey);
                 return false;
             }
 
@@ -118,7 +112,7 @@ namespace NFU
             try
             {
                 if (Settings.Default.Debug)
-                    File.AppendAllText(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\NFU.log",
+                    File.AppendAllText(String.Format(@"{0}\{1}", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Settings.Default.LogFileName),
                         String.Format("[{0}] [{1}] ({2}) -> {3}{4}", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), name, fatal,
                         err != null ? err.Message : "", Environment.NewLine));
             }
@@ -126,12 +120,12 @@ namespace NFU
 
             if (fatal)
             {
-                MessageBox.Show("A fatal error occured. NFU will exit.", "NFU Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Resources.Misc_FatalError, Resources.Misc_FatalErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
             else
             {
-                Program.formCore.toolStripStatus.Text = String.Format("{0} failed", name);
+                Program.formCore.toolStripStatus.Text = String.Format(Resources.Misc_Failed, name);
             }
         }
 
@@ -206,11 +200,11 @@ namespace NFU
         {
             try
             {
-                byte[] initVectorBytes = Encoding.ASCII.GetBytes(initVector);
-                byte[] saltValueBytes = Encoding.ASCII.GetBytes(saltValue);
+                byte[] initVectorBytes = Encoding.ASCII.GetBytes(Settings.Default.IV);
+                byte[] saltValueBytes = Encoding.ASCII.GetBytes(Settings.Default.SaltValue);
                 byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainPassword);
-                Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passPhrase, saltValueBytes, passwordIterations);
-                byte[] KeyBytes = password.GetBytes(keySize / 8);
+                Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(Settings.Default.PassPhrase, saltValueBytes, Settings.Default.PasswordIterations);
+                byte[] KeyBytes = password.GetBytes(Settings.Default.KeySize / 8);
                 RijndaelManaged symmetricKey = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7 };
                 ICryptoTransform encryptor = symmetricKey.CreateEncryptor(KeyBytes, initVectorBytes);
                 MemoryStream memoryStream = new MemoryStream();
@@ -226,7 +220,7 @@ namespace NFU
             }
             catch (Exception e)
             {
-                HandleError(e, "Encrypt");
+                HandleError(e, Resources.Misc_Encrypt);
                 return null;
             }
         }
@@ -240,11 +234,11 @@ namespace NFU
         {
             try
             {
-                byte[] initVectorBytes = Encoding.ASCII.GetBytes(initVector);
-                byte[] saltValueBytes = Encoding.ASCII.GetBytes(saltValue);
+                byte[] initVectorBytes = Encoding.ASCII.GetBytes(Settings.Default.IV);
+                byte[] saltValueBytes = Encoding.ASCII.GetBytes(Settings.Default.SaltValue);
                 byte[] cipherTextBytes = Convert.FromBase64String(encryptedPassword);
-                Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passPhrase, saltValueBytes, passwordIterations);
-                byte[] KeyBytes = password.GetBytes(keySize / 8);
+                Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(Settings.Default.PassPhrase, saltValueBytes, Settings.Default.PasswordIterations);
+                byte[] KeyBytes = password.GetBytes(Settings.Default.KeySize / 8);
                 RijndaelManaged symmetricKey = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7 };
                 ICryptoTransform decryptor = symmetricKey.CreateDecryptor(KeyBytes, initVectorBytes);
                 MemoryStream memoryStream = new MemoryStream(cipherTextBytes);
@@ -259,7 +253,7 @@ namespace NFU
             }
             catch (Exception e)
             {
-                HandleError(e, "Decrypt");
+                HandleError(e, Resources.Misc_Decrypt);
                 return null;
             }
         }
@@ -279,7 +273,7 @@ namespace NFU
             // Check if SSL errors occured and if certificate hash is not trusted
             if (sslPolicyErrors != SslPolicyErrors.None && Settings.Default.TrustedHash != certificate.GetCertHashString())
             {
-                if (MessageBox.Show(String.Format("Untrusted certificate!\n\nSubject:\n{0}\n\nIssuer:\n{1}\n\nHash:\n{2}\n\nContinue?", certificate.Subject, certificate.Issuer, certificate.GetCertHashString()), "Untrusted certificate", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                if (MessageBox.Show(String.Format(Resources.Misc_UntrustedCertificate, certificate.Subject, certificate.Issuer, certificate.GetCertHashString()), Resources.Misc_UntrustedCertificateTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                 {
                     Settings.Default.TrustedHash = certificate.GetCertHashString();
                     Settings.Default.Save();
