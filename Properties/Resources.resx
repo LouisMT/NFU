@@ -533,4 +533,7 @@ The download link can be found in the about box.</value>
   <data name="About_Nfu" xml:space="preserve">
     <value>NFU</value>
   </data>
+  <data name="Uploader_ZippingDirectory" xml:space="preserve">
+    <value>Zipping directory...</value>
+  </data>
 </root>

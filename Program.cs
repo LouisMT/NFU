@@ -28,6 +28,10 @@ namespace NFU
         [STAThread]
         static void Main(string[] args)
         {
+            // Uncomment the following lines to change the UI culture in order to test translations
+            //Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("nl-NL");
+            //Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("nl-NL");
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Net;
 using System.Net.Security;
 using System.Security.Principal;
@@ -17,7 +18,7 @@ namespace NFU
     {
         public static bool isBusy;
 
-        private static int currentIndex;
+        private static string currentStatus;
         private static bool uploadSuccess;
         private static BackgroundWorker uploadWorker = new BackgroundWorker();
         private static Dictionary<string, string> filesDictionary = new Dictionary<string, string>();
@@ -46,7 +47,6 @@ namespace NFU
                 return false;
 
             isBusy = true;
-            currentIndex = 1;
             uploadSuccess = true;
             filesDictionary.Clear();
             Misc.SetControlStatus(false);
@@ -96,12 +96,33 @@ namespace NFU
         /// </summary>
         static void UploadWorkerHandler(object sender, DoWorkEventArgs a)
         {
+            int currentIndex = 1;
+
             foreach (KeyValuePair<string, string> file in filesDictionary)
             {
-                bool abort = false;
+                string path, filename;
 
-                string path = file.Key;
-                string filename = file.Value;
+                if (Directory.Exists(file.Key))
+                {
+                    // This is a directory, zip it
+                    currentStatus = Resources.Uploader_ZippingDirectory;
+                    uploadWorker.ReportProgress(0);
+
+                    path = Misc.GetTempFileName(".zip");
+                    ZipFile.CreateFromDirectory(file.Key, path);
+                    filename = String.Format("{0}.zip", file.Value);
+                }
+                else
+                {
+                    // This is a file
+                    currentStatus = String.Format(Resources.Uploader_Uploading, currentIndex, filesDictionary.Count);
+                    uploadWorker.ReportProgress(0);
+
+                    path = file.Key;
+                    filename = file.Value;
+                }
+
+                bool abort = false;
 
                 switch (Settings.Default.TransferType)
                 {
@@ -302,8 +323,12 @@ namespace NFU
         /// </summary>
         static void UploadWorkerProgress(object sender, ProgressChangedEventArgs e)
         {
+            // Set the progress bar style to marquee if the progress is 0 to indicate something is happening
+            Program.formCore.progressUpload.Style = (e.ProgressPercentage == 0) ?
+                ProgressBarStyle.Marquee : ProgressBarStyle.Continuous;
+
             Program.formCore.progressUpload.Value = e.ProgressPercentage;
-            Program.formCore.toolStripStatus.Text = String.Format(Resources.Uploader_Uploading, currentIndex, filesDictionary.Count);
+            Program.formCore.toolStripStatus.Text = currentStatus;
         }
 
         /// <summary>
@@ -312,6 +337,7 @@ namespace NFU
         static void UploadWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Misc.SetControlStatus(true);
+            Program.formCore.progressUpload.Style = ProgressBarStyle.Continuous;
             Program.formCore.progressUpload.Value = 0;
 
             if (uploadSuccess)

@@ -1276,5 +1276,14 @@ namespace NFU.Properties {
                 return ResourceManager.GetString("Uploader_UploadSuccessfulTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zipping directory....
+        /// </summary>
+        internal static string Uploader_ZippingDirectory {
+            get {
+                return ResourceManager.GetString("Uploader_ZippingDirectory", resourceCulture);
+            }
+        }
     }
 }
