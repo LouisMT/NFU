@@ -1,5 +1,7 @@
 ﻿using NFU.Properties;
 using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -123,7 +125,19 @@ namespace NFU
         private void ButtonFile(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
-                Uploader.Upload(openFileDialog.FileNames);
+            {
+                List<UploadFile> uploadFiles = new List<UploadFile>();
+
+                foreach (string fileName in openFileDialog.FileNames)
+                {
+                    uploadFiles.Add(new UploadFile
+                    {
+                        Path = fileName
+                    });
+                }
+
+                Uploader.Upload(uploadFiles.ToArray());
+            }
         }
 
         /// <summary>
@@ -173,9 +187,18 @@ namespace NFU
         {
             if (Clipboard.ContainsFileDropList())
             {
-                string[] files = new string[Clipboard.GetFileDropList().Count];
-                Clipboard.GetFileDropList().CopyTo(files, 0);
-                Uploader.Upload(files);
+                StringCollection files = Clipboard.GetFileDropList();
+                List<UploadFile> uploadFiles = new List<UploadFile>();
+
+                foreach (string file in files)
+                {
+                    uploadFiles.Add(new UploadFile
+                    {
+                        Path = file
+                    });
+                }
+
+                Uploader.Upload(uploadFiles.ToArray());
             }
             else if (Clipboard.ContainsImage())
             {

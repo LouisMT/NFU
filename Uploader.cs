@@ -21,7 +21,7 @@ namespace NFU
         private static string currentStatus;
         private static bool uploadSuccess;
         private static BackgroundWorker uploadWorker = new BackgroundWorker();
-        private static Dictionary<string, string> filesDictionary = new Dictionary<string, string>();
+        private static UploadFile[] uploadFiles;
 
         /// <summary>
         /// Constructor.
@@ -39,20 +39,18 @@ namespace NFU
         /// <summary>
         /// Upload one or more files to the remote server.
         /// </summary>
-        /// <param name="paths">String array of paths to the local files.</param>
+        /// <param name="paths">UploadFile array of files to upload.</param>
         /// <returns>True on success; false on failure.</returns>
-        public static bool Upload(string[] paths)
+        public static bool Upload(UploadFile[] paths)
         {
             if (isBusy)
                 return false;
 
             isBusy = true;
             uploadSuccess = true;
-            filesDictionary.Clear();
             Misc.SetControlStatus(false);
 
-            foreach (string path in paths)
-                filesDictionary.Add(path, Misc.GetFilename(path));
+            uploadFiles = paths;
 
             uploadWorker.RunWorkerAsync();
 
@@ -66,9 +64,9 @@ namespace NFU
         /// <returns></returns>
         public static bool UploadImage(Image image)
         {
-            string Filename = Misc.GetTempFileName(".png");
-            image.Save(Filename);
-            return Uploader.Upload(new[] { Filename });
+            UploadFile file = new UploadFile(UploadFile.Type.Temporary, "png");
+            image.Save(file.Path);
+            return Uploader.Upload(new[] { file });
         }
 
         /// <summary>
@@ -78,9 +76,9 @@ namespace NFU
         /// <returns></returns>
         public static bool UploadText(string text)
         {
-            string Filename = Misc.GetTempFileName(".txt");
-            File.WriteAllText(Filename, text);
-            return Uploader.Upload(new[] { Filename });
+            UploadFile file = new UploadFile(UploadFile.Type.Temporary, "txt");
+            File.WriteAllText(file.Path, text);
+            return Uploader.Upload(new[] { file });
         }
 
         /// <summary>
@@ -98,28 +96,27 @@ namespace NFU
         {
             int currentIndex = 1;
 
-            foreach (KeyValuePair<string, string> file in filesDictionary)
+            foreach (UploadFile file in uploadFiles)
             {
-                string path, filename;
-
-                if (Directory.Exists(file.Key))
+                if (file.IsDirectory)
                 {
                     // This is a directory, zip it
                     currentStatus = Resources.Uploader_ZippingDirectory;
                     uploadWorker.ReportProgress(0);
 
-                    path = Misc.GetTempFileName(".zip");
-                    ZipFile.CreateFromDirectory(file.Key, path);
-                    filename = String.Format("{0}.zip", file.Value);
+                    string zipFileName = String.Format("{0}.zip", file.FileName);
+                    UploadFile zipFile = new UploadFile(UploadFile.Type.Temporary, "zip");
+                    ZipFile.CreateFromDirectory(file.Path, zipFile.Path);
+
+                    file.Path = zipFile.Path;
+                    file.FileName = zipFileName;
+                    file.IsTemporary = true;
                 }
                 else
                 {
                     // This is a file
-                    currentStatus = String.Format(Resources.Uploader_Uploading, currentIndex, filesDictionary.Count);
+                    currentStatus = String.Format(Resources.Uploader_Uploading, currentIndex, uploadFiles.Length);
                     uploadWorker.ReportProgress(0);
-
-                    path = file.Key;
-                    filename = file.Value;
                 }
 
                 bool abort = false;
@@ -128,14 +125,14 @@ namespace NFU
                 {
                     case (int)TransferType.FTP:
                     case (int)TransferType.FTPSExplicit:
-                        abort = UploadFTP(path, filename);
+                        abort = UploadFTP(file);
                         break;
 
                     case (int)TransferType.SFTP:
                     case (int)TransferType.SFTPKeys:
                         try
                         {
-                            abort = UploadSFTP(path, filename);
+                            abort = UploadSFTP(file);
                         }
                         catch (Exception err)
                         {
@@ -148,9 +145,11 @@ namespace NFU
                         break;
 
                     case (int)TransferType.CIFS:
-                        abort = UploadCIFS(path, filename);
+                        abort = UploadCIFS(file);
                         break;
                 }
+
+                file.DeleteIfTemporary();
 
                 if (abort)
                     break;
@@ -162,10 +161,9 @@ namespace NFU
         /// <summary>
         /// Upload a file via FTP(s).
         /// </summary>
-        /// <param name="path">The path of the local file.</param>
-        /// <param name="filename">The filename of the remote file.</param>
+        /// <param name="file">The file to upload.</param>
         /// <returns>True on failure, false on success.</returns>
-        static bool UploadFTP(string path, string filename)
+        static bool UploadFTP(UploadFile file)
         {
             try
             {
@@ -175,11 +173,11 @@ namespace NFU
 
                 if (!String.IsNullOrEmpty(Settings.Default.Directory))
                 {
-                    FTPrequest = (FtpWebRequest)WebRequest.Create(String.Format("ftp://{0}:{1}/{2}/{3}", Settings.Default.Host, Settings.Default.Port, Settings.Default.Directory, filename));
+                    FTPrequest = (FtpWebRequest)WebRequest.Create(String.Format("ftp://{0}:{1}/{2}/{3}", Settings.Default.Host, Settings.Default.Port, Settings.Default.Directory, file.FileName));
                 }
                 else
                 {
-                    FTPrequest = (FtpWebRequest)WebRequest.Create(String.Format("ftp://{0}:{1}/{2}", Settings.Default.Host, Settings.Default.Port, filename));
+                    FTPrequest = (FtpWebRequest)WebRequest.Create(String.Format("ftp://{0}:{1}/{2}", Settings.Default.Host, Settings.Default.Port, file.FileName));
                 }
 
                 if (Settings.Default.TransferType == (int)TransferType.FTPSExplicit)
@@ -193,7 +191,7 @@ namespace NFU
 
                 FTPrequest.Credentials = new NetworkCredential(Settings.Default.Username, Misc.Decrypt(Settings.Default.Password));
 
-                using (FileStream inputStream = File.OpenRead(path))
+                using (FileStream inputStream = File.OpenRead(file.Path))
                 using (Stream outputStream = FTPrequest.GetRequestStream())
                 {
                     long totalReadBytesCount = 0;
@@ -222,10 +220,9 @@ namespace NFU
         /// <summary>
         /// Upload a file via SFTP.
         /// </summary>
-        /// <param name="path">The path of the local file.</param>
-        /// <param name="filename">The filename of the remote file.</param>
+        /// <param name="file">The file to upload.</param>
         /// <returns>True on failure, false on success.</returns>
-        static bool UploadSFTP(string path, string filename)
+        static bool UploadSFTP(UploadFile file)
         {
             try
             {
@@ -240,14 +237,14 @@ namespace NFU
                     client = new SftpClient(Settings.Default.Host, Settings.Default.Port, Settings.Default.Username, Misc.Decrypt(Settings.Default.Password));
                 }
 
-                using (FileStream inputStream = new FileStream(path, FileMode.Open))
+                using (FileStream inputStream = new FileStream(file.Path, FileMode.Open))
                 using (SftpClient outputStream = client)
                 {
                     outputStream.Connect();
 
                     if (!String.IsNullOrEmpty(Settings.Default.Directory)) outputStream.ChangeDirectory(Settings.Default.Directory);
 
-                    IAsyncResult Async = outputStream.BeginUploadFile(inputStream, filename);
+                    IAsyncResult Async = outputStream.BeginUploadFile(inputStream, file.FileName);
                     SftpUploadAsyncResult SFTPAsync = Async as SftpUploadAsyncResult;
 
                     while (!SFTPAsync.IsCompleted)
@@ -274,10 +271,9 @@ namespace NFU
         /// <summary>
         /// Upload a file via CIFS.
         /// </summary>
-        /// <param name="path">The path of the local file.</param>
-        /// <param name="filename">The filename of the remote file.</param>
+        /// <param name="file">The file to upload.</param>
         /// <returns>True on failure, false on success.</returns>
-        static bool UploadCIFS(string path, string filename)
+        static bool UploadCIFS(UploadFile file)
         {
             try
             {
@@ -287,10 +283,10 @@ namespace NFU
                 Misc.LogonUser(Settings.Default.Username, Resources.Uploader_Nfu, Misc.Decrypt(Settings.Default.Password), 9, 0, ref Token);
                 WindowsIdentity Identity = new WindowsIdentity(Token);
 
-                string DestPath = (!String.IsNullOrEmpty(Settings.Default.Directory)) ? String.Format(@"\\{0}\{1}\{2}", Settings.Default.Host, Settings.Default.Directory, filename) : String.Format(@"\\{0}\{1}", Settings.Default.Host, filename);
+                string DestPath = (!String.IsNullOrEmpty(Settings.Default.Directory)) ? String.Format(@"\\{0}\{1}\{2}", Settings.Default.Host, Settings.Default.Directory, file.FileName) : String.Format(@"\\{0}\{1}", Settings.Default.Host, file.FileName);
 
                 using (Identity.Impersonate())
-                using (FileStream inputStream = new FileStream(path, FileMode.Open, FileAccess.Read))
+                using (FileStream inputStream = new FileStream(file.Path, FileMode.Open, FileAccess.Read))
                 using (FileStream outputStream = new FileStream(DestPath, FileMode.CreateNew, FileAccess.Write))
                 {
                     long FileLength = inputStream.Length;
@@ -347,8 +343,8 @@ namespace NFU
 
                 List<string> clipboard = new List<string>();
 
-                foreach (KeyValuePair<string, string> file in filesDictionary)
-                    clipboard.Add(Settings.Default.URL + file.Value);
+                foreach (UploadFile file in uploadFiles)
+                    clipboard.Add(Settings.Default.URL + file.FileName);
 
                 Clipboard.SetText(String.Join(Environment.NewLine, clipboard));
             }

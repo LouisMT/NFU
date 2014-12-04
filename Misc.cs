@@ -158,16 +158,6 @@ namespace NFU
         }
 
         /// <summary>
-        /// Get a path to a temporary file.
-        /// </summary>
-        /// <param name="extension">The extension of the temporary file.</param>
-        /// <returns></returns>
-        public static string GetTempFileName(string extension)
-        {
-            return String.Format("{0}{1}", Path.GetTempFileName(), extension);
-        }
-
-        /// <summary>
         /// Enable or disable all controls except progressUpload on CoreForm.
         /// </summary>
         /// <param name="status">True to enable, false to disable.</param>

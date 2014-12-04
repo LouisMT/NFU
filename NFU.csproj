@@ -102,6 +102,7 @@
     <Compile Include="Snipper.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="UploadFile.cs" />
     <Compile Include="Uploader.cs" />
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
