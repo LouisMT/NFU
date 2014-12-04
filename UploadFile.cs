@@ -10,9 +10,7 @@ namespace NFU
     public class UploadFile
     {
         private string path;
-        private string fileName;
         private bool isDirectory;
-        private bool isTemporary;
 
         public enum Type
         {
@@ -33,7 +31,7 @@ namespace NFU
                     Path = String.Format("{0}.{1}", System.IO.Path.GetTempFileName(), extension);
                 }
 
-                isTemporary = true;
+                IsTemporary = true;
             }
         }
 
@@ -46,21 +44,15 @@ namespace NFU
             set
             {
                 path = value;
-                fileName = Misc.GetFilename(path);
+                FileName = Misc.GetFilename(path);
                 isDirectory = Directory.Exists(path);
             }
         }
 
         public string FileName
         {
-            get
-            {
-                return fileName;
-            }
-            set
-            {
-                fileName = value;
-            }
+            get;
+            set;
         }
 
         public bool IsDirectory
@@ -76,19 +68,13 @@ namespace NFU
         /// </summary>
         public bool IsTemporary
         {
-            get
-            {
-                return isTemporary;
-            }
-            set
-            {
-                isTemporary = value;
-            }
+            get;
+            set;
         }
 
         public void DeleteIfTemporary()
         {
-            if (isTemporary)
+            if (IsTemporary)
             {
                 try
                 {

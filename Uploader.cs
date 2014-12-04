@@ -100,7 +100,7 @@ namespace NFU
             {
                 if (file.IsDirectory)
                 {
-                    // This is a directory, zip it
+                    // This is a directory, zip it first
                     currentStatus = Resources.Uploader_ZippingDirectory;
                     uploadWorker.ReportProgress(0);
 
@@ -112,12 +112,9 @@ namespace NFU
                     file.FileName = zipFileName;
                     file.IsTemporary = true;
                 }
-                else
-                {
-                    // This is a file
-                    currentStatus = String.Format(Resources.Uploader_Uploading, currentIndex, uploadFiles.Length);
-                    uploadWorker.ReportProgress(0);
-                }
+
+                currentStatus = String.Format(Resources.Uploader_Uploading, currentIndex, uploadFiles.Length);
+                uploadWorker.ReportProgress(0);
 
                 bool abort = false;
 
