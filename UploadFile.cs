@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using IOPath = System.IO.Path;
 
 namespace NFU
 {
@@ -18,13 +19,8 @@ namespace NFU
         {
             if (type == Type.Temporary)
             {
-                Path = System.IO.Path.GetTempFileName();
-
-                if (extension != null)
-                {
-                    FileName = String.Format("{0}.{1}", FileName, extension);
-                }
-
+                Path = IOPath.GetTempFileName();
+                FileName = IOPath.ChangeExtension(FileName, extension);
                 IsTemporary = true;
             }
         }
