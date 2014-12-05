@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NFU
 {
@@ -18,17 +14,15 @@ namespace NFU
             Temporary
         }
 
-        public UploadFile(Type uploadFileType = Type.Normal, string extension = null)
+        public UploadFile(Type type = Type.Normal, string extension = null)
         {
-            if (uploadFileType == Type.Temporary)
+            if (type == Type.Temporary)
             {
-                if (extension == null)
+                Path = System.IO.Path.GetTempFileName();
+
+                if (extension != null)
                 {
-                    Path = System.IO.Path.GetTempFileName();
-                }
-                else
-                {
-                    Path = String.Format("{0}.{1}", System.IO.Path.GetTempFileName(), extension);
+                    FileName = String.Format("{0}.{1}", FileName, extension);
                 }
 
                 IsTemporary = true;

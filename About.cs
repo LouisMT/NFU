@@ -88,8 +88,15 @@ namespace NFU
         {
             string filename = String.Format(@"{0}\{1}", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Settings.Default.LogFileName);
 
-            if (File.Exists(filename)) Process.Start(filename); else MessageBox.Show(Resources.About_LogFileNotFound,
-                Resources.About_LogFileNotFoundTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (File.Exists(filename))
+            {
+                Process.Start(filename);
+            }
+            else
+            {
+                MessageBox.Show(Resources.About_LogFileNotFound,
+                    Resources.About_LogFileNotFoundTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         /// <summary>
