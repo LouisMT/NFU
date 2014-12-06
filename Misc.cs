@@ -125,8 +125,19 @@ namespace NFU
             }
             else
             {
-                Program.formCore.toolStripStatus.Text = String.Format(Resources.Misc_Failed, name);
+                Program.formCore.toolStripStatus.Text = HandleErrorStatusText(name);
             }
+        }
+
+
+        /// <summary>
+        /// Get the error text for the status bar.
+        /// </summary>
+        /// <param name="name">The name of the error.</param>
+        /// <returns>The error text.</returns>
+        public static string HandleErrorStatusText(string name)
+        {
+            return String.Format(Resources.Misc_Failed, name);
         }
 
         /// <summary>

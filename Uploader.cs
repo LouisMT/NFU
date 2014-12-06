@@ -1,4 +1,5 @@
-﻿using NFU.Properties;
+﻿using NFU.Models;
+using NFU.Properties;
 using Renci.SshNet;
 using Renci.SshNet.Sftp;
 using System;
@@ -10,6 +11,7 @@ using System.IO.Compression;
 using System.Net;
 using System.Net.Security;
 using System.Security.Principal;
+using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
 namespace NFU
@@ -18,10 +20,10 @@ namespace NFU
     {
         public static bool isBusy;
 
+        private static string uploadStatus;
         private static string currentStatus;
-        private static bool uploadSuccess;
-        private static BackgroundWorker uploadWorker = new BackgroundWorker();
         private static UploadFile[] uploadFiles;
+        private static BackgroundWorker uploadWorker = new BackgroundWorker();
 
         /// <summary>
         /// Constructor.
@@ -47,7 +49,7 @@ namespace NFU
                 return false;
 
             isBusy = true;
-            uploadSuccess = true;
+            uploadStatus = Resources.Uploader_UploadSuccessfulStatus;
             Misc.SetControlStatus(false);
 
             uploadFiles = paths;
@@ -95,6 +97,7 @@ namespace NFU
         static void UploadWorkerHandler(object sender, DoWorkEventArgs a)
         {
             int currentIndex = 1;
+            bool abort = false;
 
             foreach (UploadFile file in uploadFiles)
             {
@@ -116,8 +119,6 @@ namespace NFU
                 currentStatus = String.Format(Resources.Uploader_Uploading, currentIndex, uploadFiles.Length);
                 uploadWorker.ReportProgress(0);
 
-                bool abort = false;
-
                 switch (Settings.Default.TransferType)
                 {
                     case (int)TransferType.FTP:
@@ -135,7 +136,7 @@ namespace NFU
                         {
                             MessageBox.Show(Resources.Uploader_SshNetMissing, Resources.Uploader_SshNetMissingTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                            uploadSuccess = false;
+                            uploadStatus = Misc.HandleErrorStatusText(Resources.Uploader_Sftp);
                             Misc.HandleError(err, Resources.Uploader_Sftp);
                             abort = true;
                         }
@@ -152,6 +153,52 @@ namespace NFU
                     break;
 
                 currentIndex++;
+            }
+
+            SendWebHookPayload(!abort);
+        }
+
+        /// <summary>
+        /// Send the WebHook payload if WebHook is enabled.
+        /// </summary>
+        /// <param name="success">True if all files were uploaded successfully, otherwise false.</param>
+        static void SendWebHookPayload(bool success)
+        {
+            if (Settings.Default.EnableWebHook)
+            {
+                currentStatus = Resources.Uploader_SendingWebHook;
+                uploadWorker.ReportProgress(0);
+
+                using (WebClient webClient = new WebClient())
+                {
+                    JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
+
+                    WebHook webHook = new WebHook
+                    {
+                        Success = success,
+                        Directory = Settings.Default.Directory
+                    };
+
+                    foreach (UploadFile file in uploadFiles)
+                    {
+                        webHook.Files.Add(new WebHookFile
+                        {
+                            FileName = file.FileName,
+                            IsDirectory = file.IsDirectory
+                        });
+                    }
+
+                    try
+                    {
+                        webClient.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+                        webClient.UploadString(new Uri(Settings.Default.WebHookUrl), "POST", javaScriptSerializer.Serialize(webHook));
+                    }
+                    catch (Exception e)
+                    {
+                        uploadStatus = String.Format(Resources.Uploader_WebHookFailed, uploadStatus);
+                        Misc.HandleError(e, "WebHook");
+                    }
+                }
             }
         }
 
@@ -208,7 +255,7 @@ namespace NFU
             }
             catch (Exception e)
             {
-                uploadSuccess = false;
+                uploadStatus = Misc.HandleErrorStatusText(Resources.Uploader_Ftps);
                 Misc.HandleError(e, Resources.Uploader_Ftps);
                 return true;
             }
@@ -258,7 +305,7 @@ namespace NFU
             }
             catch (Exception e)
             {
-                uploadSuccess = false;
+                uploadStatus = Misc.HandleErrorStatusText(Resources.Uploader_Sftp);
                 Misc.HandleError(e, Resources.CP_Sftp);
                 return true;
             }
@@ -305,7 +352,7 @@ namespace NFU
             }
             catch (Exception e)
             {
-                uploadSuccess = false;
+                uploadStatus = Misc.HandleErrorStatusText(Resources.Uploader_Cifs);
                 Misc.HandleError(e, Resources.Uploader_Cifs);
                 return true;
             }
@@ -330,13 +377,15 @@ namespace NFU
         static void UploadWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Misc.SetControlStatus(true);
+
             Program.formCore.progressUpload.Style = ProgressBarStyle.Continuous;
             Program.formCore.progressUpload.Value = 0;
 
-            if (uploadSuccess)
+            Program.formCore.toolStripStatus.Text = uploadStatus;
+
+            if (uploadStatus == Resources.Uploader_UploadSuccessfulStatus)
             {
                 Misc.ShowInfo(Resources.Uploader_UploadSuccessfulTitle, Resources.Uploader_UploadSuccessful);
-                Program.formCore.toolStripStatus.Text = Resources.Uploader_UploadSuccessfulStatus;
 
                 List<string> clipboard = new List<string>();
 

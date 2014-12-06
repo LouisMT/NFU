@@ -352,5 +352,29 @@ namespace NFU.Properties {
                 return ((int)(this["PasswordIterations"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableWebHook {
+            get {
+                return ((bool)(this["EnableWebHook"]));
+            }
+            set {
+                this["EnableWebHook"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WebHookUrl {
+            get {
+                return ((string)(this["WebHookUrl"]));
+            }
+            set {
+                this["WebHookUrl"] = value;
+            }
+        }
     }
 }

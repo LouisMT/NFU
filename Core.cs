@@ -1,4 +1,5 @@
-﻿using NFU.Properties;
+﻿using NFU.Models;
+using NFU.Properties;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -13,7 +14,6 @@ namespace NFU
 {
     public partial class Core : Form
     {
-        private WebClient updateClient = new WebClient();
         private Image screenshot;
 
         /// <summary>
@@ -246,13 +246,16 @@ namespace NFU
         {
             try
             {
-                string latestVersion = await updateClient.DownloadStringTaskAsync(new Uri(Settings.Default.VersionUrl));
-
-                if (latestVersion != Application.ProductVersion)
+                using (WebClient updateClient = new WebClient())
                 {
-                    buttonUpdate.Enabled = true;
-                    labelUpdate.Text = Resources.Core_NewVersion;
-                    Misc.ShowInfo(Resources.Core_UpdateAvailableTitle, Resources.Core_UpdateAvailable);
+                    string latestVersion = await updateClient.DownloadStringTaskAsync(new Uri(Settings.Default.VersionUrl));
+
+                    if (latestVersion != Application.ProductVersion)
+                    {
+                        buttonUpdate.Enabled = true;
+                        labelUpdate.Text = Resources.Core_NewVersion;
+                        Misc.ShowInfo(Resources.Core_UpdateAvailableTitle, Resources.Core_UpdateAvailable);
+                    }
                 }
             }
             catch (Exception err)
@@ -271,9 +274,13 @@ namespace NFU
                 string tempNFU = Path.GetTempFileName();
                 string tempCMD = Path.GetTempFileName() + ".cmd";
 
-                updateClient.DownloadFile(Settings.Default.ExecutableUrl, tempNFU);
-                File.WriteAllText(tempCMD, String.Format("@ECHO OFF{3}TITLE {0}{3}ECHO {1}{3}TIMEOUT /T 5{3}ECHO." +
-                    "{3}ECHO {2}{3}COPY /B /Y \"{4}\" \"{5}\"{3}START \"\" \"{5}\"", Resources.Core_UpdateTitle, Resources.Core_WaitingToExit, Resources.Core_Updating, Environment.NewLine, tempNFU, Application.ExecutablePath));
+                using (WebClient updateClient = new WebClient())
+                {
+                    updateClient.DownloadFile(Settings.Default.ExecutableUrl, tempNFU);
+                }
+
+                File.WriteAllText(tempCMD, String.Format("@ECHO OFF{3}TITLE {0}{3}ECHO {1}{3}TIMEOUT /T 5{3}ECHO.{3}ECHO {2}{3}COPY /B /Y \"{4}\" \"{5}\"{3}START \"\" \"{5}\"",
+                    Resources.Core_UpdateTitle, Resources.Core_WaitingToExit, Resources.Core_Updating, Environment.NewLine, tempNFU, Application.ExecutablePath));
 
                 ProcessStartInfo startInfo = new ProcessStartInfo();
 

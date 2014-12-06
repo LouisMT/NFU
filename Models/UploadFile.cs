@@ -2,7 +2,7 @@
 using System.IO;
 using IOPath = System.IO.Path;
 
-namespace NFU
+namespace NFU.Models
 {
     public class UploadFile
     {

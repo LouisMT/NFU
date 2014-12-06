@@ -536,4 +536,16 @@ The download link can be found in the about box.</value>
   <data name="Uploader_ZippingDirectory" xml:space="preserve">
     <value>Zipping directory...</value>
   </data>
+  <data name="CP_EnableWebHook" xml:space="preserve">
+    <value>Enable WebHook</value>
+  </data>
+  <data name="CP_WebHook" xml:space="preserve">
+    <value>WebHook</value>
+  </data>
+  <data name="Uploader_SendingWebHook" xml:space="preserve">
+    <value>Sending WebHook payload...</value>
+  </data>
+  <data name="Uploader_WebHookFailed" xml:space="preserve">
+    <value>{0} (WebHook failed)</value>
+  </data>
 </root>

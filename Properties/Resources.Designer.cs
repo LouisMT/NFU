@@ -658,6 +658,15 @@ namespace NFU.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable WebHook.
+        /// </summary>
+        internal static string CP_EnableWebHook {
+            get {
+                return ResourceManager.GetString("CP_EnableWebHook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FTP.
         /// </summary>
         internal static string CP_Ftp {
@@ -991,6 +1000,15 @@ namespace NFU.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to WebHook.
+        /// </summary>
+        internal static string CP_WebHook {
+            get {
+                return ResourceManager.GetString("CP_WebHook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Exit {
@@ -1195,6 +1213,15 @@ namespace NFU.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sending WebHook payload....
+        /// </summary>
+        internal static string Uploader_SendingWebHook {
+            get {
+                return ResourceManager.GetString("Uploader_SendingWebHook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SFTP.
         /// </summary>
         internal static string Uploader_Sftp {
@@ -1274,6 +1301,15 @@ namespace NFU.Properties {
         internal static string Uploader_UploadSuccessfulTitle {
             get {
                 return ResourceManager.GetString("Uploader_UploadSuccessfulTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} (WebHook failed).
+        /// </summary>
+        internal static string Uploader_WebHookFailed {
+            get {
+                return ResourceManager.GetString("Uploader_WebHookFailed", resourceCulture);
             }
         }
         
