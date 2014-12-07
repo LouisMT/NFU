@@ -112,7 +112,7 @@ namespace NFU
 
                     // Delete the temporary file first, because ZipFile.CreateFromDirectory
                     // can't write to an existing file
-                    zipFile.DeleteIfTemporary();
+                    File.Delete(zipFile.Path);
                     ZipFile.CreateFromDirectory(file.Path, zipFile.Path);
 
                     file.Path = zipFile.Path;
@@ -123,6 +123,8 @@ namespace NFU
 
                 _currentStatus = String.Format(Resources.Uploader_Uploading, currentIndex, _uploadFiles.Length);
                 UploadWorker.ReportProgress(0);
+
+                file.BeforeUpload();
 
                 switch (Settings.Default.TransferType)
                 {
@@ -152,7 +154,7 @@ namespace NFU
                         break;
                 }
 
-                file.DeleteIfTemporary();
+                file.AfterUpload();
 
                 if (abort)
                     break;

@@ -37,7 +37,7 @@ namespace NFU.Models
             set
             {
                 _path = value;
-                FileName = Misc.GetFilename(_path);
+                FileName = IOPath.GetFileName(_path);
                 IsDirectory = Directory.Exists(_path);
             }
         }
@@ -71,10 +71,19 @@ namespace NFU.Models
         }
 
         /// <summary>
-        /// Delete this file if it is temporary.
+        /// Things that have to be done before uploading this file.
         /// </summary>
-        public void DeleteIfTemporary()
+        public void BeforeUpload()
         {
+            FileName = Misc.GetRemoteFileName(FileName);
+        }
+
+        /// <summary>
+        /// Things that have to be done after uploading this file.
+        /// </summary>
+        public void AfterUpload()
+        {
+            // Delete this file if it is temporary
             if (IsTemporary)
             {
                 try

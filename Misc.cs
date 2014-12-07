@@ -149,31 +149,30 @@ namespace NFU
         }
 
         /// <summary>
-        /// Get the remote filename.
+        /// Get the remote file name.
+        /// This will remove unsafe characters and increaste the upload count.
         /// </summary>
-        /// <param name="path">The path to the local file.</param>
+        /// <param name="filename">The file name.</param>
         /// <returns>The remote filename.</returns>
-        public static string GetFilename(string path)
+        public static string GetRemoteFileName(string filename)
         {
-            path = Path.GetFileName(path);
-
             switch (Settings.Default.Filename)
             {
                 case 0:
-                    path = Regex.Replace(path.Replace(' ', '_'), "[^a-zA-Z_\\.]*$", String.Empty).Trim();
+                    filename = Regex.Replace(filename.Replace(' ', '_'), "[^a-zA-Z_\\.]*$", String.Empty).Trim();
                     break;
 
                 case 1:
                     if (Settings.Default.Count == 99999)
                         Settings.Default.Count = 0;
 
-                    path = String.Format("{0}-{1}{2}", DateTime.Now.ToString("ddMMyyyy"), (++Settings.Default.Count).ToString("D5"), Path.GetExtension(path));
+                    filename = String.Format("{0}-{1}{2}", DateTime.Now.ToString("ddMMyyyy"), (++Settings.Default.Count).ToString("D5"), Path.GetExtension(filename));
 
                     Settings.Default.Save();
                     break;
             }
 
-            return path;
+            return filename;
         }
 
         /// <summary>
