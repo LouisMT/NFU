@@ -61,6 +61,10 @@ namespace NFU
                     labelUpdate.Text = Resources.Core_NewVersion;
                     Misc.ShowInfo(Resources.Core_UpdateAvailableTitle, Resources.Core_UpdateAvailable);
                 }
+                else
+                {
+                    labelUpdate.Text = Resources.Core_LatestVersion;
+                }
             }, taskScheduler);
         }
 
