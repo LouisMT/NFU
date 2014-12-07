@@ -5,23 +5,31 @@ using IOPath = System.IO.Path;
 
 namespace NFU.Models
 {
+    public enum FileState
+    {
+        Normal,
+        Temporary
+    }
+
+    public enum FileType
+    {
+        File,
+        Directory,
+        ZippedDirectory
+    }
+
     public class UploadFile
     {
         private string _path;
 
-        public enum Type
+        public UploadFile(FileState state = FileState.Normal, string extension = null)
         {
-            Normal,
-            Temporary
-        }
+            State = state;
 
-        public UploadFile(Type type = Type.Normal, string extension = null)
-        {
-            if (type == Type.Temporary)
+            if (state == FileState.Temporary)
             {
                 Path = IOPath.GetTempFileName();
                 FileName = IOPath.ChangeExtension(FileName, extension);
-                IsTemporary = true;
             }
         }
 
@@ -38,7 +46,7 @@ namespace NFU.Models
             {
                 _path = value;
                 FileName = IOPath.GetFileName(_path);
-                IsDirectory = Directory.Exists(_path);
+                Type = Directory.Exists(_path) ? FileType.Directory : FileType.File;
             }
         }
 
@@ -52,19 +60,18 @@ namespace NFU.Models
         }
 
         /// <summary>
-        /// Indicates if this file is a directory or a zipped directory.
+        /// The sstate of this file.
         /// </summary>
-        public bool IsDirectory
+        public FileState State
         {
             get;
             set;
         }
 
         /// <summary>
-        /// Indicates if this file is temporary.
-        /// Temporary files will be deleted after uploading.
+        /// The type of this file.
         /// </summary>
-        public bool IsTemporary
+        public FileType Type
         {
             get;
             set;
@@ -84,7 +91,7 @@ namespace NFU.Models
         public void AfterUpload()
         {
             // Delete this file if it is temporary
-            if (IsTemporary)
+            if (State == FileState.Temporary)
             {
                 try
                 {

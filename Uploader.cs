@@ -66,7 +66,7 @@ namespace NFU
         /// <returns></returns>
         public static bool UploadImage(Image image)
         {
-            UploadFile file = new UploadFile(UploadFile.Type.Temporary, "png");
+            UploadFile file = new UploadFile(FileState.Temporary, "png");
             image.Save(file.Path);
             return Upload(new[] { file });
         }
@@ -78,7 +78,7 @@ namespace NFU
         /// <returns></returns>
         public static bool UploadText(string text)
         {
-            UploadFile file = new UploadFile(UploadFile.Type.Temporary, "txt");
+            UploadFile file = new UploadFile(FileState.Temporary, "txt");
             File.WriteAllText(file.Path, text);
             return Upload(new[] { file });
         }
@@ -101,14 +101,14 @@ namespace NFU
 
             foreach (UploadFile file in _uploadFiles)
             {
-                if (file.IsDirectory)
+                if (file.Type == FileType.Directory)
                 {
                     // This is a directory, zip it first
                     _currentStatus = Resources.Uploader_ZippingDirectory;
                     UploadWorker.ReportProgress(0);
 
                     string zipFileName = String.Format("{0}.zip", file.FileName);
-                    UploadFile zipFile = new UploadFile(UploadFile.Type.Temporary, "zip");
+                    UploadFile zipFile = new UploadFile(FileState.Temporary, "zip");
 
                     // Delete the temporary file first, because ZipFile.CreateFromDirectory
                     // can't write to an existing file
@@ -117,8 +117,8 @@ namespace NFU
 
                     file.Path = zipFile.Path;
                     file.FileName = zipFileName;
-                    file.IsTemporary = true;
-                    file.IsDirectory = true;
+                    file.State = FileState.Temporary;
+                    file.Type = FileType.ZippedDirectory;
                 }
 
                 _currentStatus = String.Format(Resources.Uploader_Uploading, currentIndex, _uploadFiles.Length);
@@ -189,7 +189,7 @@ namespace NFU
                     webHook.Files.Add(new WebHookFile
                     {
                         FileName = file.FileName,
-                        IsDirectory = file.IsDirectory
+                        IsDirectory = (file.Type == FileType.ZippedDirectory)
                     });
                 }
 
@@ -203,7 +203,7 @@ namespace NFU
                     catch (Exception e)
                     {
                         _uploadStatus = String.Format(Resources.Uploader_WebHookFailed, _uploadStatus);
-                        Misc.HandleError(e, "WebHook");
+                        Misc.HandleError(e, Resources.CP_WebHook);
                     }
                 }
             }
