@@ -8,8 +8,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
-using System.Net.Security;
 using System.Security.Principal;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
@@ -18,24 +18,24 @@ namespace NFU
 {
     public static class Uploader
     {
-        public static bool isBusy;
+        public static bool IsBusy;
 
-        private static string uploadStatus;
-        private static string currentStatus;
-        private static UploadFile[] uploadFiles;
-        private static BackgroundWorker uploadWorker = new BackgroundWorker();
+        private static string _uploadStatus;
+        private static string _currentStatus;
+        private static UploadFile[] _uploadFiles;
+        private static readonly BackgroundWorker UploadWorker = new BackgroundWorker();
 
         /// <summary>
         /// Constructor.
         /// </summary>
         static Uploader()
         {
-            uploadWorker.WorkerReportsProgress = true;
-            uploadWorker.WorkerSupportsCancellation = true;
+            UploadWorker.WorkerReportsProgress = true;
+            UploadWorker.WorkerSupportsCancellation = true;
 
-            uploadWorker.DoWork += UploadWorkerHandler;
-            uploadWorker.ProgressChanged += UploadWorkerProgress;
-            uploadWorker.RunWorkerCompleted += UploadWorkerCompleted;
+            UploadWorker.DoWork += UploadWorkerHandler;
+            UploadWorker.ProgressChanged += UploadWorkerProgress;
+            UploadWorker.RunWorkerCompleted += UploadWorkerCompleted;
         }
 
         /// <summary>
@@ -45,16 +45,16 @@ namespace NFU
         /// <returns>True on success; false on failure.</returns>
         public static bool Upload(UploadFile[] paths)
         {
-            if (isBusy)
+            if (IsBusy)
                 return false;
 
-            isBusy = true;
-            uploadStatus = Resources.Uploader_UploadSuccessfulStatus;
+            IsBusy = true;
+            _uploadStatus = Resources.Uploader_UploadSuccessfulStatus;
             Misc.SetControlStatus(false);
 
-            uploadFiles = paths;
+            _uploadFiles = paths;
 
-            uploadWorker.RunWorkerAsync();
+            UploadWorker.RunWorkerAsync();
 
             return true;
         }
@@ -68,19 +68,19 @@ namespace NFU
         {
             UploadFile file = new UploadFile(UploadFile.Type.Temporary, "png");
             image.Save(file.Path);
-            return Uploader.Upload(new[] { file });
+            return Upload(new[] { file });
         }
 
         /// <summary>
         /// Upload a textfile.
         /// </summary>
-        /// <param name="Text">The text.</param>
+        /// <param name="text">The text.</param>
         /// <returns></returns>
         public static bool UploadText(string text)
         {
             UploadFile file = new UploadFile(UploadFile.Type.Temporary, "txt");
             File.WriteAllText(file.Path, text);
-            return Uploader.Upload(new[] { file });
+            return Upload(new[] { file });
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace NFU
         /// </summary>
         public static void Cancel()
         {
-            uploadWorker.CancelAsync();
+            UploadWorker.CancelAsync();
         }
 
         /// <summary>
@@ -99,13 +99,13 @@ namespace NFU
             int currentIndex = 1;
             bool abort = false;
 
-            foreach (UploadFile file in uploadFiles)
+            foreach (UploadFile file in _uploadFiles)
             {
                 if (file.IsDirectory)
                 {
                     // This is a directory, zip it first
-                    currentStatus = Resources.Uploader_ZippingDirectory;
-                    uploadWorker.ReportProgress(0);
+                    _currentStatus = Resources.Uploader_ZippingDirectory;
+                    UploadWorker.ReportProgress(0);
 
                     string zipFileName = String.Format("{0}.zip", file.FileName);
                     UploadFile zipFile = new UploadFile(UploadFile.Type.Temporary, "zip");
@@ -121,34 +121,34 @@ namespace NFU
                     file.IsDirectory = true;
                 }
 
-                currentStatus = String.Format(Resources.Uploader_Uploading, currentIndex, uploadFiles.Length);
-                uploadWorker.ReportProgress(0);
+                _currentStatus = String.Format(Resources.Uploader_Uploading, currentIndex, _uploadFiles.Length);
+                UploadWorker.ReportProgress(0);
 
                 switch (Settings.Default.TransferType)
                 {
-                    case (int)TransferType.FTP:
-                    case (int)TransferType.FTPSExplicit:
-                        abort = UploadFTP(file);
+                    case (int)TransferType.Ftp:
+                    case (int)TransferType.FtpsExplicit:
+                        abort = UploadFtp(file);
                         break;
 
-                    case (int)TransferType.SFTP:
-                    case (int)TransferType.SFTPKeys:
+                    case (int)TransferType.Sftp:
+                    case (int)TransferType.SftpKeys:
                         try
                         {
-                            abort = UploadSFTP(file);
+                            abort = UploadSftp(file);
                         }
                         catch (Exception err)
                         {
                             MessageBox.Show(Resources.Uploader_SshNetMissing, Resources.Uploader_SshNetMissingTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                            uploadStatus = Misc.HandleErrorStatusText(Resources.Uploader_Sftp);
+                            _uploadStatus = Misc.HandleErrorStatusText(Resources.Uploader_Sftp);
                             Misc.HandleError(err, Resources.Uploader_Sftp);
                             abort = true;
                         }
                         break;
 
-                    case (int)TransferType.CIFS:
-                        abort = UploadCIFS(file);
+                    case (int)TransferType.Cifs:
+                        abort = UploadCifs(file);
                         break;
                 }
 
@@ -171,8 +171,8 @@ namespace NFU
         {
             if (Settings.Default.EnableWebHook)
             {
-                currentStatus = Resources.Uploader_SendingWebHook;
-                uploadWorker.ReportProgress(0);
+                _currentStatus = Resources.Uploader_SendingWebHook;
+                UploadWorker.ReportProgress(0);
 
                 JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
 
@@ -182,7 +182,7 @@ namespace NFU
                     Directory = Settings.Default.Directory
                 };
 
-                foreach (UploadFile file in uploadFiles)
+                foreach (UploadFile file in _uploadFiles)
                 {
                     webHook.Files.Add(new WebHookFile
                     {
@@ -200,7 +200,7 @@ namespace NFU
                     }
                     catch (Exception e)
                     {
-                        uploadStatus = String.Format(Resources.Uploader_WebHookFailed, uploadStatus);
+                        _uploadStatus = String.Format(Resources.Uploader_WebHookFailed, _uploadStatus);
                         Misc.HandleError(e, "WebHook");
                     }
                 }
@@ -212,47 +212,47 @@ namespace NFU
         /// </summary>
         /// <param name="file">The file to upload.</param>
         /// <returns>True on failure, false on success.</returns>
-        static bool UploadFTP(UploadFile file)
+        static bool UploadFtp(UploadFile file)
         {
             try
             {
-                byte[] Buffer = new byte[1024 * 10];
+                byte[] buffer = new byte[1024 * 10];
 
-                FtpWebRequest FTPrequest;
+                FtpWebRequest ftpRequest;
 
                 if (!String.IsNullOrEmpty(Settings.Default.Directory))
                 {
-                    FTPrequest = (FtpWebRequest)WebRequest.Create(String.Format("ftp://{0}:{1}/{2}/{3}", Settings.Default.Host, Settings.Default.Port, Settings.Default.Directory, file.FileName));
+                    ftpRequest = (FtpWebRequest)WebRequest.Create(String.Format("ftp://{0}:{1}/{2}/{3}", Settings.Default.Host, Settings.Default.Port, Settings.Default.Directory, file.FileName));
                 }
                 else
                 {
-                    FTPrequest = (FtpWebRequest)WebRequest.Create(String.Format("ftp://{0}:{1}/{2}", Settings.Default.Host, Settings.Default.Port, file.FileName));
+                    ftpRequest = (FtpWebRequest)WebRequest.Create(String.Format("ftp://{0}:{1}/{2}", Settings.Default.Host, Settings.Default.Port, file.FileName));
                 }
 
-                if (Settings.Default.TransferType == (int)TransferType.FTPSExplicit)
+                if (Settings.Default.TransferType == (int)TransferType.FtpsExplicit)
                 {
-                    FTPrequest.EnableSsl = true;
-                    ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(Misc.ValidateServerCertificate);
+                    ftpRequest.EnableSsl = true;
+                    ServicePointManager.ServerCertificateValidationCallback = Misc.ValidateServerCertificate;
                 }
 
-                FTPrequest.KeepAlive = false;
-                FTPrequest.Method = WebRequestMethods.Ftp.UploadFile;
+                ftpRequest.KeepAlive = false;
+                ftpRequest.Method = WebRequestMethods.Ftp.UploadFile;
 
-                FTPrequest.Credentials = new NetworkCredential(Settings.Default.Username, Misc.Decrypt(Settings.Default.Password));
+                ftpRequest.Credentials = new NetworkCredential(Settings.Default.Username, Misc.Decrypt(Settings.Default.Password));
 
                 using (FileStream inputStream = File.OpenRead(file.Path))
-                using (Stream outputStream = FTPrequest.GetRequestStream())
+                using (Stream outputStream = ftpRequest.GetRequestStream())
                 {
                     long totalReadBytesCount = 0;
                     int readBytesCount;
-                    while ((readBytesCount = inputStream.Read(Buffer, 0, Buffer.Length)) > 0)
+                    while ((readBytesCount = inputStream.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        if (uploadWorker.CancellationPending) return true;
+                        if (UploadWorker.CancellationPending) return true;
 
-                        outputStream.Write(Buffer, 0, readBytesCount);
+                        outputStream.Write(buffer, 0, readBytesCount);
                         totalReadBytesCount += readBytesCount;
 
-                        uploadWorker.ReportProgress((int)(totalReadBytesCount * 100 / inputStream.Length));
+                        UploadWorker.ReportProgress((int)(totalReadBytesCount * 100 / inputStream.Length));
                     }
                 }
 
@@ -260,7 +260,7 @@ namespace NFU
             }
             catch (Exception e)
             {
-                uploadStatus = Misc.HandleErrorStatusText(Resources.Uploader_Ftps);
+                _uploadStatus = Misc.HandleErrorStatusText(Resources.Uploader_Ftps);
                 Misc.HandleError(e, Resources.Uploader_Ftps);
                 return true;
             }
@@ -271,13 +271,13 @@ namespace NFU
         /// </summary>
         /// <param name="file">The file to upload.</param>
         /// <returns>True on failure, false on success.</returns>
-        static bool UploadSFTP(UploadFile file)
+        static bool UploadSftp(UploadFile file)
         {
             try
             {
-                SftpClient client;
+                 SftpClient client;
 
-                if (Settings.Default.TransferType == (int)TransferType.SFTPKeys)
+                if (Settings.Default.TransferType == (int) TransferType.SftpKeys)
                 {
                     client = new SftpClient(Settings.Default.Host, Settings.Default.Port, Settings.Default.Username, new PrivateKeyFile(Misc.Decrypt(Settings.Default.Password)));
                 }
@@ -293,24 +293,24 @@ namespace NFU
 
                     if (!String.IsNullOrEmpty(Settings.Default.Directory)) outputStream.ChangeDirectory(Settings.Default.Directory);
 
-                    IAsyncResult Async = outputStream.BeginUploadFile(inputStream, file.FileName);
-                    SftpUploadAsyncResult SFTPAsync = Async as SftpUploadAsyncResult;
+                    IAsyncResult async = outputStream.BeginUploadFile(inputStream, file.FileName);
+                    SftpUploadAsyncResult sftpAsync = async as SftpUploadAsyncResult;
 
-                    while (!SFTPAsync.IsCompleted)
+                    while (sftpAsync != null && !sftpAsync.IsCompleted)
                     {
-                        if (uploadWorker.CancellationPending) return true;
+                        if (UploadWorker.CancellationPending) return true;
 
-                        uploadWorker.ReportProgress((int)(SFTPAsync.UploadedBytes * 100 / (ulong)inputStream.Length));
+                        UploadWorker.ReportProgress((int)(sftpAsync.UploadedBytes * 100 / (ulong)inputStream.Length));
                     }
 
-                    outputStream.EndUploadFile(Async);
+                    outputStream.EndUploadFile(async);
                 }
 
                 return false;
             }
             catch (Exception e)
             {
-                uploadStatus = Misc.HandleErrorStatusText(Resources.Uploader_Sftp);
+                _uploadStatus = Misc.HandleErrorStatusText(Resources.Uploader_Sftp);
                 Misc.HandleError(e, Resources.CP_Sftp);
                 return true;
             }
@@ -322,34 +322,34 @@ namespace NFU
         /// </summary>
         /// <param name="file">The file to upload.</param>
         /// <returns>True on failure, false on success.</returns>
-        static bool UploadCIFS(UploadFile file)
+        static bool UploadCifs(UploadFile file)
         {
             try
             {
-                byte[] Buffer = new byte[1024 * 10];
+                byte[] buffer = new byte[1024 * 10];
 
-                IntPtr Token = IntPtr.Zero;
-                Misc.LogonUser(Settings.Default.Username, Resources.Uploader_Nfu, Misc.Decrypt(Settings.Default.Password), 9, 0, ref Token);
-                WindowsIdentity Identity = new WindowsIdentity(Token);
+                IntPtr token = IntPtr.Zero;
+                Misc.LogonUser(Settings.Default.Username, Resources.Uploader_Nfu, Misc.Decrypt(Settings.Default.Password), 9, 0, ref token);
+                WindowsIdentity identity = new WindowsIdentity(token);
 
-                string DestPath = (!String.IsNullOrEmpty(Settings.Default.Directory)) ? String.Format(@"\\{0}\{1}\{2}", Settings.Default.Host, Settings.Default.Directory, file.FileName) : String.Format(@"\\{0}\{1}", Settings.Default.Host, file.FileName);
+                string destPath = (!String.IsNullOrEmpty(Settings.Default.Directory)) ? String.Format(@"\\{0}\{1}\{2}", Settings.Default.Host, Settings.Default.Directory, file.FileName) : String.Format(@"\\{0}\{1}", Settings.Default.Host, file.FileName);
 
-                using (Identity.Impersonate())
+                using (identity.Impersonate())
                 using (FileStream inputStream = new FileStream(file.Path, FileMode.Open, FileAccess.Read))
-                using (FileStream outputStream = new FileStream(DestPath, FileMode.CreateNew, FileAccess.Write))
+                using (FileStream outputStream = new FileStream(destPath, FileMode.CreateNew, FileAccess.Write))
                 {
-                    long FileLength = inputStream.Length;
-                    long TotalBytes = 0;
-                    int CurrentBlockSize;
+                    long fileLength = inputStream.Length;
+                    long totalBytes = 0;
+                    int currentBlockSize;
 
-                    while ((CurrentBlockSize = inputStream.Read(Buffer, 0, Buffer.Length)) > 0)
+                    while ((currentBlockSize = inputStream.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        if (uploadWorker.CancellationPending) return true;
+                        if (UploadWorker.CancellationPending) return true;
 
-                        outputStream.Write(Buffer, 0, CurrentBlockSize);
-                        TotalBytes += CurrentBlockSize;
+                        outputStream.Write(buffer, 0, currentBlockSize);
+                        totalBytes += currentBlockSize;
 
-                        uploadWorker.ReportProgress((int)(TotalBytes * 100 / FileLength));
+                        UploadWorker.ReportProgress((int)(totalBytes * 100 / fileLength));
                     }
                 }
 
@@ -357,7 +357,7 @@ namespace NFU
             }
             catch (Exception e)
             {
-                uploadStatus = Misc.HandleErrorStatusText(Resources.Uploader_Cifs);
+                _uploadStatus = Misc.HandleErrorStatusText(Resources.Uploader_Cifs);
                 Misc.HandleError(e, Resources.Uploader_Cifs);
                 return true;
             }
@@ -369,11 +369,11 @@ namespace NFU
         static void UploadWorkerProgress(object sender, ProgressChangedEventArgs e)
         {
             // Set the progress bar style to marquee if the progress is 0 to indicate something is happening
-            Program.formCore.progressUpload.Style = (e.ProgressPercentage == 0) ?
+            Program.FormCore.progressUpload.Style = (e.ProgressPercentage == 0) ?
                 ProgressBarStyle.Marquee : ProgressBarStyle.Continuous;
 
-            Program.formCore.progressUpload.Value = e.ProgressPercentage;
-            Program.formCore.toolStripStatus.Text = currentStatus;
+            Program.FormCore.progressUpload.Value = e.ProgressPercentage;
+            Program.FormCore.toolStripStatus.Text = _currentStatus;
         }
 
         /// <summary>
@@ -383,19 +383,16 @@ namespace NFU
         {
             Misc.SetControlStatus(true);
 
-            Program.formCore.progressUpload.Style = ProgressBarStyle.Continuous;
-            Program.formCore.progressUpload.Value = 0;
+            Program.FormCore.progressUpload.Style = ProgressBarStyle.Continuous;
+            Program.FormCore.progressUpload.Value = 0;
 
-            Program.formCore.toolStripStatus.Text = uploadStatus;
+            Program.FormCore.toolStripStatus.Text = _uploadStatus;
 
-            if (uploadStatus == Resources.Uploader_UploadSuccessfulStatus)
+            if (_uploadStatus == Resources.Uploader_UploadSuccessfulStatus)
             {
                 Misc.ShowInfo(Resources.Uploader_UploadSuccessfulTitle, Resources.Uploader_UploadSuccessful);
 
-                List<string> clipboard = new List<string>();
-
-                foreach (UploadFile file in uploadFiles)
-                    clipboard.Add(Settings.Default.URL + file.FileName);
+                List<string> clipboard = _uploadFiles.Select(file => Settings.Default.URL + file.FileName).ToList();
 
                 Clipboard.SetText(String.Join(Environment.NewLine, clipboard));
             }
@@ -404,7 +401,7 @@ namespace NFU
                 Misc.ShowInfo(Resources.Uploader_UploadFailedTitle, Resources.Uploader_UploadFailed, ToolTipIcon.Error);
             }
 
-            isBusy = false;
+            IsBusy = false;
         }
     }
 }

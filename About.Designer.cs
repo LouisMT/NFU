@@ -63,7 +63,7 @@
             this.listViewLibraries.TabIndex = 12;
             this.listViewLibraries.UseCompatibleStateImageBehavior = false;
             this.listViewLibraries.View = System.Windows.Forms.View.Details;
-            this.listViewLibraries.DoubleClick += new System.EventHandler(this.OpenLibraryURL);
+            this.listViewLibraries.DoubleClick += new System.EventHandler(this.OpenLibraryUrl);
             // 
             // columnName
             // 
@@ -167,7 +167,7 @@
             this.buttonOpenLog.TabIndex = 14;
             this.buttonOpenLog.Text = global::NFU.Properties.Resources.About_ButtonOpenLog;
             this.buttonOpenLog.UseVisualStyleBackColor = true;
-            this.buttonOpenLog.Click += new System.EventHandler(this.OpenNFULog);
+            this.buttonOpenLog.Click += new System.EventHandler(this.OpenNfuLog);
             // 
             // lineSeparatorAbout2
             // 

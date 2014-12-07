@@ -1,11 +1,11 @@
 ﻿using NFU.Models;
 using NFU.Properties;
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,7 +14,9 @@ namespace NFU
 {
     public partial class Core : Form
     {
-        private Image screenshot;
+        public bool UpdateAvailable;
+
+        private Image _screenshot;
 
         /// <summary>
         /// Constructor.
@@ -50,7 +52,16 @@ namespace NFU
         /// </summary>
         private async void CoreShown(object sender, EventArgs e)
         {
-            await Task.Run(() => CheckForUpdate());
+            TaskScheduler taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+
+            await Task.Run(() => CheckForUpdate()).ContinueWith(u => {
+                if (UpdateAvailable)
+                {
+                    buttonUpdate.Enabled = true;
+                    labelUpdate.Text = Resources.Core_NewVersion;
+                    Misc.ShowInfo(Resources.Core_UpdateAvailableTitle, Resources.Core_UpdateAvailable);
+                }
+            }, taskScheduler);
         }
 
         /// <summary>
@@ -58,7 +69,7 @@ namespace NFU
         /// </summary>
         private void CoreResize(object sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Minimized && Settings.Default.MinimizeSystemTray)
+            if (WindowState == FormWindowState.Minimized && Settings.Default.MinimizeSystemTray)
             {
                 if (!Settings.Default.TooltipShown)
                 {
@@ -67,7 +78,7 @@ namespace NFU
                     Settings.Default.Save();
                 }
 
-                this.Hide();
+                Hide();
             }
         }
 
@@ -86,19 +97,19 @@ namespace NFU
         /// <summary>
         /// Restore window using System Tray.
         /// </summary>
-        private void NotifyIconNFUClick(object sender, MouseEventArgs e)
+        private void NotifyIconNfuClick(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left)
                 return;
 
-            if (this.WindowState == FormWindowState.Normal)
+            if (WindowState == FormWindowState.Normal)
             {
-                this.WindowState = FormWindowState.Minimized;
+                WindowState = FormWindowState.Minimized;
             }
             else
             {
-                this.Show();
-                this.WindowState = FormWindowState.Normal;
+                Show();
+                WindowState = FormWindowState.Normal;
             }
         }
 
@@ -126,17 +137,10 @@ namespace NFU
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                List<UploadFile> uploadFiles = new List<UploadFile>();
-
-                foreach (string fileName in openFileDialog.FileNames)
+                Uploader.Upload(openFileDialog.FileNames.Select(fileName => new UploadFile
                 {
-                    uploadFiles.Add(new UploadFile
-                    {
-                        Path = fileName
-                    });
-                }
-
-                Uploader.Upload(uploadFiles.ToArray());
+                    Path = fileName
+                }).ToArray());
             }
         }
 
@@ -145,23 +149,23 @@ namespace NFU
         /// </summary>
         private void ButtonScreenshot(object sender, EventArgs e)
         {
-            if (Snipper.isActive)
+            if (Snipper.IsActive)
                 return;
 
-            screenshot = Snipper.Snip();
+            _screenshot = Snipper.Snip();
 
-            if (screenshot != null)
+            if (_screenshot != null)
             {
                 reuploadScreenshotToolStripMenuItem.Enabled = true;
 
-                switch (Snipper.returnType)
+                switch (Snipper.ReturnType)
                 {
-                    case Snipper.returnTypes.Default:
-                        Uploader.UploadImage(screenshot);
+                    case Snipper.ReturnTypes.Default:
+                        Uploader.UploadImage(_screenshot);
                         break;
 
-                    case Snipper.returnTypes.ToClipboard:
-                        Clipboard.SetImage(screenshot);
+                    case Snipper.ReturnTypes.ToClipboard:
+                        Clipboard.SetImage(_screenshot);
                         Misc.ShowInfo(Resources.Core_ScreenShotCopiedTitle, Resources.Core_ScreenShotCopied);
                         break;
                 }
@@ -177,7 +181,7 @@ namespace NFU
         /// </summary>
         private void ReuploadScreenshot(object sender, EventArgs e)
         {
-            Uploader.UploadImage(screenshot);
+            Uploader.UploadImage(_screenshot);
         }
 
         /// <summary>
@@ -188,17 +192,12 @@ namespace NFU
             if (Clipboard.ContainsFileDropList())
             {
                 StringCollection files = Clipboard.GetFileDropList();
-                List<UploadFile> uploadFiles = new List<UploadFile>();
 
-                foreach (string file in files)
-                {
-                    uploadFiles.Add(new UploadFile
+                Uploader.Upload((from string file in files
+                    select new UploadFile
                     {
                         Path = file
-                    });
-                }
-
-                Uploader.Upload(uploadFiles.ToArray());
+                    }).ToArray());
             }
             else if (Clipboard.ContainsImage())
             {
@@ -210,8 +209,16 @@ namespace NFU
             }
             else
             {
-                Misc.HandleError(new ArgumentException(String.Format(Resources.Core_CannotHandleTypes,
-                    String.Join(",", Clipboard.GetDataObject().GetFormats()))), Resources.Core_Import);
+                IDataObject dataObject = Clipboard.GetDataObject();
+                if (dataObject != null)
+                {
+                    Misc.HandleError(new ArgumentException(String.Format(Resources.Core_CannotHandleTypes,
+                        String.Join(",", dataObject.GetFormats()))), Resources.Core_Import);
+                }
+                else
+                {
+                    Misc.HandleError(new ArgumentException(Resources.Core_UnsupportedData), Resources.Core_Import);
+                }
             }
         }
 
@@ -220,7 +227,7 @@ namespace NFU
         /// </summary>
         private void OpenSettings(object sender, EventArgs e)
         {
-            Program.formCP.ShowDialog();
+            Program.FormCp.ShowDialog();
         }
 
         /// <summary>
@@ -228,13 +235,13 @@ namespace NFU
         /// </summary>
         private void OpenAbout(object sender, EventArgs e)
         {
-            Program.formAbout.ShowDialog();
+            Program.FormAbout.ShowDialog();
         }
 
         /// <summary>
         /// Exit NFU.
         /// </summary>
-        private void ExitNFU(object sender, EventArgs e)
+        private void ExitNfu(object sender, EventArgs e)
         {
             Application.Exit();
         }
@@ -252,9 +259,7 @@ namespace NFU
 
                     if (latestVersion != Application.ProductVersion)
                     {
-                        buttonUpdate.Enabled = true;
-                        labelUpdate.Text = Resources.Core_NewVersion;
-                        Misc.ShowInfo(Resources.Core_UpdateAvailableTitle, Resources.Core_UpdateAvailable);
+                        UpdateAvailable = true;
                     }
                 }
             }
@@ -271,22 +276,23 @@ namespace NFU
         {
             try
             {
-                string tempNFU = Path.GetTempFileName();
-                string tempCMD = Path.GetTempFileName() + ".cmd";
+                string tempNfu = Path.GetTempFileName();
+                string tempCmd = Path.GetTempFileName() + ".cmd";
 
                 using (WebClient updateClient = new WebClient())
                 {
-                    updateClient.DownloadFile(Settings.Default.ExecutableUrl, tempNFU);
+                    updateClient.DownloadFile(Settings.Default.ExecutableUrl, tempNfu);
                 }
 
-                File.WriteAllText(tempCMD, String.Format("@ECHO OFF{3}TITLE {0}{3}ECHO {1}{3}TIMEOUT /T 5{3}ECHO.{3}ECHO {2}{3}COPY /B /Y \"{4}\" \"{5}\"{3}START \"\" \"{5}\"",
-                    Resources.Core_UpdateTitle, Resources.Core_WaitingToExit, Resources.Core_Updating, Environment.NewLine, tempNFU, Application.ExecutablePath));
+                File.WriteAllText(tempCmd, String.Format("@ECHO OFF{3}TITLE {0}{3}ECHO {1}{3}TIMEOUT /T 5{3}ECHO.{3}ECHO {2}{3}COPY /B /Y \"{4}\" \"{5}\"{3}START \"\" \"{5}\"",
+                    Resources.Core_UpdateTitle, Resources.Core_WaitingToExit, Resources.Core_Updating, Environment.NewLine, tempNfu, Application.ExecutablePath));
 
-                ProcessStartInfo startInfo = new ProcessStartInfo();
-
-                startInfo.UseShellExecute = true;
-                startInfo.FileName = tempCMD;
-                startInfo.Verb = "runas";
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    UseShellExecute = true,
+                    FileName = tempCmd,
+                    Verb = "runas"
+                };
 
                 Process.Start(startInfo);
 

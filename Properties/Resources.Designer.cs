@@ -379,6 +379,15 @@ namespace NFU.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Checking for updates....
+        /// </summary>
+        internal static string Core_CheckingForUpdates {
+            get {
+                return ResourceManager.GetString("Core_CheckingForUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit.
         /// </summary>
         internal static string Core_Exit {
@@ -537,6 +546,15 @@ namespace NFU.Properties {
         internal static string Core_Title {
             get {
                 return ResourceManager.GetString("Core_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unsupported data on clipboard..
+        /// </summary>
+        internal static string Core_UnsupportedData {
+            get {
+                return ResourceManager.GetString("Core_UnsupportedData", resourceCulture);
             }
         }
         
@@ -775,6 +793,15 @@ namespace NFU.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to RunKey doesn&apos;t exist..
+        /// </summary>
+        internal static string CP_NoRunKey {
+            get {
+                return ResourceManager.GetString("CP_NoRunKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use original filename.
         /// </summary>
         internal static string CP_OriginalFileName {
@@ -807,6 +834,15 @@ namespace NFU.Properties {
         internal static string CP_Reset {
             get {
                 return ResourceManager.GetString("CP_Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to change RunKey..
+        /// </summary>
+        internal static string CP_RunKeyChangeFailed {
+            get {
+                return ResourceManager.GetString("CP_RunKeyChangeFailed", resourceCulture);
             }
         }
         
@@ -1037,6 +1073,15 @@ namespace NFU.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string Misc_Error {
+            get {
+                return ResourceManager.GetString("Misc_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} failed.
         /// </summary>
         internal static string Misc_Failed {
@@ -1060,6 +1105,15 @@ namespace NFU.Properties {
         internal static string Misc_FatalErrorTitle {
             get {
                 return ResourceManager.GetString("Misc_FatalErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred, but the log file isn&apos;t writeable..
+        /// </summary>
+        internal static string Misc_LogNotWriteable {
+            get {
+                return ResourceManager.GetString("Misc_LogNotWriteable", resourceCulture);
             }
         }
         
@@ -1319,6 +1373,24 @@ namespace NFU.Properties {
         internal static string Uploader_ZippingDirectory {
             get {
                 return ResourceManager.GetString("Uploader_ZippingDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t delete {0}..
+        /// </summary>
+        internal static string UploadFile_DeleteError {
+            get {
+                return ResourceManager.GetString("UploadFile_DeleteError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UploadFile.
+        /// </summary>
+        internal static string UploadFile_Title {
+            get {
+                return ResourceManager.GetString("UploadFile_Title", resourceCulture);
             }
         }
     }

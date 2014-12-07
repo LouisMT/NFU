@@ -1,7 +1,7 @@
 ﻿using System;
 namespace NFU
 {
-    partial class CP
+    partial class Cp
     {
         /// <summary>
         /// Required designer variable.
@@ -496,7 +496,7 @@ namespace NFU
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = global::NFU.Properties.Resources.CP_Title;
-            this.Shown += new System.EventHandler(this.CPShown);
+            this.Shown += new System.EventHandler(this.CpShown);
             this.tabControlCP.ResumeLayout(false);
             this.tabServer.ResumeLayout(false);
             this.tabServer.PerformLayout();

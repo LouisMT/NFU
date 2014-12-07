@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NFU.Properties;
+using System;
 using System.IO;
 using IOPath = System.IO.Path;
 
@@ -6,7 +7,7 @@ namespace NFU.Models
 {
     public class UploadFile
     {
-        private string path;
+        private string _path;
 
         public enum Type
         {
@@ -31,13 +32,13 @@ namespace NFU.Models
         {
             get
             {
-                return path;
+                return _path;
             }
             set
             {
-                path = value;
-                FileName = Misc.GetFilename(path);
-                IsDirectory = Directory.Exists(path);
+                _path = value;
+                FileName = Misc.GetFilename(_path);
+                IsDirectory = Directory.Exists(_path);
             }
         }
 
@@ -78,10 +79,12 @@ namespace NFU.Models
             {
                 try
                 {
-                    File.Delete(path);
+                    File.Delete(_path);
                 }
                 catch
-                { }
+                {
+                    Misc.HandleError(new Exception(String.Format(Resources.UploadFile_DeleteError, _path)), Resources.UploadFile_Title, false, false);
+                }
             }
         }
     }

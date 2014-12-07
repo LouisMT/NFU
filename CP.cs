@@ -5,14 +5,14 @@ using System.Windows.Forms;
 
 namespace NFU
 {
-    public partial class CP : Form
+    public partial class Cp : Form
     {
-        private RegistryKey autoStartKey = Registry.CurrentUser.OpenSubKey(Settings.Default.RunSubKey, true);
+        private readonly RegistryKey _autoStartKey = Registry.CurrentUser.OpenSubKey(Settings.Default.RunSubKey, true);
 
         /// <summary>
         /// Read all the settings back into the GUI.
         /// </summary>
-        public CP()
+        public Cp()
         {
             InitializeComponent();
 
@@ -38,9 +38,12 @@ namespace NFU
 
             try
             {
-                checkBoxStartWindows.Checked = autoStartKey.GetValue(Settings.Default.RunKey) != null;
+                checkBoxStartWindows.Checked = _autoStartKey.GetValue(Settings.Default.RunKey) != null;
             }
-            catch { }
+            catch
+            {
+                Misc.HandleError(new Exception(Resources.CP_NoRunKey), Resources.CP_Title, false, false);
+            }
 
             comboBoxFilename.SelectedIndex = Settings.Default.Filename;
 
@@ -51,7 +54,7 @@ namespace NFU
         /// <summary>
         /// Reload the file counter.
         /// </summary>
-        private void CPShown(object sender, EventArgs e)
+        private void CpShown(object sender, EventArgs e)
         {
             labelCounter.Text = String.Format(Resources.CP_Counter, Settings.Default.Count.ToString("D5"));
         }
@@ -77,14 +80,18 @@ namespace NFU
             {
                 if (checkBoxStartWindows.Checked)
                 {
-                    autoStartKey.SetValue(Settings.Default.RunKey, String.Format("\"{0}\" {1}", Application.ExecutablePath, "minimized"));
+                    _autoStartKey.SetValue(Settings.Default.RunKey,
+                        String.Format("\"{0}\" {1}", Application.ExecutablePath, "minimized"));
                 }
                 else
                 {
-                    autoStartKey.DeleteValue(Settings.Default.RunKey);
+                    _autoStartKey.DeleteValue(Settings.Default.RunKey);
                 }
             }
-            catch { }
+            catch
+            {
+                Misc.HandleError(new Exception(Resources.CP_RunKeyChangeFailed), Resources.CP_Title, false, false);
+            }
 
             Settings.Default.Filename = comboBoxFilename.SelectedIndex;
 
@@ -128,7 +135,7 @@ namespace NFU
                     break;
 
                 case "textBoxPassword":
-                    if (comboBoxType.SelectedIndex == (int)TransferType.SFTPKeys)
+                    if (comboBoxType.SelectedIndex == (int)TransferType.SftpKeys)
                     {
                         infoTitle = Resources.CP_ServerKey;
                         infoText = Resources.CP_ServerKeyExample;
@@ -181,8 +188,8 @@ namespace NFU
         {
             switch (comboBoxType.SelectedIndex)
             {
-                case (int)TransferType.FTP:
-                case (int)TransferType.FTPSExplicit:
+                case (int)TransferType.Ftp:
+                case (int)TransferType.FtpsExplicit:
                     numericUpDownPort.Enabled = true;
                     numericUpDownPort.Value = 21;
                     labelPassword.Text = Resources.CP_Password;
@@ -190,7 +197,7 @@ namespace NFU
                     textBoxPassword.UseSystemPasswordChar = true;
                     break;
 
-                case (int)TransferType.SFTP:
+                case (int)TransferType.Sftp:
                     numericUpDownPort.Enabled = true;
                     numericUpDownPort.Value = 22;
                     labelPassword.Text = Resources.CP_Password;
@@ -198,7 +205,7 @@ namespace NFU
                     textBoxPassword.UseSystemPasswordChar = true;
                     break;
 
-                case (int)TransferType.SFTPKeys:
+                case (int)TransferType.SftpKeys:
                     numericUpDownPort.Enabled = true;
                     numericUpDownPort.Value = 22;
                     labelPassword.Text = Resources.CP_KeyPath;
@@ -206,7 +213,7 @@ namespace NFU
                     textBoxPassword.UseSystemPasswordChar = false;
                     break;
 
-                case (int)TransferType.CIFS:
+                case (int)TransferType.Cifs:
                     numericUpDownPort.Enabled = false;
                     numericUpDownPort.Value = 0;
                     labelPassword.Text = Resources.CP_Password;

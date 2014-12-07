@@ -113,7 +113,7 @@
             this.notifyIconNFU.Icon = global::NFU.Properties.Resources.NFU;
             this.notifyIconNFU.Text = global::NFU.Properties.Resources.Core_NotifiyIconTitle;
             this.notifyIconNFU.Visible = true;
-            this.notifyIconNFU.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIconNFUClick);
+            this.notifyIconNFU.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIconNfuClick);
             // 
             // contextMenuMain
             // 
@@ -122,7 +122,7 @@
             this.toolStripSeparator,
             this.exitToolStripMenuItem});
             this.contextMenuMain.Name = "contextMenuMain";
-            this.contextMenuMain.Size = new System.Drawing.Size(185, 76);
+            this.contextMenuMain.Size = new System.Drawing.Size(185, 54);
             // 
             // reuploadScreenshotToolStripMenuItem
             // 
@@ -135,15 +135,15 @@
             // toolStripSeparator
             // 
             this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(163, 6);
+            this.toolStripSeparator.Size = new System.Drawing.Size(181, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = global::NFU.Properties.Resources.Exit;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.exitToolStripMenuItem.Text = global::NFU.Properties.Resources.Core_Exit;
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitNFU);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitNfu);
             // 
             // buttonUpdate
             // 
@@ -162,7 +162,7 @@
             this.labelUpdate.Name = "labelUpdate";
             this.labelUpdate.Size = new System.Drawing.Size(376, 13);
             this.labelUpdate.TabIndex = 4;
-            this.labelUpdate.Text = global::NFU.Properties.Resources.Core_LatestVersion;
+            this.labelUpdate.Text = global::NFU.Properties.Resources.Core_CheckingForUpdates;
             this.labelUpdate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBoxAbout
@@ -231,13 +231,13 @@
         public System.Windows.Forms.ProgressBar progressUpload;
         private System.Windows.Forms.ContextMenuStrip contextMenuMain;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.Button buttonUpdate;
         private System.Windows.Forms.Label labelUpdate;
         public System.Windows.Forms.NotifyIcon notifyIconNFU;
         private System.Windows.Forms.PictureBox pictureBoxAbout;
         private System.Windows.Forms.PictureBox pictureBoxSettings;
         private System.Windows.Forms.ToolStripMenuItem reuploadScreenshotToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
+        public System.Windows.Forms.Button buttonUpdate;
 
 
 

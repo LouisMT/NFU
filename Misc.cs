@@ -13,14 +13,14 @@ using System.Windows.Forms;
 
 namespace NFU
 {
-    public partial class LineSeparator : UserControl
+    public sealed class LineSeparator : UserControl
     {
         /// <summary>
         /// Constructor.
         /// </summary>
         public LineSeparator()
         {
-            Paint += new PaintEventHandler(PaintLineSeparator);
+            Paint += PaintLineSeparator;
             MaximumSize = new Size(2000, 2);
             MinimumSize = new Size(0, 2);
             TabStop = false;
@@ -79,24 +79,24 @@ namespace NFU
         /// <param name="handle">The handle.</param>
         public static bool RegisterHotKey(Keys key, Action method, int id, IntPtr handle)
         {
-            HotKeyWndProc HotKeyWnd = new HotKeyWndProc();
+            HotKeyWndProc hotKeyWnd = new HotKeyWndProc();
 
-            if (!Misc.RegisterHotKey(handle, id, 0, key))
+            if (!RegisterHotKey(handle, id, 0, key))
             {
-                Misc.HandleError(new Win32Exception(String.Format(Resources.Misc_RegisterHotKeyFailed, key)), Resources.Misc_RegisterHotKey);
+                HandleError(new Win32Exception(String.Format(Resources.Misc_RegisterHotKeyFailed, key)), Resources.Misc_RegisterHotKey);
                 return false;
             }
 
             try
             {
-                HotKeyWnd.HotKeyPass = new HotKeyPass(method);
-                HotKeyWnd.WParam = id;
-                HotKeyWnd.AssignHandle(handle);
+                hotKeyWnd.HotKeyPass = new HotKeyPass(method);
+                hotKeyWnd.WParam = id;
+                hotKeyWnd.AssignHandle(handle);
                 return true;
             }
             catch
             {
-                HotKeyWnd.ReleaseHandle();
+                hotKeyWnd.ReleaseHandle();
                 return false;
             }
         }
@@ -107,25 +107,33 @@ namespace NFU
         /// <param name="err">The exception.</param>
         /// <param name="name">Name of the exception.</param>
         /// <param name="fatal">Whether the exception is fatal or not.</param>
-        public static void HandleError(Exception err, string name, bool fatal = false)
+        /// <param name="show">Whether the exception should be shown in the status bar.</param>
+        public static void HandleError(Exception err, string name, bool fatal = false, bool show = true)
         {
             try
             {
                 if (Settings.Default.Debug)
-                    File.AppendAllText(String.Format(@"{0}\{1}", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Settings.Default.LogFileName),
-                        String.Format("[{0}] [{1}] ({2}) -> {3}{4}", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), name, fatal,
-                        err != null ? err.Message : "", Environment.NewLine));
+                    File.AppendAllText(
+                        String.Format(@"{0}\{1}", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                            Settings.Default.LogFileName),
+                        String.Format("[{0}] [{1}] ({2}) -> {3}{4}", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), name,
+                            fatal,
+                            err != null ? err.Message : "", Environment.NewLine));
             }
-            catch { }
+            catch
+            {
+                MessageBox.Show(Resources.Misc_LogNotWriteable, Resources.Misc_Error, MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
 
             if (fatal)
             {
                 MessageBox.Show(Resources.Misc_FatalError, Resources.Misc_FatalErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
-            else
+            else if (show)
             {
-                Program.formCore.toolStripStatus.Text = HandleErrorStatusText(name);
+                Program.FormCore.toolStripStatus.Text = HandleErrorStatusText(name);
             }
         }
 
@@ -174,8 +182,11 @@ namespace NFU
         /// <param name="status">True to enable, false to disable.</param>
         public static void SetControlStatus(bool status)
         {
-            foreach (Control control in Program.formCore.Controls)
-                if (control.Name != "progressUpload" && control.Name != "buttonUpdate") control.Enabled = status;
+            foreach (Control control in Program.FormCore.Controls)
+                if (control.Name != "progressUpload" && control.Name != "updateButton") control.Enabled = status;
+
+            // Only enable the update button if status is true and there is an update available
+            Program.FormCore.buttonUpdate.Enabled = (status && Program.FormCore.UpdateAvailable);
         }
 
         /// <summary>
@@ -186,10 +197,10 @@ namespace NFU
         /// <param name="icon">The icon.</param>
         public static void ShowInfo(string title, string text, ToolTipIcon icon = ToolTipIcon.Info)
         {
-            if (Program.formCore.WindowState != FormWindowState.Minimized)
+            if (Program.FormCore.WindowState != FormWindowState.Minimized)
                 return;
 
-            Program.formCore.notifyIconNFU.ShowBalloonTip(1000, title, text, icon);
+            Program.FormCore.notifyIconNFU.ShowBalloonTip(1000, title, text, icon);
         }
 
         /// <summary>
@@ -205,9 +216,9 @@ namespace NFU
                 byte[] saltValueBytes = Encoding.ASCII.GetBytes(Settings.Default.SaltValue);
                 byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainPassword);
                 Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(Settings.Default.PassPhrase, saltValueBytes, Settings.Default.PasswordIterations);
-                byte[] KeyBytes = password.GetBytes(Settings.Default.KeySize / 8);
+                byte[] keyBytes = password.GetBytes(Settings.Default.KeySize / 8);
                 RijndaelManaged symmetricKey = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7 };
-                ICryptoTransform encryptor = symmetricKey.CreateEncryptor(KeyBytes, initVectorBytes);
+                ICryptoTransform encryptor = symmetricKey.CreateEncryptor(keyBytes, initVectorBytes);
                 MemoryStream memoryStream = new MemoryStream();
                 CryptoStream cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write);
                 cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
@@ -239,9 +250,9 @@ namespace NFU
                 byte[] saltValueBytes = Encoding.ASCII.GetBytes(Settings.Default.SaltValue);
                 byte[] cipherTextBytes = Convert.FromBase64String(encryptedPassword);
                 Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(Settings.Default.PassPhrase, saltValueBytes, Settings.Default.PasswordIterations);
-                byte[] KeyBytes = password.GetBytes(Settings.Default.KeySize / 8);
+                byte[] keyBytes = password.GetBytes(Settings.Default.KeySize / 8);
                 RijndaelManaged symmetricKey = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7 };
-                ICryptoTransform decryptor = symmetricKey.CreateDecryptor(KeyBytes, initVectorBytes);
+                ICryptoTransform decryptor = symmetricKey.CreateDecryptor(keyBytes, initVectorBytes);
                 MemoryStream memoryStream = new MemoryStream(cipherTextBytes);
                 CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read);
                 byte[] plainTextBytes = new byte[cipherTextBytes.Length];

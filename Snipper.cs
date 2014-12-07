@@ -6,24 +6,23 @@ using System.Windows.Forms;
 
 namespace NFU
 {
-    public class Snipper : Form
+    public sealed class Snipper : Form
     {
-        public static bool isActive;
-        public static returnTypes returnType;
-        public enum returnTypes { Default, ToClipboard };
+        public static bool IsActive;
+        public static ReturnTypes ReturnType;
+        public enum ReturnTypes { Default, ToClipboard };
 
-        private static Bitmap bitmapFullScreen;
-        private static int offsetX, offsetY;
-
+        private static Bitmap _bitmapFullScreen;
+        private static int _offsetX, _offsetY;
         private enum Mode { New, X, Width, Y, Height };
 
-        private Mode mode;
-        private Image image;
-        private Cursor cursor;
-        private Point pointStart;
-        private Rectangle rectangle;
-        private Rectangle rectangleSelection;
-        private ComboBox comboBoxScreen = new ComboBox();
+        private Mode _mode;
+        private Image _image;
+        private Cursor _cursor;
+        private Point _pointStart;
+        private Rectangle _rectangle;
+        private Rectangle _rectangleSelection;
+        private readonly ComboBox _comboBoxScreen = new ComboBox();
 
         /// <summary>
         /// Snips the image.
@@ -31,31 +30,31 @@ namespace NFU
         /// <returns>The image or null on failure.</returns>
         public static Image Snip()
         {
-            isActive = true;
+            IsActive = true;
 
-            Program.formCore.Opacity = 0;
+            Program.FormCore.Opacity = 0;
 
             Rectangle rectangleFullScreen = SystemInformation.VirtualScreen;
-            bitmapFullScreen = new Bitmap(rectangleFullScreen.Width, rectangleFullScreen.Height, PixelFormat.Format32bppRgb);
-            offsetX = (rectangleFullScreen.X < 0) ? rectangleFullScreen.X * -1 : 0;
-            offsetY = (rectangleFullScreen.Y < 0) ? rectangleFullScreen.Y * -1 : 0;
+            _bitmapFullScreen = new Bitmap(rectangleFullScreen.Width, rectangleFullScreen.Height, PixelFormat.Format32bppRgb);
+            _offsetX = (rectangleFullScreen.X < 0) ? rectangleFullScreen.X * -1 : 0;
+            _offsetY = (rectangleFullScreen.Y < 0) ? rectangleFullScreen.Y * -1 : 0;
 
-            using (Graphics gr = Graphics.FromImage(bitmapFullScreen))
+            using (Graphics gr = Graphics.FromImage(_bitmapFullScreen))
             {
                 // TODO: Fix this hack
                 // Somehow, the color #0D0B0C (13, 11, 12) becomes a transparent pixel, or a black pixel if there is no alpha channel
                 // This doesn't happen if the graphics object is cleared using this color first, however, this is a bit hacky (why only this color)
                 gr.Clear(Color.FromArgb(13, 11, 12));
-                gr.CopyFromScreen(rectangleFullScreen.X, rectangleFullScreen.Y, 0, 0, bitmapFullScreen.Size);
+                gr.CopyFromScreen(rectangleFullScreen.X, rectangleFullScreen.Y, 0, 0, _bitmapFullScreen.Size);
             }
 
             using (Snipper snipper = new Snipper())
             {
                 DialogResult result = snipper.ShowDialog();
-                Program.formCore.Opacity = 1;
-                isActive = false;
+                Program.FormCore.Opacity = 1;
+                IsActive = false;
 
-                if (result == DialogResult.OK) return snipper.image;
+                if (result == DialogResult.OK) return snipper._image;
             }
 
             return null;
@@ -72,20 +71,20 @@ namespace NFU
             FormBorderStyle = FormBorderStyle.None;
             StartPosition = FormStartPosition.Manual;
 
-            comboBoxScreen.Items.Add(Resources.Snipper_MergeScreens);
-            comboBoxScreen.Location = new Point(3, 3);
-            comboBoxScreen.DropDownStyle = ComboBoxStyle.DropDownList;
+            _comboBoxScreen.Items.Add(Resources.Snipper_MergeScreens);
+            _comboBoxScreen.Location = new Point(3, 3);
+            _comboBoxScreen.DropDownStyle = ComboBoxStyle.DropDownList;
 
             for (int i = 0; i < Screen.AllScreens.Length; i++)
             {
-                comboBoxScreen.Items.Add(String.Format(Resources.Snipper_Screen, i + 1));
+                _comboBoxScreen.Items.Add(String.Format(Resources.Snipper_Screen, i + 1));
             }
 
-            comboBoxScreen.SelectedIndexChanged += ScreenIndexChanged;
-            comboBoxScreen.SelectedIndex = Settings.Default.Screen;
-            comboBoxScreen.Visible = Settings.Default.ShowControls;
+            _comboBoxScreen.SelectedIndexChanged += ScreenIndexChanged;
+            _comboBoxScreen.SelectedIndex = Settings.Default.Screen;
+            _comboBoxScreen.Visible = Settings.Default.ShowControls;
 
-            this.Controls.Add(comboBoxScreen);
+            Controls.Add(_comboBoxScreen);
 
             Misc.SetForegroundWindow(Handle);
         }
@@ -95,23 +94,23 @@ namespace NFU
         /// </summary>
         private void ScreenIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxScreen.SelectedIndex == 0)
+            if (_comboBoxScreen.SelectedIndex == 0)
             {
-                rectangle = SystemInformation.VirtualScreen;
+                _rectangle = SystemInformation.VirtualScreen;
             }
             else
             {
-                rectangle = Screen.AllScreens[comboBoxScreen.SelectedIndex - 1].Bounds;
+                _rectangle = Screen.AllScreens[_comboBoxScreen.SelectedIndex - 1].Bounds;
             }
 
-            Size = rectangle.Size;
-            Location = rectangle.Location;
+            Size = _rectangle.Size;
+            Location = _rectangle.Location;
 
-            Bitmap bitmap = new Bitmap(rectangle.Width, rectangle.Height, PixelFormat.Format32bppRgb);
+            Bitmap bitmap = new Bitmap(_rectangle.Width, _rectangle.Height, PixelFormat.Format32bppRgb);
 
             using (Graphics gr = Graphics.FromImage(bitmap))
             {
-                gr.DrawImage(bitmapFullScreen, new Rectangle(0, 0, bitmap.Width, bitmap.Height), new Rectangle(rectangle.X + offsetX, rectangle.Y + offsetY, rectangle.Width, rectangle.Height), GraphicsUnit.Pixel);
+                gr.DrawImage(_bitmapFullScreen, new Rectangle(0, 0, bitmap.Width, bitmap.Height), new Rectangle(_rectangle.X + _offsetX, _rectangle.Y + _offsetY, _rectangle.Width, _rectangle.Height), GraphicsUnit.Pixel);
             }
 
             BackgroundImage = bitmap;
@@ -130,19 +129,19 @@ namespace NFU
 
             // Margin to create a virtual border of 5 px
             // 2px both sides + 1px real border
-            int size = 5;
-            int margin = 2;
+            const int size = 5;
+            const int margin = 2;
 
-            if (new Rectangle(rectangleSelection.X - margin, rectangleSelection.Y, size, rectangleSelection.Height).Contains(e.Location))
+            if (new Rectangle(_rectangleSelection.X - margin, _rectangleSelection.Y, size, _rectangleSelection.Height).Contains(e.Location))
                 return Mode.X;
 
-            if (new Rectangle(rectangleSelection.X + rectangleSelection.Width - margin, rectangleSelection.Y, size, rectangleSelection.Height).Contains(e.Location))
+            if (new Rectangle(_rectangleSelection.X + _rectangleSelection.Width - margin, _rectangleSelection.Y, size, _rectangleSelection.Height).Contains(e.Location))
                 return Mode.Width;
 
-            if (new Rectangle(rectangleSelection.X, rectangleSelection.Y - margin, rectangleSelection.Width, size).Contains(e.Location))
+            if (new Rectangle(_rectangleSelection.X, _rectangleSelection.Y - margin, _rectangleSelection.Width, size).Contains(e.Location))
                 return Mode.Y;
 
-            if (new Rectangle(rectangleSelection.X, rectangleSelection.Y + rectangleSelection.Height - margin, rectangleSelection.Width, size).Contains(e.Location))
+            if (new Rectangle(_rectangleSelection.X, _rectangleSelection.Y + _rectangleSelection.Height - margin, _rectangleSelection.Width, size).Contains(e.Location))
                 return Mode.Height;
 
             return Mode.New;
@@ -156,9 +155,9 @@ namespace NFU
             if (e.Button != MouseButtons.Left)
                 return;
 
-            mode = GetMode(e);
+            _mode = GetMode(e);
 
-            pointStart = e.Location;
+            _pointStart = e.Location;
         }
 
         /// <summary>
@@ -173,70 +172,70 @@ namespace NFU
                 {
                     case Mode.X:
                     case Mode.Width:
-                        cursor = Cursors.SizeWE;
+                        _cursor = Cursors.SizeWE;
                         break;
 
                     case Mode.Y:
                     case Mode.Height:
-                        cursor = Cursors.SizeNS;
+                        _cursor = Cursors.SizeNS;
                         break;
 
                     case Mode.New:
-                        cursor = Cursors.Arrow;
+                        _cursor = Cursors.Arrow;
                         break;
                 }
 
-                Cursor.Current = cursor;
+                Cursor.Current = _cursor;
                 return;
             }
 
             // Set the cursor on every move to prevent flickering
-            Cursor.Current = cursor;
+            Cursor.Current = _cursor;
 
             int x = 0, y = 0, w = 0, h = 0;
 
-            switch (mode)
+            switch (_mode)
             {
                 case Mode.X:
                     x = e.X;
-                    y = rectangleSelection.Y;
-                    w = rectangleSelection.Width + (rectangleSelection.X - e.X);
-                    h = rectangleSelection.Height;
+                    y = _rectangleSelection.Y;
+                    w = _rectangleSelection.Width + (_rectangleSelection.X - e.X);
+                    h = _rectangleSelection.Height;
                     break;
 
                 case Mode.Width:
-                    x = rectangleSelection.X;
-                    y = rectangleSelection.Y;
-                    w = e.X - rectangleSelection.X;
-                    h = rectangleSelection.Height;
+                    x = _rectangleSelection.X;
+                    y = _rectangleSelection.Y;
+                    w = e.X - _rectangleSelection.X;
+                    h = _rectangleSelection.Height;
                     break;
 
                 case Mode.Y:
-                    x = rectangleSelection.X;
+                    x = _rectangleSelection.X;
                     y = e.Y;
-                    w = rectangleSelection.Width;
-                    h = rectangleSelection.Height + (rectangleSelection.Y - e.Y);
+                    w = _rectangleSelection.Width;
+                    h = _rectangleSelection.Height + (_rectangleSelection.Y - e.Y);
                     break;
 
                 case Mode.Height:
-                    x = rectangleSelection.X;
-                    y = rectangleSelection.Y;
-                    w = rectangleSelection.Width;
-                    h = e.Y - rectangleSelection.Y;
+                    x = _rectangleSelection.X;
+                    y = _rectangleSelection.Y;
+                    w = _rectangleSelection.Width;
+                    h = e.Y - _rectangleSelection.Y;
                     break;
 
                 case Mode.New:
-                    x = Math.Min(e.X, pointStart.X);
-                    y = Math.Min(e.Y, pointStart.Y);
-                    w = Math.Max(e.X, pointStart.X) - x;
-                    h = Math.Max(e.Y, pointStart.Y) - y;
+                    x = Math.Min(e.X, _pointStart.X);
+                    y = Math.Min(e.Y, _pointStart.Y);
+                    w = Math.Max(e.X, _pointStart.X) - x;
+                    h = Math.Max(e.Y, _pointStart.Y) - y;
                     break;
             }
 
             if (w <= 10 || h <= 10)
                 return;
 
-            rectangleSelection = new Rectangle(x, y, w, h);
+            _rectangleSelection = new Rectangle(x, y, w, h);
             Invalidate();
         }
 
@@ -246,17 +245,17 @@ namespace NFU
         /// </summary>
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            if (rectangleSelection.Width <= 0 || rectangleSelection.Height <= 0)
+            if (_rectangleSelection.Width <= 0 || _rectangleSelection.Height <= 0)
                 return;
 
-            image = new Bitmap(rectangleSelection.Width, rectangleSelection.Height, PixelFormat.Format32bppRgb);
+            _image = new Bitmap(_rectangleSelection.Width, _rectangleSelection.Height, PixelFormat.Format32bppRgb);
 
-            using (Graphics gr = Graphics.FromImage(image))
+            using (Graphics gr = Graphics.FromImage(_image))
             {
-                gr.DrawImage(BackgroundImage, new Rectangle(0, 0, image.Width, image.Height), rectangleSelection, GraphicsUnit.Pixel);
+                gr.DrawImage(BackgroundImage, new Rectangle(0, 0, _image.Width, _image.Height), _rectangleSelection, GraphicsUnit.Pixel);
             }
 
-            returnType = (Control.ModifierKeys == Keys.Control) ? returnTypes.ToClipboard : returnTypes.Default;
+            ReturnType = (ModifierKeys == Keys.Control) ? ReturnTypes.ToClipboard : ReturnTypes.Default;
 
             if (Settings.Default.QuickScreenshots)
                 DialogResult = DialogResult.OK;
@@ -269,10 +268,10 @@ namespace NFU
         {
             using (Brush br = new SolidBrush(Color.FromArgb(120, Color.White)))
             {
-                int x1 = rectangleSelection.X;
-                int x2 = rectangleSelection.X + rectangleSelection.Width;
-                int y1 = rectangleSelection.Y;
-                int y2 = rectangleSelection.Y + rectangleSelection.Height;
+                int x1 = _rectangleSelection.X;
+                int x2 = _rectangleSelection.X + _rectangleSelection.Width;
+                int y1 = _rectangleSelection.Y;
+                int y2 = _rectangleSelection.Y + _rectangleSelection.Height;
                 e.Graphics.FillRectangle(br, new Rectangle(0, 0, x1, Height));
                 e.Graphics.FillRectangle(br, new Rectangle(x2, 0, Width - x2, Height));
                 e.Graphics.FillRectangle(br, new Rectangle(x1, 0, x2 - x1, y1));
@@ -280,7 +279,7 @@ namespace NFU
             }
             using (Pen pen = new Pen(Color.Red, 1))
             {
-                e.Graphics.DrawRectangle(pen, rectangleSelection);
+                e.Graphics.DrawRectangle(pen, _rectangleSelection);
             }
             using (Brush bg = new SolidBrush(Color.FromArgb(130, Color.Black)))
             using (Brush fg = new SolidBrush(Color.White))
@@ -291,7 +290,7 @@ namespace NFU
                 Rectangle rectangleDisplay = new Rectangle(0, 0, Width, 27);
                 e.Graphics.FillRectangle(bg, rectangleDisplay);
                 e.Graphics.DrawString(String.Format(Resources.Snipper_Coordinates,
-                    rectangleSelection.X, rectangleSelection.Y, rectangleSelection.Width, rectangleSelection.Height, Resources.Snipper_HotKeys),
+                    _rectangleSelection.X, _rectangleSelection.Y, _rectangleSelection.Width, _rectangleSelection.Height, Resources.Snipper_HotKeys),
                     new Font("Consolas", 8.25F), fg, rectangleDisplay, new StringFormat() { Alignment = StringAlignment.Center });
             }
         }
@@ -301,7 +300,7 @@ namespace NFU
         /// </summary>
         protected override bool ProcessCmdKey(ref Message message, Keys keyData)
         {
-            returnType = (Control.ModifierKeys == Keys.Control) ? returnTypes.Default : returnTypes.ToClipboard;
+            ReturnType = (ModifierKeys == Keys.Control) ? ReturnTypes.Default : ReturnTypes.ToClipboard;
             // Remove the control modifier from the keys
             var keys = (keyData & ~Keys.Control);
 
@@ -313,14 +312,14 @@ namespace NFU
             else if (keys == Keys.C)
             {
                 Settings.Default.ShowControls = !Settings.Default.ShowControls;
-                comboBoxScreen.Visible = Settings.Default.ShowControls;
+                _comboBoxScreen.Visible = Settings.Default.ShowControls;
                 Settings.Default.Save();
                 Invalidate();
                 return true;
             }
             else if (keys == Keys.F)
             {
-                rectangleSelection = new Rectangle(0, 0, BackgroundImage.Width, BackgroundImage.Height);
+                _rectangleSelection = new Rectangle(0, 0, BackgroundImage.Width, BackgroundImage.Height);
                 OnMouseUp(null);
                 return true;
             }

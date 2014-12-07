@@ -23,18 +23,18 @@ namespace NFU
 
             textBoxVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-            ListViewItem sshNet = new ListViewItem(new string[] {
+            ListViewItem sshNet = new ListViewItem(new[] {
                 Resources.About_SshNetName,
                 Resources.About_SshNetUrl,
                 Resources.About_SshNetUsedFor
             });
-            ListViewItem iconPack = new ListViewItem(new string[] {
+            ListViewItem iconPack = new ListViewItem(new[] {
                 Resources.About_IcoMoonName,
                 Resources.About_IcoMoonUrl,
                 Resources.About_IcoMoonUsedFor
             });
 
-            listViewLibraries.Items.AddRange(new ListViewItem[] {
+            listViewLibraries.Items.AddRange(new[] {
                 sshNet,
                 iconPack
             });
@@ -43,7 +43,7 @@ namespace NFU
         /// <summary>
         /// Open the selected library page.
         /// </summary>
-        private void OpenLibraryURL(object sender, EventArgs e)
+        private void OpenLibraryUrl(object sender, EventArgs e)
         {
             if (listViewLibraries.SelectedItems.Count > 0)
                 Process.Start(listViewLibraries.SelectedItems[0].SubItems[1].Text);
@@ -84,7 +84,7 @@ namespace NFU
         /// <summary>
         /// Open the NFU log.
         /// </summary>
-        private void OpenNFULog(object sender, EventArgs e)
+        private void OpenNfuLog(object sender, EventArgs e)
         {
             string filename = String.Format(@"{0}\{1}", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Settings.Default.LogFileName);
 

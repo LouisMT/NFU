@@ -548,4 +548,28 @@ The download link can be found in the about box.</value>
   <data name="Uploader_WebHookFailed" xml:space="preserve">
     <value>{0} (WebHook failed)</value>
   </data>
+  <data name="Misc_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Misc_LogNotWriteable" xml:space="preserve">
+    <value>An error occurred, but the log file isn't writeable.</value>
+  </data>
+  <data name="Core_UnsupportedData" xml:space="preserve">
+    <value>Unsupported data on clipboard.</value>
+  </data>
+  <data name="CP_NoRunKey" xml:space="preserve">
+    <value>RunKey doesn't exist.</value>
+  </data>
+  <data name="CP_RunKeyChangeFailed" xml:space="preserve">
+    <value>Failed to change RunKey.</value>
+  </data>
+  <data name="Core_CheckingForUpdates" xml:space="preserve">
+    <value>Checking for updates...</value>
+  </data>
+  <data name="UploadFile_DeleteError" xml:space="preserve">
+    <value>Couldn't delete {0}.</value>
+  </data>
+  <data name="UploadFile_Title" xml:space="preserve">
+    <value>UploadFile</value>
+  </data>
 </root>

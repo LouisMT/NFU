@@ -7,20 +7,20 @@ namespace NFU
 {
     public enum TransferType
     {
-        FTP,
-        FTPSExplicit,
-        SFTP,
-        SFTPKeys,
-        CIFS
+        Ftp,
+        FtpsExplicit,
+        Sftp,
+        SftpKeys,
+        Cifs
     }
 
     static class Program
     {
-        public static Core formCore;
-        public static About formAbout;
-        public static CP formCP;
+        public static Core FormCore;
+        public static About FormAbout;
+        public static Cp FormCp;
 
-        private static Mutex mutex = new Mutex(true, "NFU {537e6f56-11cb-461a-9983-634307543f5b}");
+        private static readonly Mutex Mutex = new Mutex(true, "NFU {537e6f56-11cb-461a-9983-634307543f5b}");
 
         /// <summary>
         /// The main entry point for the application.
@@ -37,7 +37,7 @@ namespace NFU
 
             try
             {
-                if (mutex.WaitOne(TimeSpan.Zero, true))
+                if (Mutex.WaitOne(TimeSpan.Zero, true))
                 {
                     if (Settings.Default.NeedsUpgrade)
                     {
@@ -51,22 +51,22 @@ namespace NFU
 
                     Settings.Default.Save();
 
-                    formCore = new Core();
-                    formAbout = new About();
-                    formCP = new CP();
+                    FormCore = new Core();
+                    FormAbout = new About();
+                    FormCp = new Cp();
 
-                    formCore.Setup();
+                    FormCore.Setup();
 
-                    if (Settings.Default.FirstRun) formCore.Load += (sender, e) =>
+                    if (Settings.Default.FirstRun) FormCore.Load += (sender, e) =>
                         {
-                            Program.formCP.ShowDialog();
+                            FormCp.ShowDialog();
                         };
 
                     if (args.Length > 0)
                         if (args[0] == "minimized")
-                            formCore.WindowState = FormWindowState.Minimized;
+                            FormCore.WindowState = FormWindowState.Minimized;
 
-                    Application.Run(formCore);
+                    Application.Run(FormCore);
                 }
                 else
                 {
