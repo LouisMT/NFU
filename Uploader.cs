@@ -109,6 +109,10 @@ namespace NFU
 
                     string zipFileName = String.Format("{0}.zip", file.FileName);
                     UploadFile zipFile = new UploadFile(UploadFile.Type.Temporary, "zip");
+                    
+                    // Delete the temporary file first, because ZipFile.CreateFromDirectory
+                    // can't write to an existing file
+                    zipFile.DeleteIfTemporary();
                     ZipFile.CreateFromDirectory(file.Path, zipFile.Path);
 
                     file.Path = zipFile.Path;
@@ -169,25 +173,25 @@ namespace NFU
                 currentStatus = Resources.Uploader_SendingWebHook;
                 uploadWorker.ReportProgress(0);
 
+                JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
+
+                WebHook webHook = new WebHook
+                {
+                    Success = success,
+                    Directory = Settings.Default.Directory
+                };
+
+                foreach (UploadFile file in uploadFiles)
+                {
+                    webHook.Files.Add(new WebHookFile
+                    {
+                        FileName = file.FileName,
+                        IsDirectory = file.IsDirectory
+                    });
+                }
+
                 using (WebClient webClient = new WebClient())
                 {
-                    JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
-
-                    WebHook webHook = new WebHook
-                    {
-                        Success = success,
-                        Directory = Settings.Default.Directory
-                    };
-
-                    foreach (UploadFile file in uploadFiles)
-                    {
-                        webHook.Files.Add(new WebHookFile
-                        {
-                            FileName = file.FileName,
-                            IsDirectory = file.IsDirectory
-                        });
-                    }
-
                     try
                     {
                         webClient.Headers.Add(HttpRequestHeader.ContentType, "application/json");
