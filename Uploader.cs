@@ -109,7 +109,7 @@ namespace NFU
 
                     string zipFileName = String.Format("{0}.zip", file.FileName);
                     UploadFile zipFile = new UploadFile(UploadFile.Type.Temporary, "zip");
-                    
+
                     // Delete the temporary file first, because ZipFile.CreateFromDirectory
                     // can't write to an existing file
                     zipFile.DeleteIfTemporary();
@@ -118,6 +118,7 @@ namespace NFU
                     file.Path = zipFile.Path;
                     file.FileName = zipFileName;
                     file.IsTemporary = true;
+                    file.IsDirectory = true;
                 }
 
                 currentStatus = String.Format(Resources.Uploader_Uploading, currentIndex, uploadFiles.Length);

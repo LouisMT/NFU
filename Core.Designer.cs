@@ -1,5 +1,4 @@
-﻿using NFU.Properties;
-namespace NFU
+﻿namespace NFU
 {
     partial class Core
     {
@@ -67,7 +66,7 @@ namespace NFU
             // 
             this.toolStripStatus.Name = "toolStripStatus";
             this.toolStripStatus.Size = new System.Drawing.Size(39, 17);
-            this.toolStripStatus.Text = Resources.Core_Ready;
+            this.toolStripStatus.Text = global::NFU.Properties.Resources.Core_Ready;
             // 
             // buttonFile
             // 
@@ -75,7 +74,7 @@ namespace NFU
             this.buttonFile.Name = "buttonFile";
             this.buttonFile.Size = new System.Drawing.Size(120, 23);
             this.buttonFile.TabIndex = 0;
-            this.buttonFile.Text = Resources.Core_ButtonFiles;
+            this.buttonFile.Text = global::NFU.Properties.Resources.Core_ButtonFiles;
             this.buttonFile.Click += new System.EventHandler(this.ButtonFile);
             // 
             // buttonImport
@@ -84,7 +83,7 @@ namespace NFU
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(120, 23);
             this.buttonImport.TabIndex = 2;
-            this.buttonImport.Text = Resources.Core_ButtonImport;
+            this.buttonImport.Text = global::NFU.Properties.Resources.Core_ButtonImport;
             this.buttonImport.Click += new System.EventHandler(this.ButtonImport);
             // 
             // buttonScreenshot
@@ -93,7 +92,7 @@ namespace NFU
             this.buttonScreenshot.Name = "buttonScreenshot";
             this.buttonScreenshot.Size = new System.Drawing.Size(124, 23);
             this.buttonScreenshot.TabIndex = 1;
-            this.buttonScreenshot.Text = Resources.Core_ButtonScreenShot;
+            this.buttonScreenshot.Text = global::NFU.Properties.Resources.Core_ButtonScreenShot;
             this.buttonScreenshot.Click += new System.EventHandler(this.ButtonScreenshot);
             // 
             // progressUpload
@@ -106,13 +105,13 @@ namespace NFU
             // openFileDialog
             // 
             this.openFileDialog.Multiselect = true;
-            this.openFileDialog.Title = Resources.Core_FilesTitle;
+            this.openFileDialog.Title = global::NFU.Properties.Resources.Core_FilesTitle;
             // 
             // notifyIconNFU
             // 
             this.notifyIconNFU.ContextMenuStrip = this.contextMenuMain;
             this.notifyIconNFU.Icon = global::NFU.Properties.Resources.NFU;
-            this.notifyIconNFU.Text = Resources.Core_NotifiyIconTitle;
+            this.notifyIconNFU.Text = global::NFU.Properties.Resources.Core_NotifiyIconTitle;
             this.notifyIconNFU.Visible = true;
             this.notifyIconNFU.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIconNFUClick);
             // 
@@ -130,7 +129,7 @@ namespace NFU
             this.reuploadScreenshotToolStripMenuItem.Enabled = false;
             this.reuploadScreenshotToolStripMenuItem.Name = "reuploadScreenshotToolStripMenuItem";
             this.reuploadScreenshotToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.reuploadScreenshotToolStripMenuItem.Text = Resources.Core_ReUploadScreenShot;
+            this.reuploadScreenshotToolStripMenuItem.Text = global::NFU.Properties.Resources.Core_ReUploadScreenShot;
             this.reuploadScreenshotToolStripMenuItem.Click += new System.EventHandler(this.ReuploadScreenshot);
             // 
             // toolStripSeparator
@@ -143,7 +142,7 @@ namespace NFU
             this.exitToolStripMenuItem.Image = global::NFU.Properties.Resources.Exit;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.exitToolStripMenuItem.Text = Resources.Core_Exit;
+            this.exitToolStripMenuItem.Text = global::NFU.Properties.Resources.Core_Exit;
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitNFU);
             // 
             // buttonUpdate
@@ -153,7 +152,7 @@ namespace NFU
             this.buttonUpdate.Name = "buttonUpdate";
             this.buttonUpdate.Size = new System.Drawing.Size(124, 23);
             this.buttonUpdate.TabIndex = 5;
-            this.buttonUpdate.Text = Resources.Core_ButtonUpdate;
+            this.buttonUpdate.Text = global::NFU.Properties.Resources.Core_ButtonUpdate;
             this.buttonUpdate.UseVisualStyleBackColor = true;
             this.buttonUpdate.Click += new System.EventHandler(this.StartUpdate);
             // 
@@ -163,7 +162,7 @@ namespace NFU
             this.labelUpdate.Name = "labelUpdate";
             this.labelUpdate.Size = new System.Drawing.Size(376, 13);
             this.labelUpdate.TabIndex = 4;
-            this.labelUpdate.Text = Resources.Core_LatestVersion;
+            this.labelUpdate.Text = global::NFU.Properties.Resources.Core_LatestVersion;
             this.labelUpdate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBoxAbout
@@ -207,7 +206,7 @@ namespace NFU
             this.MaximizeBox = false;
             this.Name = "Core";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = Resources.Core_Title;
+            this.Text = global::NFU.Properties.Resources.Core_Title;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CoreFormClosing);
             this.Shown += new System.EventHandler(this.CoreShown);
             this.Resize += new System.EventHandler(this.CoreResize);

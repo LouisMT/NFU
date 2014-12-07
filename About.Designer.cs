@@ -1,5 +1,4 @@
-﻿using NFU.Properties;
-namespace NFU
+﻿namespace NFU
 {
     partial class About
     {
@@ -68,15 +67,15 @@ namespace NFU
             // 
             // columnName
             // 
-            this.columnName.Text = Resources.About_Name;
+            this.columnName.Text = global::NFU.Properties.Resources.About_Name;
             // 
             // columnURL
             // 
-            this.columnURL.Text = Resources.About_Url;
+            this.columnURL.Text = global::NFU.Properties.Resources.About_Url;
             // 
             // columnFor
             // 
-            this.columnFor.Text = Resources.About_UsedFor;
+            this.columnFor.Text = global::NFU.Properties.Resources.About_UsedFor;
             // 
             // labelName
             // 
@@ -85,7 +84,7 @@ namespace NFU
             this.labelName.Name = "labelName";
             this.labelName.Size = new System.Drawing.Size(38, 13);
             this.labelName.TabIndex = 0;
-            this.labelName.Text = Resources.About_Name;
+            this.labelName.Text = global::NFU.Properties.Resources.About_Name;
             // 
             // textBoxName
             // 
@@ -94,7 +93,7 @@ namespace NFU
             this.textBoxName.ReadOnly = true;
             this.textBoxName.Size = new System.Drawing.Size(253, 20);
             this.textBoxName.TabIndex = 1;
-            this.textBoxName.Text = Resources.About_Nfu;
+            this.textBoxName.Text = global::NFU.Properties.Resources.About_Nfu;
             // 
             // textBoxCopyright
             // 
@@ -103,7 +102,7 @@ namespace NFU
             this.textBoxCopyright.ReadOnly = true;
             this.textBoxCopyright.Size = new System.Drawing.Size(410, 20);
             this.textBoxCopyright.TabIndex = 5;
-            this.textBoxCopyright.Text = Resources.About_CopyrightText;
+            this.textBoxCopyright.Text = global::NFU.Properties.Resources.About_CopyrightText;
             // 
             // labelCopyright
             // 
@@ -112,7 +111,7 @@ namespace NFU
             this.labelCopyright.Name = "labelCopyright";
             this.labelCopyright.Size = new System.Drawing.Size(54, 13);
             this.labelCopyright.TabIndex = 4;
-            this.labelCopyright.Text = Resources.About_Copyright;
+            this.labelCopyright.Text = global::NFU.Properties.Resources.About_Copyright;
             // 
             // textBoxVersion
             // 
@@ -129,7 +128,7 @@ namespace NFU
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(45, 13);
             this.labelVersion.TabIndex = 2;
-            this.labelVersion.Text = Resources.About_Version;
+            this.labelVersion.Text = global::NFU.Properties.Resources.About_Version;
             // 
             // labelLibraries
             // 
@@ -138,7 +137,7 @@ namespace NFU
             this.labelLibraries.Name = "labelLibraries";
             this.labelLibraries.Size = new System.Drawing.Size(316, 13);
             this.labelLibraries.TabIndex = 11;
-            this.labelLibraries.Text = Resources.About_ThirdParty;
+            this.labelLibraries.Text = global::NFU.Properties.Resources.About_ThirdParty;
             // 
             // buttonClose
             // 
@@ -147,7 +146,7 @@ namespace NFU
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(120, 23);
             this.buttonClose.TabIndex = 16;
-            this.buttonClose.Text = Resources.About_ButtonClose;
+            this.buttonClose.Text = global::NFU.Properties.Resources.About_ButtonClose;
             this.buttonClose.UseVisualStyleBackColor = true;
             // 
             // lineSeperatorAbout
@@ -166,7 +165,7 @@ namespace NFU
             this.buttonOpenLog.Name = "buttonOpenLog";
             this.buttonOpenLog.Size = new System.Drawing.Size(119, 23);
             this.buttonOpenLog.TabIndex = 14;
-            this.buttonOpenLog.Text = Resources.About_ButtonOpenLog;
+            this.buttonOpenLog.Text = global::NFU.Properties.Resources.About_ButtonOpenLog;
             this.buttonOpenLog.UseVisualStyleBackColor = true;
             this.buttonOpenLog.Click += new System.EventHandler(this.OpenNFULog);
             // 
@@ -188,7 +187,7 @@ namespace NFU
             this.linkLabelSource.Size = new System.Drawing.Size(92, 13);
             this.linkLabelSource.TabIndex = 15;
             this.linkLabelSource.TabStop = true;
-            this.linkLabelSource.Text = Resources.About_Source;
+            this.linkLabelSource.Text = global::NFU.Properties.Resources.About_Source;
             this.linkLabelSource.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OpenSource);
             // 
             // buttonChangelog
@@ -197,7 +196,7 @@ namespace NFU
             this.buttonChangelog.Name = "buttonChangelog";
             this.buttonChangelog.Size = new System.Drawing.Size(98, 23);
             this.buttonChangelog.TabIndex = 6;
-            this.buttonChangelog.Text = Resources.About_ButtonChangeLog;
+            this.buttonChangelog.Text = global::NFU.Properties.Resources.About_ButtonChangeLog;
             this.buttonChangelog.UseVisualStyleBackColor = true;
             this.buttonChangelog.Click += new System.EventHandler(this.OpenChangelog);
             // 
@@ -207,7 +206,7 @@ namespace NFU
             this.buttonIssues.Name = "buttonIssues";
             this.buttonIssues.Size = new System.Drawing.Size(98, 23);
             this.buttonIssues.TabIndex = 8;
-            this.buttonIssues.Text = Resources.About_ButtonIssues;
+            this.buttonIssues.Text = global::NFU.Properties.Resources.About_ButtonIssues;
             this.buttonIssues.UseVisualStyleBackColor = true;
             this.buttonIssues.Click += new System.EventHandler(this.OpenIssues);
             // 
@@ -217,7 +216,7 @@ namespace NFU
             this.buttonContributors.Name = "buttonContributors";
             this.buttonContributors.Size = new System.Drawing.Size(98, 23);
             this.buttonContributors.TabIndex = 7;
-            this.buttonContributors.Text = Resources.About_ButtonContributors;
+            this.buttonContributors.Text = global::NFU.Properties.Resources.About_ButtonContributors;
             this.buttonContributors.UseVisualStyleBackColor = true;
             this.buttonContributors.Click += new System.EventHandler(this.OpenContributors);
             // 
@@ -227,7 +226,7 @@ namespace NFU
             this.buttonLicense.Name = "buttonLicense";
             this.buttonLicense.Size = new System.Drawing.Size(98, 23);
             this.buttonLicense.TabIndex = 9;
-            this.buttonLicense.Text = Resources.About_ButtonLicense;
+            this.buttonLicense.Text = global::NFU.Properties.Resources.About_ButtonLicense;
             this.buttonLicense.UseVisualStyleBackColor = true;
             this.buttonLicense.Click += new System.EventHandler(this.OpenLicense);
             // 
@@ -263,7 +262,7 @@ namespace NFU
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = Resources.About_Title;
+            this.Text = global::NFU.Properties.Resources.About_Title;
             this.ResumeLayout(false);
             this.PerformLayout();
 

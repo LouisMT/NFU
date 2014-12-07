@@ -7,7 +7,6 @@ namespace NFU.Models
     public class UploadFile
     {
         private string path;
-        private bool isDirectory;
 
         public enum Type
         {
@@ -25,6 +24,9 @@ namespace NFU.Models
             }
         }
 
+        /// <summary>
+        /// The full path of this file.
+        /// </summary>
         public string Path
         {
             get
@@ -35,25 +37,30 @@ namespace NFU.Models
             {
                 path = value;
                 FileName = Misc.GetFilename(path);
-                isDirectory = Directory.Exists(path);
+                IsDirectory = Directory.Exists(path);
             }
         }
 
+        /// <summary>
+        /// The file name of this file.
+        /// </summary>
         public string FileName
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Indicates if this file is a directory or a zipped directory.
+        /// </summary>
         public bool IsDirectory
         {
-            get
-            {
-                return isDirectory;
-            }
+            get;
+            set;
         }
 
         /// <summary>
+        /// Indicates if this file is temporary.
         /// Temporary files will be deleted after uploading.
         /// </summary>
         public bool IsTemporary
@@ -62,6 +69,9 @@ namespace NFU.Models
             set;
         }
 
+        /// <summary>
+        /// Delete this file if it is temporary.
+        /// </summary>
         public void DeleteIfTemporary()
         {
             if (IsTemporary)
