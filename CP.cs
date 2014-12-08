@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using NFU.Properties;
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace NFU
@@ -15,6 +16,8 @@ namespace NFU
         public Cp()
         {
             InitializeComponent();
+
+            SetDebugButtonState();
 
             comboBoxScreen.Items.Add(Resources.CP_MergeScreens);
 
@@ -33,7 +36,6 @@ namespace NFU
             checkBoxPause.Checked = Settings.Default.HandlePause;
             checkBoxPrintScreen.Checked = Settings.Default.HandlePrintScreen;
             checkBoxQuickScreenshots.Checked = Settings.Default.QuickScreenshots;
-            checkBoxDebug.Checked = Settings.Default.Debug;
             checkBoxSytemTray.Checked = Settings.Default.MinimizeSystemTray;
 
             try
@@ -42,7 +44,7 @@ namespace NFU
             }
             catch
             {
-                Misc.HandleError(new Exception(Resources.CP_NoRunKey), Resources.CP_Title, false, false);
+                Misc.HandleError(new Exception(Resources.CP_NoRunKey), Resources.CP_Title, false);
             }
 
             comboBoxFilename.SelectedIndex = Settings.Default.Filename;
@@ -73,7 +75,6 @@ namespace NFU
             Settings.Default.HandlePause = checkBoxPause.Checked;
             Settings.Default.HandlePrintScreen = checkBoxPrintScreen.Checked;
             Settings.Default.QuickScreenshots = checkBoxQuickScreenshots.Checked;
-            Settings.Default.Debug = checkBoxDebug.Checked;
             Settings.Default.MinimizeSystemTray = checkBoxSytemTray.Checked;
 
             try
@@ -90,7 +91,7 @@ namespace NFU
             }
             catch
             {
-                Misc.HandleError(new Exception(Resources.CP_RunKeyChangeFailed), Resources.CP_Title, false, false);
+                Misc.HandleError(new Exception(Resources.CP_RunKeyChangeFailed), Resources.CP_Title, false);
             }
 
             Settings.Default.Filename = comboBoxFilename.SelectedIndex;
@@ -221,6 +222,67 @@ namespace NFU
                     textBoxPassword.UseSystemPasswordChar = true;
                     break;
             }
+        }
+
+        /// <summary>
+        /// Set the state of the debug button.
+        /// </summary>
+        private void SetDebugButtonState()
+        {
+            buttonDebug.FlatStyle = FlatStyle.System;
+
+            if (Settings.Default.Debug)
+            {
+                // Disable UAC shield
+                Misc.SendMessage(buttonDebug.Handle, 0x160C, 0, 0x0);
+                buttonDebug.Text = Resources.CP_DisableDebug;
+            }
+            else
+            {
+                // Enable UAC shield
+                Misc.SendMessage(buttonDebug.Handle, 0x160C, 0, 0xFFFFFFFF);
+                buttonDebug.Text = Resources.CP_EnableDebug;
+            }
+        }
+
+        /// <summary>
+        /// Enable or disable debug mode.
+        /// </summary>
+        private void EnableDisableDebug(object sender, EventArgs e)
+        {
+            if (Settings.Default.Debug)
+            {
+                Settings.Default.Debug = false;
+                Settings.Default.Save();
+            }
+            else
+            {
+                // Save settings just to be safe
+                Settings.Default.Save();
+
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    UseShellExecute = true,
+                    FileName = Application.ExecutablePath,
+                    Verb = "runas",
+                    Arguments = "debug"
+                };
+
+                Process process = new Process
+                {
+                    StartInfo = startInfo,
+                    EnableRaisingEvents = true
+                };
+
+                process.Start();
+                process.WaitForExit();
+
+                // Reload settings to check if debug
+                // mode has been successfully enabled
+                Settings.Default.Reload();
+            }
+
+            SetDebugButtonState();
         }
     }
 }

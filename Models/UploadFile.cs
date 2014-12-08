@@ -60,7 +60,7 @@ namespace NFU.Models
         }
 
         /// <summary>
-        /// The sstate of this file.
+        /// The state of this file.
         /// </summary>
         public FileState State
         {
@@ -99,7 +99,7 @@ namespace NFU.Models
                 }
                 catch
                 {
-                    Misc.HandleError(new Exception(String.Format(Resources.UploadFile_DeleteError, _path)), Resources.UploadFile_Title, false, false);
+                    Misc.HandleError(new Exception(String.Format(Resources.UploadFile_DeleteError, _path)), Resources.UploadFile_Title, false);
                 }
             }
         }

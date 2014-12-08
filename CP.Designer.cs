@@ -51,13 +51,13 @@ namespace NFU
             this.comboBoxFilename = new System.Windows.Forms.ComboBox();
             this.separatorNFU = new NFU.LineSeparator();
             this.tabNFU = new System.Windows.Forms.TabPage();
+            this.buttonDebug = new System.Windows.Forms.Button();
             this.checkBoxQuickScreenshots = new System.Windows.Forms.CheckBox();
             this.checkBoxStartWindows = new System.Windows.Forms.CheckBox();
             this.checkBoxSytemTray = new System.Windows.Forms.CheckBox();
             this.comboBoxScreen = new System.Windows.Forms.ComboBox();
             this.checkBoxPause = new System.Windows.Forms.CheckBox();
             this.checkBoxPrintScreen = new System.Windows.Forms.CheckBox();
-            this.checkBoxDebug = new System.Windows.Forms.CheckBox();
             this.seperatorNFU = new NFU.LineSeparator();
             this.tabWebHook = new System.Windows.Forms.TabPage();
             this.labelWebHook = new System.Windows.Forms.Label();
@@ -314,21 +314,31 @@ namespace NFU
             // 
             // tabNFU
             // 
+            this.tabNFU.Controls.Add(this.buttonDebug);
             this.tabNFU.Controls.Add(this.checkBoxQuickScreenshots);
             this.tabNFU.Controls.Add(this.checkBoxStartWindows);
             this.tabNFU.Controls.Add(this.checkBoxSytemTray);
             this.tabNFU.Controls.Add(this.comboBoxScreen);
             this.tabNFU.Controls.Add(this.checkBoxPause);
             this.tabNFU.Controls.Add(this.checkBoxPrintScreen);
-            this.tabNFU.Controls.Add(this.checkBoxDebug);
             this.tabNFU.Controls.Add(this.seperatorNFU);
             this.tabNFU.Location = new System.Drawing.Point(4, 22);
             this.tabNFU.Name = "tabNFU";
             this.tabNFU.Padding = new System.Windows.Forms.Padding(3);
             this.tabNFU.Size = new System.Drawing.Size(452, 171);
             this.tabNFU.TabIndex = 2;
-            this.tabNFU.Text = global::NFU.Properties.Resources.CP_Nfu;
+            this.tabNFU.Text = global::NFU.Properties.Resources.AppName;
             this.tabNFU.UseVisualStyleBackColor = true;
+            // 
+            // buttonDebug
+            // 
+            this.buttonDebug.Location = new System.Drawing.Point(313, 142);
+            this.buttonDebug.Name = "buttonDebug";
+            this.buttonDebug.Size = new System.Drawing.Size(133, 23);
+            this.buttonDebug.TabIndex = 8;
+            this.buttonDebug.Text = global::NFU.Properties.Resources.CP_EnableDebug;
+            this.buttonDebug.UseVisualStyleBackColor = true;
+            this.buttonDebug.Click += new System.EventHandler(this.EnableDisableDebug);
             // 
             // checkBoxQuickScreenshots
             // 
@@ -343,8 +353,9 @@ namespace NFU
             // checkBoxStartWindows
             // 
             this.checkBoxStartWindows.AutoSize = true;
-            this.checkBoxStartWindows.Location = new System.Drawing.Point(6, 148);
+            this.checkBoxStartWindows.Location = new System.Drawing.Point(329, 41);
             this.checkBoxStartWindows.Name = "checkBoxStartWindows";
+            this.checkBoxStartWindows.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.checkBoxStartWindows.Size = new System.Drawing.Size(117, 17);
             this.checkBoxStartWindows.TabIndex = 7;
             this.checkBoxStartWindows.Text = global::NFU.Properties.Resources.CP_StartWithWindows;
@@ -389,17 +400,6 @@ namespace NFU
             this.checkBoxPrintScreen.TabIndex = 3;
             this.checkBoxPrintScreen.Text = global::NFU.Properties.Resources.CP_HandlePrintScreenKey;
             this.checkBoxPrintScreen.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxDebug
-            // 
-            this.checkBoxDebug.AutoSize = true;
-            this.checkBoxDebug.Location = new System.Drawing.Point(388, 41);
-            this.checkBoxDebug.Name = "checkBoxDebug";
-            this.checkBoxDebug.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.checkBoxDebug.Size = new System.Drawing.Size(58, 17);
-            this.checkBoxDebug.TabIndex = 5;
-            this.checkBoxDebug.Text = global::NFU.Properties.Resources.CP_Debug;
-            this.checkBoxDebug.UseVisualStyleBackColor = true;
             // 
             // seperatorNFU
             // 
@@ -478,7 +478,7 @@ namespace NFU
             this.labelHelpText.TabIndex = 2;
             this.labelHelpText.Text = global::NFU.Properties.Resources.CP_EffectAfterRestart;
             // 
-            // CP
+            // Cp
             // 
             this.AcceptButton = this.buttonSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -491,7 +491,7 @@ namespace NFU
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "CP";
+            this.Name = "Cp";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -517,7 +517,6 @@ namespace NFU
         private System.Windows.Forms.TabControl tabControlCP;
         private System.Windows.Forms.TabPage tabNFU;
         private System.Windows.Forms.Button buttonSave;
-        private System.Windows.Forms.CheckBox checkBoxDebug;
         private System.Windows.Forms.TabPage tabServer;
         private System.Windows.Forms.ComboBox comboBoxType;
         private LineSeparator seperatorServer;
@@ -551,6 +550,7 @@ namespace NFU
         private System.Windows.Forms.TextBox textBoxWebHookUrl;
         private System.Windows.Forms.CheckBox checkBoxEnableWebHook;
         private System.Windows.Forms.Label labelWebHook;
+        private System.Windows.Forms.Button buttonDebug;
 
     }
 }

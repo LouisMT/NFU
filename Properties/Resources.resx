@@ -146,7 +146,7 @@
     <value>&amp;License</value>
   </data>
   <data name="About_ButtonOpenLog" xml:space="preserve">
-    <value>&amp;Open log file</value>
+    <value>&amp;Open log</value>
   </data>
   <data name="About_ChangeLogUrl" xml:space="preserve">
     <value>https://github.com/Naxiz/NFU/commits/master</value>
@@ -171,14 +171,6 @@
   </data>
   <data name="About_LicenseUrl" xml:space="preserve">
     <value>https://github.com/naxiz/NFU/blob/master/LICENSE</value>
-  </data>
-  <data name="About_LogFileNotFound" xml:space="preserve">
-    <value>The log could not be found.
-
-Did you enable debug mode?</value>
-  </data>
-  <data name="About_LogFileNotFoundTitle" xml:space="preserve">
-    <value>NFU log not found</value>
   </data>
   <data name="About_Name" xml:space="preserve">
     <value>Name</value>
@@ -249,9 +241,6 @@ Did you enable debug mode?</value>
   <data name="Core_NoFilesSelected" xml:space="preserve">
     <value>No files selected</value>
   </data>
-  <data name="Core_NotifiyIconTitle" xml:space="preserve">
-    <value>NFU</value>
-  </data>
   <data name="Core_PauseHotKeyNotRegistered" xml:space="preserve">
     <value>Pause hotkey could not be registered. Is it already in use?</value>
   </data>
@@ -278,9 +267,6 @@ Did you enable debug mode?</value>
   </data>
   <data name="Core_StillActiveTitle" xml:space="preserve">
     <value>NFU is still active</value>
-  </data>
-  <data name="Core_Title" xml:space="preserve">
-    <value>NFU</value>
   </data>
   <data name="Core_Update" xml:space="preserve">
     <value>Update</value>
@@ -311,9 +297,6 @@ Did you enable debug mode?</value>
   </data>
   <data name="CP_Counter" xml:space="preserve">
     <value>Counter: {0}</value>
-  </data>
-  <data name="CP_Debug" xml:space="preserve">
-    <value>Debug</value>
   </data>
   <data name="CP_Directory" xml:space="preserve">
     <value>Directory</value>
@@ -353,9 +336,6 @@ Did you enable debug mode?</value>
   </data>
   <data name="CP_MinimizeToSystemTray" xml:space="preserve">
     <value>Minimize to system tray</value>
-  </data>
-  <data name="CP_Nfu" xml:space="preserve">
-    <value>NFU</value>
   </data>
   <data name="CP_OriginalFileName" xml:space="preserve">
     <value>Use original filename</value>
@@ -495,9 +475,6 @@ Continue?</value>
   <data name="Uploader_Ftps" xml:space="preserve">
     <value>FTP(S)</value>
   </data>
-  <data name="Uploader_Nfu" xml:space="preserve">
-    <value>NFU</value>
-  </data>
   <data name="Uploader_Sftp" xml:space="preserve">
     <value>SFTP</value>
   </data>
@@ -530,9 +507,6 @@ The download link can be found in the about box.</value>
   <data name="About_CopyrightText" xml:space="preserve">
     <value>Louis Matthijssen 2014</value>
   </data>
-  <data name="About_Nfu" xml:space="preserve">
-    <value>NFU</value>
-  </data>
   <data name="Uploader_ZippingDirectory" xml:space="preserve">
     <value>Zipping directory...</value>
   </data>
@@ -552,7 +526,9 @@ The download link can be found in the about box.</value>
     <value>Error</value>
   </data>
   <data name="Misc_LogNotWriteable" xml:space="preserve">
-    <value>An error occurred, but the log file isn't writeable.</value>
+    <value>An error occurred, but the log isn't writeable. Debug mode will be disabled.
+
+Try to enable debug mode in order to solve this issue.</value>
   </data>
   <data name="Core_UnsupportedData" xml:space="preserve">
     <value>Unsupported data on clipboard.</value>
@@ -571,5 +547,15 @@ The download link can be found in the about box.</value>
   </data>
   <data name="UploadFile_Title" xml:space="preserve">
     <value>UploadFile</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>NFU</value>
+    <comment>Should not be translated</comment>
+  </data>
+  <data name="CP_DisableDebug" xml:space="preserve">
+    <value>Disable debug</value>
+  </data>
+  <data name="CP_EnableDebug" xml:space="preserve">
+    <value>Enable debug</value>
   </data>
 </root>

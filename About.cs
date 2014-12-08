@@ -1,7 +1,6 @@
 ﻿using NFU.Properties;
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -82,21 +81,11 @@ namespace NFU
         }
 
         /// <summary>
-        /// Open the NFU log.
+        /// Open the NFU log using the Event Viewer with a filter.
         /// </summary>
         private void OpenNfuLog(object sender, EventArgs e)
         {
-            string filename = String.Format(@"{0}\{1}", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Settings.Default.LogFileName);
-
-            if (File.Exists(filename))
-            {
-                Process.Start(filename);
-            }
-            else
-            {
-                MessageBox.Show(Resources.About_LogFileNotFound,
-                    Resources.About_LogFileNotFoundTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            Process.Start("eventvwr", "/f:\"<QueryList><Query Id='0' Path='Application'><Select Path='Application'>*[System[Provider[@Name='NFU']]]</Select></Query></QueryList>\"");
         }
 
         /// <summary>

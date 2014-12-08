@@ -111,7 +111,7 @@
             // 
             this.notifyIconNFU.ContextMenuStrip = this.contextMenuMain;
             this.notifyIconNFU.Icon = global::NFU.Properties.Resources.NFU;
-            this.notifyIconNFU.Text = global::NFU.Properties.Resources.Core_NotifiyIconTitle;
+            this.notifyIconNFU.Text = global::NFU.Properties.Resources.AppName;
             this.notifyIconNFU.Visible = true;
             this.notifyIconNFU.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIconNfuClick);
             // 
@@ -206,7 +206,7 @@
             this.MaximizeBox = false;
             this.Name = "Core";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = global::NFU.Properties.Resources.Core_Title;
+            this.Text = global::NFU.Properties.Resources.AppName;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CoreFormClosing);
             this.Shown += new System.EventHandler(this.CoreShown);
             this.Resize += new System.EventHandler(this.CoreResize);

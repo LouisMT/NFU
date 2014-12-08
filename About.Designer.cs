@@ -93,7 +93,7 @@
             this.textBoxName.ReadOnly = true;
             this.textBoxName.Size = new System.Drawing.Size(253, 20);
             this.textBoxName.TabIndex = 1;
-            this.textBoxName.Text = global::NFU.Properties.Resources.About_Nfu;
+            this.textBoxName.Text = global::NFU.Properties.Resources.AppName;
             // 
             // textBoxCopyright
             // 

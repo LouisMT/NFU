@@ -1,5 +1,7 @@
 ﻿using NFU.Properties;
 using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -37,6 +39,26 @@ namespace NFU
 
             try
             {
+                if (args.Any(a => a == "debug"))
+                {
+                    if (!Settings.Default.Debug)
+                    {
+                        try
+                        {
+                            if (!EventLog.SourceExists(Resources.AppName))
+                            {
+                                EventLog.CreateEventSource(Resources.AppName, "Application");
+                            }
+
+                            Settings.Default.Debug = true;
+                            Settings.Default.Save();
+                        }
+                        catch { }
+                    }
+
+                    return;
+                }      
+
                 if (Mutex.WaitOne(TimeSpan.Zero, true))
                 {
                     if (Settings.Default.NeedsUpgrade)
@@ -62,9 +84,10 @@ namespace NFU
                             FormCp.ShowDialog();
                         };
 
-                    if (args.Length > 0)
-                        if (args[0] == "minimized")
-                            FormCore.WindowState = FormWindowState.Minimized;
+                    if (args.Any(a => a == "minimized"))
+                    {
+                        FormCore.WindowState = FormWindowState.Minimized;
+                    } 
 
                     Application.Run(FormCore);
                 }

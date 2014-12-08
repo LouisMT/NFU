@@ -1,6 +1,7 @@
 ﻿using NFU.Properties;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Net.Security;
@@ -106,27 +107,25 @@ namespace NFU
         /// </summary>
         /// <param name="err">The exception.</param>
         /// <param name="name">Name of the exception.</param>
-        /// <param name="fatal">Whether the exception is fatal or not.</param>
         /// <param name="show">Whether the exception should be shown in the status bar.</param>
-        public static void HandleError(Exception err, string name, bool fatal = false, bool show = true)
+        /// <param name="type">The type of error, Error is considered fatal and will close the program.</param>
+        public static void HandleError(Exception err, string name, bool show = true, EventLogEntryType type = EventLogEntryType.Warning)
         {
             try
             {
                 if (Settings.Default.Debug)
-                    File.AppendAllText(
-                        String.Format(@"{0}\{1}", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                            Settings.Default.LogFileName),
-                        String.Format("[{0}] [{1}] ({2}) -> {3}{4}", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), name,
-                            fatal,
-                            err != null ? err.Message : "", Environment.NewLine));
+                {
+                    EventLog.WriteEntry(Resources.AppName, String.Format("[{0}]: {1}\n\n{2}", name, err.Message, err.StackTrace), type);
+                }
             }
             catch
             {
-                MessageBox.Show(Resources.Misc_LogNotWriteable, Resources.Misc_Error, MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show(Resources.Misc_LogNotWriteable, Resources.Misc_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Settings.Default.Debug = false;
+                Settings.Default.Save();
             }
 
-            if (fatal)
+            if (type == EventLogEntryType.Error)
             {
                 MessageBox.Show(Resources.Misc_FatalError, Resources.Misc_FatalErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();

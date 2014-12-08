@@ -116,7 +116,7 @@ namespace NFU.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Open log file.
+        ///   Looks up a localized string similar to &amp;Open log.
         /// </summary>
         internal static string About_ButtonOpenLog {
             get {
@@ -206,40 +206,11 @@ namespace NFU.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The log could not be found.
-        ///
-        ///Did you enable debug mode?.
-        /// </summary>
-        internal static string About_LogFileNotFound {
-            get {
-                return ResourceManager.GetString("About_LogFileNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NFU log not found.
-        /// </summary>
-        internal static string About_LogFileNotFoundTitle {
-            get {
-                return ResourceManager.GetString("About_LogFileNotFoundTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         internal static string About_Name {
             get {
                 return ResourceManager.GetString("About_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NFU.
-        /// </summary>
-        internal static string About_Nfu {
-            get {
-                return ResourceManager.GetString("About_Nfu", resourceCulture);
             }
         }
         
@@ -330,6 +301,15 @@ namespace NFU.Properties {
         internal static string About_Version {
             get {
                 return ResourceManager.GetString("About_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NFU.
+        /// </summary>
+        internal static string AppName {
+            get {
+                return ResourceManager.GetString("AppName", resourceCulture);
             }
         }
         
@@ -451,15 +431,6 @@ namespace NFU.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NFU.
-        /// </summary>
-        internal static string Core_NotifiyIconTitle {
-            get {
-                return ResourceManager.GetString("Core_NotifiyIconTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Pause hotkey could not be registered. Is it already in use?.
         /// </summary>
         internal static string Core_PauseHotKeyNotRegistered {
@@ -537,15 +508,6 @@ namespace NFU.Properties {
         internal static string Core_StillActiveTitle {
             get {
                 return ResourceManager.GetString("Core_StillActiveTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NFU.
-        /// </summary>
-        internal static string Core_Title {
-            get {
-                return ResourceManager.GetString("Core_Title", resourceCulture);
             }
         }
         
@@ -649,15 +611,6 @@ namespace NFU.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Debug.
-        /// </summary>
-        internal static string CP_Debug {
-            get {
-                return ResourceManager.GetString("CP_Debug", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Directory.
         /// </summary>
         internal static string CP_Directory {
@@ -667,11 +620,29 @@ namespace NFU.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disable debug.
+        /// </summary>
+        internal static string CP_DisableDebug {
+            get {
+                return ResourceManager.GetString("CP_DisableDebug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Some settings may only take effect after a restart.
         /// </summary>
         internal static string CP_EffectAfterRestart {
             get {
                 return ResourceManager.GetString("CP_EffectAfterRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable debug.
+        /// </summary>
+        internal static string CP_EnableDebug {
+            get {
+                return ResourceManager.GetString("CP_EnableDebug", resourceCulture);
             }
         }
         
@@ -780,15 +751,6 @@ namespace NFU.Properties {
         internal static string CP_MinimizeToSystemTray {
             get {
                 return ResourceManager.GetString("CP_MinimizeToSystemTray", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NFU.
-        /// </summary>
-        internal static string CP_Nfu {
-            get {
-                return ResourceManager.GetString("CP_Nfu", resourceCulture);
             }
         }
         
@@ -1109,7 +1071,9 @@ namespace NFU.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An error occurred, but the log file isn&apos;t writeable..
+        ///   Looks up a localized string similar to An error occurred, but the log isn&apos;t writeable. Debug mode will be disabled.
+        ///
+        ///Try to enable debug mode in order to solve this issue..
         /// </summary>
         internal static string Misc_LogNotWriteable {
             get {
@@ -1254,15 +1218,6 @@ namespace NFU.Properties {
         internal static string Uploader_Ftps {
             get {
                 return ResourceManager.GetString("Uploader_Ftps", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NFU.
-        /// </summary>
-        internal static string Uploader_Nfu {
-            get {
-                return ResourceManager.GetString("Uploader_Nfu", resourceCulture);
             }
         }
         

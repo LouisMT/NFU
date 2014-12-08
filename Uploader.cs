@@ -331,7 +331,7 @@ namespace NFU
                 byte[] buffer = new byte[1024 * 10];
 
                 IntPtr token = IntPtr.Zero;
-                Misc.LogonUser(Settings.Default.Username, Resources.Uploader_Nfu, Misc.Decrypt(Settings.Default.Password), 9, 0, ref token);
+                Misc.LogonUser(Settings.Default.Username, Resources.AppName, Misc.Decrypt(Settings.Default.Password), 9, 0, ref token);
                 WindowsIdentity identity = new WindowsIdentity(token);
 
                 string destPath = (!String.IsNullOrEmpty(Settings.Default.Directory)) ? String.Format(@"\\{0}\{1}\{2}", Settings.Default.Host, Settings.Default.Directory, file.FileName) : String.Format(@"\\{0}\{1}", Settings.Default.Host, file.FileName);
