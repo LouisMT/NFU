@@ -181,7 +181,8 @@ namespace NFU
                 WebHook webHook = new WebHook
                 {
                     Success = success,
-                    Directory = Settings.Default.Directory
+                    Directory = Settings.Default.Directory,
+                    Secret = Misc.Decrypt(Settings.Default.WebHookSecret)
                 };
 
                 foreach (UploadFile file in _uploadFiles)

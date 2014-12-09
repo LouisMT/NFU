@@ -60,6 +60,8 @@ namespace NFU
             this.checkBoxPrintScreen = new System.Windows.Forms.CheckBox();
             this.seperatorNFU = new NFU.LineSeparator();
             this.tabWebHook = new System.Windows.Forms.TabPage();
+            this.textBoxWebHookSecret = new System.Windows.Forms.TextBox();
+            this.labelWebHookSecret = new System.Windows.Forms.Label();
             this.labelWebHook = new System.Windows.Forms.Label();
             this.textBoxWebHookUrl = new System.Windows.Forms.TextBox();
             this.checkBoxEnableWebHook = new System.Windows.Forms.CheckBox();
@@ -413,6 +415,8 @@ namespace NFU
             // 
             // tabWebHook
             // 
+            this.tabWebHook.Controls.Add(this.textBoxWebHookSecret);
+            this.tabWebHook.Controls.Add(this.labelWebHookSecret);
             this.tabWebHook.Controls.Add(this.labelWebHook);
             this.tabWebHook.Controls.Add(this.textBoxWebHookUrl);
             this.tabWebHook.Controls.Add(this.checkBoxEnableWebHook);
@@ -422,6 +426,22 @@ namespace NFU
             this.tabWebHook.TabIndex = 3;
             this.tabWebHook.Text = global::NFU.Properties.Resources.CP_WebHook;
             this.tabWebHook.UseVisualStyleBackColor = true;
+            // 
+            // textBoxWebHookSecret
+            // 
+            this.textBoxWebHookSecret.Location = new System.Drawing.Point(93, 32);
+            this.textBoxWebHookSecret.Name = "textBoxWebHookSecret";
+            this.textBoxWebHookSecret.Size = new System.Drawing.Size(353, 20);
+            this.textBoxWebHookSecret.TabIndex = 4;
+            // 
+            // labelWebHookSecret
+            // 
+            this.labelWebHookSecret.AutoSize = true;
+            this.labelWebHookSecret.Location = new System.Drawing.Point(3, 35);
+            this.labelWebHookSecret.Name = "labelWebHookSecret";
+            this.labelWebHookSecret.Size = new System.Drawing.Size(84, 13);
+            this.labelWebHookSecret.TabIndex = 3;
+            this.labelWebHookSecret.Text = global::NFU.Properties.Resources.CP_Secret;
             // 
             // labelWebHook
             // 
@@ -434,16 +454,17 @@ namespace NFU
             // 
             // textBoxWebHookUrl
             // 
-            this.textBoxWebHookUrl.Location = new System.Drawing.Point(38, 6);
+            this.textBoxWebHookUrl.Location = new System.Drawing.Point(93, 6);
             this.textBoxWebHookUrl.Name = "textBoxWebHookUrl";
-            this.textBoxWebHookUrl.Size = new System.Drawing.Size(294, 20);
+            this.textBoxWebHookUrl.Size = new System.Drawing.Size(353, 20);
             this.textBoxWebHookUrl.TabIndex = 1;
             // 
             // checkBoxEnableWebHook
             // 
             this.checkBoxEnableWebHook.AutoSize = true;
-            this.checkBoxEnableWebHook.Location = new System.Drawing.Point(338, 8);
+            this.checkBoxEnableWebHook.Location = new System.Drawing.Point(335, 58);
             this.checkBoxEnableWebHook.Name = "checkBoxEnableWebHook";
+            this.checkBoxEnableWebHook.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.checkBoxEnableWebHook.Size = new System.Drawing.Size(111, 17);
             this.checkBoxEnableWebHook.TabIndex = 0;
             this.checkBoxEnableWebHook.Text = global::NFU.Properties.Resources.CP_EnableWebHook;
@@ -551,6 +572,8 @@ namespace NFU
         private System.Windows.Forms.CheckBox checkBoxEnableWebHook;
         private System.Windows.Forms.Label labelWebHook;
         private System.Windows.Forms.Button buttonDebug;
+        private System.Windows.Forms.TextBox textBoxWebHookSecret;
+        private System.Windows.Forms.Label labelWebHookSecret;
 
     }
 }

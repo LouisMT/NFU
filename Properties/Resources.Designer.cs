@@ -818,6 +818,15 @@ namespace NFU.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Secret (optional).
+        /// </summary>
+        internal static string CP_Secret {
+            get {
+                return ResourceManager.GetString("CP_Secret", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Server.
         /// </summary>
         internal static string CP_Server {

@@ -558,4 +558,7 @@ Try to enable debug mode in order to solve this issue.</value>
   <data name="CP_EnableDebug" xml:space="preserve">
     <value>Enable debug</value>
   </data>
+  <data name="CP_Secret" xml:space="preserve">
+    <value>Secret (optional)</value>
+  </data>
 </root>

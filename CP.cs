@@ -49,8 +49,9 @@ namespace NFU
 
             comboBoxFilename.SelectedIndex = Settings.Default.Filename;
 
-            checkBoxEnableWebHook.Checked = Settings.Default.EnableWebHook;
             textBoxWebHookUrl.Text = Settings.Default.WebHookUrl;
+            textBoxWebHookSecret.Text = Misc.Decrypt(Settings.Default.WebHookSecret);
+            checkBoxEnableWebHook.Checked = Settings.Default.EnableWebHook;
         }
 
         /// <summary>
@@ -97,8 +98,9 @@ namespace NFU
             Settings.Default.Filename = comboBoxFilename.SelectedIndex;
 
             // TODO: Validate URL
-            Settings.Default.EnableWebHook = checkBoxEnableWebHook.Checked;
             Settings.Default.WebHookUrl = textBoxWebHookUrl.Text;
+            Settings.Default.WebHookSecret = Misc.Encrypt(textBoxWebHookSecret.Text);
+            Settings.Default.EnableWebHook = checkBoxEnableWebHook.Checked;
 
             if (Settings.Default.FirstRun) Settings.Default.FirstRun = false;
 

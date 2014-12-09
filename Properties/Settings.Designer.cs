@@ -367,5 +367,17 @@ namespace NFU.Properties {
                 this["WebHookUrl"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WebHookSecret {
+            get {
+                return ((string)(this["WebHookSecret"]));
+            }
+            set {
+                this["WebHookSecret"] = value;
+            }
+        }
     }
 }

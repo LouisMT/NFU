@@ -208,6 +208,11 @@ namespace NFU
         /// <returns>The encrypted password.</returns>
         public static string Encrypt(string plainPassword)
         {
+            if (String.IsNullOrEmpty(plainPassword))
+            {
+                return String.Empty;
+            }
+
             try
             {
                 byte[] initVectorBytes = Encoding.ASCII.GetBytes(Settings.Default.IV);
@@ -242,6 +247,11 @@ namespace NFU
         /// <returns>The password in plain text.</returns>
         public static string Decrypt(string encryptedPassword)
         {
+            if (String.IsNullOrEmpty(encryptedPassword))
+            {
+                return String.Empty;
+            }
+
             try
             {
                 byte[] initVectorBytes = Encoding.ASCII.GetBytes(Settings.Default.IV);
