@@ -1,9 +1,9 @@
-﻿using NFU.Properties;
+﻿using Nfu.Properties;
 using System;
 using System.IO;
 using IOPath = System.IO.Path;
 
-namespace NFU.Models
+namespace Nfu.Models
 {
     public enum FileState
     {
@@ -99,7 +99,7 @@ namespace NFU.Models
                 }
                 catch
                 {
-                    Misc.HandleError(new Exception(String.Format(Resources.UploadFile_DeleteError, _path)), Resources.UploadFile_Title, false);
+                    Misc.HandleError(new Exception(String.Format(Resources.DeleteError, _path)), Resources.Title, false);
                 }
             }
         }

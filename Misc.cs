@@ -1,4 +1,4 @@
-﻿using NFU.Properties;
+﻿using Nfu.Properties;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -12,7 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace NFU
+namespace Nfu
 {
     public sealed class LineSeparator : UserControl
     {
@@ -84,7 +84,7 @@ namespace NFU
 
             if (!RegisterHotKey(handle, id, 0, key))
             {
-                HandleError(new Win32Exception(String.Format(Resources.Misc_RegisterHotKeyFailed, key)), Resources.Misc_RegisterHotKey);
+                HandleError(new Win32Exception(String.Format(Resources.RegisterHotKeyFailed, key)), Resources.RegisterHotKey);
                 return false;
             }
 
@@ -120,14 +120,13 @@ namespace NFU
             }
             catch
             {
-                MessageBox.Show(Resources.Misc_LogNotWriteable, Resources.Misc_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Resources.LogNotWriteable, Resources.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Settings.Default.Debug = false;
-                Settings.Default.Save();
             }
 
             if (type == EventLogEntryType.Error)
             {
-                MessageBox.Show(Resources.Misc_FatalError, Resources.Misc_FatalErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Resources.FatalError, Resources.FatalErrorTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
             else if (show)
@@ -144,7 +143,7 @@ namespace NFU
         /// <returns>The error text.</returns>
         public static string HandleErrorStatusText(string name)
         {
-            return String.Format(Resources.Misc_Failed, name);
+            return String.Format(Resources.Failed, name);
         }
 
         /// <summary>
@@ -167,7 +166,6 @@ namespace NFU
 
                     filename = String.Format("{0}-{1}{2}", DateTime.Now.ToString("ddMMyyyy"), (++Settings.Default.Count).ToString("D5"), Path.GetExtension(filename));
 
-                    Settings.Default.Save();
                     break;
             }
 
@@ -198,7 +196,7 @@ namespace NFU
             if (Program.FormCore.WindowState != FormWindowState.Minimized)
                 return;
 
-            Program.FormCore.notifyIconNFU.ShowBalloonTip(1000, title, text, icon);
+            Program.FormCore.notifyIconNfu.ShowBalloonTip(1000, title, text, icon);
         }
 
         /// <summary>
@@ -235,7 +233,7 @@ namespace NFU
             }
             catch (Exception e)
             {
-                HandleError(e, Resources.Misc_Encrypt);
+                HandleError(e, Resources.Encrypt);
                 return null;
             }
         }
@@ -273,7 +271,7 @@ namespace NFU
             }
             catch (Exception e)
             {
-                HandleError(e, Resources.Misc_Decrypt);
+                HandleError(e, Resources.Decrypt);
                 return null;
             }
         }
@@ -293,10 +291,9 @@ namespace NFU
             // Check if SSL errors occured and if certificate hash is not trusted
             if (sslPolicyErrors != SslPolicyErrors.None && Settings.Default.TrustedHash != certificate.GetCertHashString())
             {
-                if (MessageBox.Show(String.Format(Resources.Misc_UntrustedCertificate, certificate.Subject, certificate.Issuer, certificate.GetCertHashString()), Resources.Misc_UntrustedCertificateTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                if (MessageBox.Show(String.Format(Resources.UntrustedCertificate, certificate.Subject, certificate.Issuer, certificate.GetCertHashString()), Resources.UntrustedCertificateTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                 {
                     Settings.Default.TrustedHash = certificate.GetCertHashString();
-                    Settings.Default.Save();
                 }
                 else
                 {

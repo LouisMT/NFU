@@ -1,4 +1,4 @@
-﻿namespace NFU.Models
+﻿namespace Nfu.Models
 {
     public class WebHookFile
     {

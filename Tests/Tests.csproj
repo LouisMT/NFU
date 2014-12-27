@@ -54,9 +54,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NFU.csproj">
+    <ProjectReference Include="..\Nfu.csproj">
       <Project>{ac829096-177b-4c27-95e8-a971e2d8b00f}</Project>
-      <Name>NFU</Name>
+      <Name>Nfu</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

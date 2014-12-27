@@ -1,10 +1,10 @@
-﻿using NFU.Properties;
+﻿using Nfu.Properties;
 using System;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace NFU
+namespace Nfu
 {
     partial class About : Form
     {
@@ -23,14 +23,14 @@ namespace NFU
             textBoxVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
             ListViewItem sshNet = new ListViewItem(new[] {
-                Resources.About_SshNetName,
-                Resources.About_SshNetUrl,
-                Resources.About_SshNetUsedFor
+                Resources.SshNetName,
+                Resources.SshNetUrl,
+                Resources.SshNetUsedFor
             });
             ListViewItem iconPack = new ListViewItem(new[] {
-                Resources.About_IcoMoonName,
-                Resources.About_IcoMoonUrl,
-                Resources.About_IcoMoonUsedFor
+                Resources.IcoMoonName,
+                Resources.IcoMoonUrl,
+                Resources.IcoMoonUsedFor
             });
 
             listViewLibraries.Items.AddRange(new[] {
@@ -53,7 +53,7 @@ namespace NFU
         /// </summary>
         private void OpenChangelog(object sender, EventArgs e)
         {
-            Process.Start(Resources.About_ChangeLogUrl);
+            Process.Start(Resources.ChangeLogUrl);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace NFU
         /// </summary>
         private void OpenContributors(object sender, EventArgs e)
         {
-            Process.Start(Resources.About_ContributorsUrl);
+            Process.Start(Resources.ContributorsUrl);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace NFU
         /// </summary>
         private void OpenIssues(object sender, EventArgs e)
         {
-            Process.Start(Resources.About_IssuesUrl);
+            Process.Start(Resources.IssuesUrl);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace NFU
         /// </summary>
         private void OpenLicense(object sender, EventArgs e)
         {
-            Process.Start(Resources.About_LicenseUrl);
+            Process.Start(Resources.LicenseUrl);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace NFU
         /// </summary>
         private void OpenSource(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(Resources.About_SourceUrl);
+            Process.Start(Resources.SourceUrl);
         }
     }
 }

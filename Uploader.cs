@@ -1,5 +1,5 @@
-﻿using NFU.Models;
-using NFU.Properties;
+﻿using Nfu.Models;
+using Nfu.Properties;
 using Renci.SshNet;
 using Renci.SshNet.Sftp;
 using System;
@@ -14,7 +14,7 @@ using System.Security.Principal;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
-namespace NFU
+namespace Nfu
 {
     public static class Uploader
     {
@@ -49,7 +49,7 @@ namespace NFU
                 return false;
 
             IsBusy = true;
-            _uploadStatus = Resources.Uploader_UploadSuccessfulStatus;
+            _uploadStatus = Resources.UploadSuccessfulStatus;
             Misc.SetControlStatus(false);
 
             _uploadFiles = paths;
@@ -104,7 +104,7 @@ namespace NFU
                 if (file.Type == FileType.Directory)
                 {
                     // This is a directory, zip it first
-                    _currentStatus = Resources.Uploader_ZippingDirectory;
+                    _currentStatus = Resources.ZippingDirectory;
                     UploadWorker.ReportProgress(0);
 
                     string zipFileName = String.Format("{0}.zip", file.FileName);
@@ -121,7 +121,7 @@ namespace NFU
                     file.Type = FileType.ZippedDirectory;
                 }
 
-                _currentStatus = String.Format(Resources.Uploader_Uploading, currentIndex, _uploadFiles.Length);
+                _currentStatus = String.Format(Resources.Uploading, currentIndex, _uploadFiles.Length);
                 UploadWorker.ReportProgress(0);
 
                 file.BeforeUpload();
@@ -141,10 +141,10 @@ namespace NFU
                         }
                         catch (Exception err)
                         {
-                            MessageBox.Show(Resources.Uploader_SshNetMissing, Resources.Uploader_SshNetMissingTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(Resources.SshNetMissing, Resources.SshNetMissingTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                            _uploadStatus = Misc.HandleErrorStatusText(Resources.Uploader_Sftp);
-                            Misc.HandleError(err, Resources.Uploader_Sftp);
+                            _uploadStatus = Misc.HandleErrorStatusText(Resources.Sftp);
+                            Misc.HandleError(err, Resources.Sftp);
                             abort = true;
                         }
                         break;
@@ -173,7 +173,7 @@ namespace NFU
         {
             if (Settings.Default.EnableWebHook)
             {
-                _currentStatus = Resources.Uploader_SendingWebHook;
+                _currentStatus = Resources.SendingWebHook;
                 UploadWorker.ReportProgress(0);
 
                 JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
@@ -203,8 +203,8 @@ namespace NFU
                     }
                     catch (Exception e)
                     {
-                        _uploadStatus = String.Format(Resources.Uploader_WebHookFailed, _uploadStatus);
-                        Misc.HandleError(e, Resources.CP_WebHook);
+                        _uploadStatus = String.Format(Resources.WebHookFailed, _uploadStatus);
+                        Misc.HandleError(e, Resources.WebHook);
                     }
                 }
             }
@@ -263,8 +263,8 @@ namespace NFU
             }
             catch (Exception e)
             {
-                _uploadStatus = Misc.HandleErrorStatusText(Resources.Uploader_Ftps);
-                Misc.HandleError(e, Resources.Uploader_Ftps);
+                _uploadStatus = Misc.HandleErrorStatusText(Resources.Ftp);
+                Misc.HandleError(e, Resources.Ftp);
                 return true;
             }
         }
@@ -313,8 +313,8 @@ namespace NFU
             }
             catch (Exception e)
             {
-                _uploadStatus = Misc.HandleErrorStatusText(Resources.Uploader_Sftp);
-                Misc.HandleError(e, Resources.CP_Sftp);
+                _uploadStatus = Misc.HandleErrorStatusText(Resources.Sftp);
+                Misc.HandleError(e, Resources.Sftp);
                 return true;
             }
         }
@@ -360,8 +360,8 @@ namespace NFU
             }
             catch (Exception e)
             {
-                _uploadStatus = Misc.HandleErrorStatusText(Resources.Uploader_Cifs);
-                Misc.HandleError(e, Resources.Uploader_Cifs);
+                _uploadStatus = Misc.HandleErrorStatusText(Resources.Cifs);
+                Misc.HandleError(e, Resources.Cifs);
                 return true;
             }
         }
@@ -391,9 +391,9 @@ namespace NFU
 
             Program.FormCore.toolStripStatus.Text = _uploadStatus;
 
-            if (_uploadStatus == Resources.Uploader_UploadSuccessfulStatus)
+            if (_uploadStatus == Resources.UploadSuccessfulStatus)
             {
-                Misc.ShowInfo(Resources.Uploader_UploadSuccessfulTitle, Resources.Uploader_UploadSuccessful);
+                Misc.ShowInfo(Resources.UploadSuccessfulTitle, Resources.UploadSuccessful);
 
                 List<string> clipboard = _uploadFiles.Select(file => Settings.Default.URL + file.FileName).ToList();
 
@@ -401,7 +401,7 @@ namespace NFU
             }
             else
             {
-                Misc.ShowInfo(Resources.Uploader_UploadFailedTitle, Resources.Uploader_UploadFailed, ToolTipIcon.Error);
+                Misc.ShowInfo(Resources.UploadFailedTitle, Resources.UploadFailed, ToolTipIcon.Error);
             }
 
             IsBusy = false;

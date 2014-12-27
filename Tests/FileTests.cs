@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using NFU.Models;
+using Nfu.Models;
 using System.IO;
 
 namespace Tests

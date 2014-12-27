@@ -1,5 +1,5 @@
-﻿using NFU.Models;
-using NFU.Properties;
+﻿using Nfu.Models;
+using Nfu.Properties;
 using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -10,7 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace NFU
+namespace Nfu
 {
     public partial class Core : Form
     {
@@ -36,14 +36,14 @@ namespace NFU
 
             if (Settings.Default.HandlePause && !Misc.RegisterHotKey(Keys.Pause, HotKeyPause, 10000, Handle))
             {
-                MessageBox.Show(Resources.Core_PauseHotKeyNotRegistered,
-                    Resources.Core_HotKeyNotRegisteredTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(String.Format(Resources.HotKeyNotRegistered, "Pause"),
+                    Resources.HotKeyNotRegisteredTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             if (Settings.Default.HandlePrintScreen && !Misc.RegisterHotKey(Keys.PrintScreen, HotKeyPrintScreen, 20000, Handle))
             {
-                MessageBox.Show(Resources.Core_PrintScreenHotKeyNotRegistered,
-                    Resources.Core_HotKeyNotRegisteredTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(String.Format(Resources.HotKeyNotRegistered, "PrintScreen"),
+                    Resources.HotKeyNotRegisteredTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -58,12 +58,12 @@ namespace NFU
                 if (UpdateAvailable)
                 {
                     buttonUpdate.Enabled = true;
-                    labelUpdate.Text = Resources.Core_NewVersion;
-                    Misc.ShowInfo(Resources.Core_UpdateAvailableTitle, Resources.Core_UpdateAvailable);
+                    labelUpdate.Text = Resources.NewVersion;
+                    Misc.ShowInfo(Resources.UpdateAvailableTitle, Resources.UpdateAvailable);
                 }
                 else
                 {
-                    labelUpdate.Text = Resources.Core_LatestVersion;
+                    labelUpdate.Text = Resources.LatestVersion;
                 }
             }, taskScheduler);
         }
@@ -77,9 +77,8 @@ namespace NFU
             {
                 if (!Settings.Default.TooltipShown)
                 {
-                    Misc.ShowInfo(Resources.Core_StillActiveTitle, Resources.Core_StillActive);
+                    Misc.ShowInfo(Resources.StillActiveTitle, Resources.StillActive);
                     Settings.Default.TooltipShown = true;
-                    Settings.Default.Save();
                 }
 
                 Hide();
@@ -170,13 +169,13 @@ namespace NFU
 
                     case Snipper.ReturnTypes.ToClipboard:
                         Clipboard.SetImage(_screenshot);
-                        Misc.ShowInfo(Resources.Core_ScreenShotCopiedTitle, Resources.Core_ScreenShotCopied);
+                        Misc.ShowInfo(Resources.ScreenShotCopiedTitle, Resources.ScreenShotCopied);
                         break;
                 }
             }
             else
             {
-                Misc.HandleError(new ArgumentException(Resources.Core_NoFilesSelected), Resources.Core_ScreenShot);
+                Misc.HandleError(new ArgumentException(Resources.NoFilesSelected), Resources.ScreenShot);
             }
         }
 
@@ -216,12 +215,12 @@ namespace NFU
                 IDataObject dataObject = Clipboard.GetDataObject();
                 if (dataObject != null)
                 {
-                    Misc.HandleError(new ArgumentException(String.Format(Resources.Core_CannotHandleTypes,
-                        String.Join(",", dataObject.GetFormats()))), Resources.Core_Import);
+                    Misc.HandleError(new ArgumentException(String.Format(Resources.CannotHandleContentTypes,
+                        String.Join(",", dataObject.GetFormats()))), Resources.Import);
                 }
                 else
                 {
-                    Misc.HandleError(new ArgumentException(Resources.Core_UnsupportedData), Resources.Core_Import);
+                    Misc.HandleError(new ArgumentException(Resources.UnsupportedData), Resources.Import);
                 }
             }
         }
@@ -269,7 +268,7 @@ namespace NFU
             }
             catch (Exception err)
             {
-                Misc.HandleError(err, Resources.Core_UpdateCheck);
+                Misc.HandleError(err, Resources.UpdateCheck);
             }
         }
 
@@ -289,7 +288,7 @@ namespace NFU
                 }
 
                 File.WriteAllText(tempCmd, String.Format("@ECHO OFF{3}TITLE {0}{3}ECHO {1}{3}TIMEOUT /T 5{3}ECHO.{3}ECHO {2}{3}COPY /B /Y \"{4}\" \"{5}\"{3}START \"\" \"{5}\"",
-                    Resources.Core_UpdateTitle, Resources.Core_WaitingToExit, Resources.Core_Updating, Environment.NewLine, tempNfu, Application.ExecutablePath));
+                    Resources.UpdateTitle, Resources.WaitingToExit, Resources.Updating, Environment.NewLine, tempNfu, Application.ExecutablePath));
 
                 ProcessStartInfo startInfo = new ProcessStartInfo
                 {
@@ -304,7 +303,7 @@ namespace NFU
             }
             catch (Exception err)
             {
-                Misc.HandleError(err, Resources.Core_Update);
+                Misc.HandleError(err, Resources.Update);
             }
         }
     }

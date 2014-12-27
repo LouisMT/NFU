@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NFU.Properties {
+namespace Nfu.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace NFU.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NFU.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Nfu.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,246 +61,39 @@ namespace NFU.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        internal static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap About {
+        internal static System.Drawing.Bitmap AboutIcon {
             get {
-                object obj = ResourceManager.GetObject("About", resourceCulture);
+                object obj = ResourceManager.GetObject("AboutIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to C&amp;hangelog.
+        ///   Looks up a localized string similar to NFU is already running. Please close the other instance of NFU..
         /// </summary>
-        internal static string About_ButtonChangeLog {
+        internal static string AlreadyRunning {
             get {
-                return ResourceManager.GetString("About_ButtonChangeLog", resourceCulture);
+                return ResourceManager.GetString("AlreadyRunning", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Close.
+        ///   Looks up a localized string similar to NFU Already Running.
         /// </summary>
-        internal static string About_ButtonClose {
+        internal static string AlreadyRunningTitle {
             get {
-                return ResourceManager.GetString("About_ButtonClose", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Co&amp;ntributors.
-        /// </summary>
-        internal static string About_ButtonContributors {
-            get {
-                return ResourceManager.GetString("About_ButtonContributors", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;Issues.
-        /// </summary>
-        internal static string About_ButtonIssues {
-            get {
-                return ResourceManager.GetString("About_ButtonIssues", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;License.
-        /// </summary>
-        internal static string About_ButtonLicense {
-            get {
-                return ResourceManager.GetString("About_ButtonLicense", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;Open log.
-        /// </summary>
-        internal static string About_ButtonOpenLog {
-            get {
-                return ResourceManager.GetString("About_ButtonOpenLog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to https://github.com/Naxiz/NFU/commits/master.
-        /// </summary>
-        internal static string About_ChangeLogUrl {
-            get {
-                return ResourceManager.GetString("About_ChangeLogUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to https://github.com/Naxiz/NFU/graphs/contributors.
-        /// </summary>
-        internal static string About_ContributorsUrl {
-            get {
-                return ResourceManager.GetString("About_ContributorsUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Copyright.
-        /// </summary>
-        internal static string About_Copyright {
-            get {
-                return ResourceManager.GetString("About_Copyright", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Louis Matthijssen 2014.
-        /// </summary>
-        internal static string About_CopyrightText {
-            get {
-                return ResourceManager.GetString("About_CopyrightText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to IcoMoon.
-        /// </summary>
-        internal static string About_IcoMoonName {
-            get {
-                return ResourceManager.GetString("About_IcoMoonName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to https://icomoon.io.
-        /// </summary>
-        internal static string About_IcoMoonUrl {
-            get {
-                return ResourceManager.GetString("About_IcoMoonUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to All icons.
-        /// </summary>
-        internal static string About_IcoMoonUsedFor {
-            get {
-                return ResourceManager.GetString("About_IcoMoonUsedFor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to https://github.com/Naxiz/NFU/issues.
-        /// </summary>
-        internal static string About_IssuesUrl {
-            get {
-                return ResourceManager.GetString("About_IssuesUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to https://github.com/naxiz/NFU/blob/master/LICENSE.
-        /// </summary>
-        internal static string About_LicenseUrl {
-            get {
-                return ResourceManager.GetString("About_LicenseUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        internal static string About_Name {
-            get {
-                return ResourceManager.GetString("About_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Source on GitHub.
-        /// </summary>
-        internal static string About_Source {
-            get {
-                return ResourceManager.GetString("About_Source", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to https://github.com/Naxiz/NFU.
-        /// </summary>
-        internal static string About_SourceUrl {
-            get {
-                return ResourceManager.GetString("About_SourceUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SSH.NET.
-        /// </summary>
-        internal static string About_SshNetName {
-            get {
-                return ResourceManager.GetString("About_SshNetName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to https://sshnet.codeplex.com.
-        /// </summary>
-        internal static string About_SshNetUrl {
-            get {
-                return ResourceManager.GetString("About_SshNetUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SFTP uploads.
-        /// </summary>
-        internal static string About_SshNetUsedFor {
-            get {
-                return ResourceManager.GetString("About_SshNetUsedFor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NFU uses the following third party resources (double click to visit).
-        /// </summary>
-        internal static string About_ThirdParty {
-            get {
-                return ResourceManager.GetString("About_ThirdParty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to About.
-        /// </summary>
-        internal static string About_Title {
-            get {
-                return ResourceManager.GetString("About_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to URL.
-        /// </summary>
-        internal static string About_Url {
-            get {
-                return ResourceManager.GetString("About_Url", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Used for.
-        /// </summary>
-        internal static string About_UsedFor {
-            get {
-                return ResourceManager.GetString("About_UsedFor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version.
-        /// </summary>
-        internal static string About_Version {
-            get {
-                return ResourceManager.GetString("About_Version", resourceCulture);
+                return ResourceManager.GetString("AlreadyRunningTitle", resourceCulture);
             }
         }
         
@@ -314,768 +107,490 @@ namespace NFU.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to C&amp;hangelog.
+        /// </summary>
+        internal static string ButtonChangeLog {
+            get {
+                return ResourceManager.GetString("ButtonChangeLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Close.
+        /// </summary>
+        internal static string ButtonClose {
+            get {
+                return ResourceManager.GetString("ButtonClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Co&amp;ntributors.
+        /// </summary>
+        internal static string ButtonContributors {
+            get {
+                return ResourceManager.GetString("ButtonContributors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;File(s).
         /// </summary>
-        internal static string Core_ButtonFiles {
+        internal static string ButtonFiles {
             get {
-                return ResourceManager.GetString("Core_ButtonFiles", resourceCulture);
+                return ResourceManager.GetString("ButtonFiles", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to &amp;Import.
         /// </summary>
-        internal static string Core_ButtonImport {
+        internal static string ButtonImport {
             get {
-                return ResourceManager.GetString("Core_ButtonImport", resourceCulture);
+                return ResourceManager.GetString("ButtonImport", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Screenshot.
+        ///   Looks up a localized string similar to &amp;Issues.
         /// </summary>
-        internal static string Core_ButtonScreenShot {
+        internal static string ButtonIssues {
             get {
-                return ResourceManager.GetString("Core_ButtonScreenShot", resourceCulture);
+                return ResourceManager.GetString("ButtonIssues", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Update.
+        ///   Looks up a localized string similar to &amp;License.
         /// </summary>
-        internal static string Core_ButtonUpdate {
+        internal static string ButtonLicense {
             get {
-                return ResourceManager.GetString("Core_ButtonUpdate", resourceCulture);
+                return ResourceManager.GetString("ButtonLicense", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot handle clipboard content of type(s) {0}.
+        ///   Looks up a localized string similar to &amp;Open log.
         /// </summary>
-        internal static string Core_CannotHandleTypes {
+        internal static string ButtonOpenLog {
             get {
-                return ResourceManager.GetString("Core_CannotHandleTypes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Checking for updates....
-        /// </summary>
-        internal static string Core_CheckingForUpdates {
-            get {
-                return ResourceManager.GetString("Core_CheckingForUpdates", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Exit.
-        /// </summary>
-        internal static string Core_Exit {
-            get {
-                return ResourceManager.GetString("Core_Exit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Choose one or more files to upload.
-        /// </summary>
-        internal static string Core_FilesTitle {
-            get {
-                return ResourceManager.GetString("Core_FilesTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to register hotkey.
-        /// </summary>
-        internal static string Core_HotKeyNotRegisteredTitle {
-            get {
-                return ResourceManager.GetString("Core_HotKeyNotRegisteredTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Import.
-        /// </summary>
-        internal static string Core_Import {
-            get {
-                return ResourceManager.GetString("Core_Import", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You already have the latest version of NFU.
-        /// </summary>
-        internal static string Core_LatestVersion {
-            get {
-                return ResourceManager.GetString("Core_LatestVersion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A new version of NFU is available.
-        /// </summary>
-        internal static string Core_NewVersion {
-            get {
-                return ResourceManager.GetString("Core_NewVersion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No files selected.
-        /// </summary>
-        internal static string Core_NoFilesSelected {
-            get {
-                return ResourceManager.GetString("Core_NoFilesSelected", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pause hotkey could not be registered. Is it already in use?.
-        /// </summary>
-        internal static string Core_PauseHotKeyNotRegistered {
-            get {
-                return ResourceManager.GetString("Core_PauseHotKeyNotRegistered", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to PrintScreen hotkey could not be registered. Is it already in use?.
-        /// </summary>
-        internal static string Core_PrintScreenHotKeyNotRegistered {
-            get {
-                return ResourceManager.GetString("Core_PrintScreenHotKeyNotRegistered", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ready.
-        /// </summary>
-        internal static string Core_Ready {
-            get {
-                return ResourceManager.GetString("Core_Ready", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reupload screenshot.
-        /// </summary>
-        internal static string Core_ReUploadScreenShot {
-            get {
-                return ResourceManager.GetString("Core_ReUploadScreenShot", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Screenshot.
-        /// </summary>
-        internal static string Core_ScreenShot {
-            get {
-                return ResourceManager.GetString("Core_ScreenShot", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The screenshot has been copied to the clipboard..
-        /// </summary>
-        internal static string Core_ScreenShotCopied {
-            get {
-                return ResourceManager.GetString("Core_ScreenShotCopied", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NFU screenshot copied.
-        /// </summary>
-        internal static string Core_ScreenShotCopiedTitle {
-            get {
-                return ResourceManager.GetString("Core_ScreenShotCopiedTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Click on this icon to open NFU or right click to exit..
-        /// </summary>
-        internal static string Core_StillActive {
-            get {
-                return ResourceManager.GetString("Core_StillActive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NFU is still active.
-        /// </summary>
-        internal static string Core_StillActiveTitle {
-            get {
-                return ResourceManager.GetString("Core_StillActiveTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unsupported data on clipboard..
-        /// </summary>
-        internal static string Core_UnsupportedData {
-            get {
-                return ResourceManager.GetString("Core_UnsupportedData", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Update.
-        /// </summary>
-        internal static string Core_Update {
-            get {
-                return ResourceManager.GetString("Core_Update", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to There is an update available for NFU..
-        /// </summary>
-        internal static string Core_UpdateAvailable {
-            get {
-                return ResourceManager.GetString("Core_UpdateAvailable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NFU update available.
-        /// </summary>
-        internal static string Core_UpdateAvailableTitle {
-            get {
-                return ResourceManager.GetString("Core_UpdateAvailableTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Update Check.
-        /// </summary>
-        internal static string Core_UpdateCheck {
-            get {
-                return ResourceManager.GetString("Core_UpdateCheck", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NFU UPDATE.
-        /// </summary>
-        internal static string Core_UpdateTitle {
-            get {
-                return ResourceManager.GetString("Core_UpdateTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Updating NFU....
-        /// </summary>
-        internal static string Core_Updating {
-            get {
-                return ResourceManager.GetString("Core_Updating", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Waiting for NFU to exit....
-        /// </summary>
-        internal static string Core_WaitingToExit {
-            get {
-                return ResourceManager.GetString("Core_WaitingToExit", resourceCulture);
+                return ResourceManager.GetString("ButtonOpenLog", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to &amp;Save.
         /// </summary>
-        internal static string CP_ButtonSave {
+        internal static string ButtonSave {
             get {
-                return ResourceManager.GetString("CP_ButtonSave", resourceCulture);
+                return ResourceManager.GetString("ButtonSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Screenshot.
+        /// </summary>
+        internal static string ButtonScreenShot {
+            get {
+                return ResourceManager.GetString("ButtonScreenShot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Update.
+        /// </summary>
+        internal static string ButtonUpdate {
+            get {
+                return ResourceManager.GetString("ButtonUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot handle clipboard content of type(s) {0}.
+        /// </summary>
+        internal static string CannotHandleContentTypes {
+            get {
+                return ResourceManager.GetString("CannotHandleContentTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/Naxiz/NFU/commits/master.
+        /// </summary>
+        internal static string ChangeLogUrl {
+            get {
+                return ResourceManager.GetString("ChangeLogUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checking for updates....
+        /// </summary>
+        internal static string CheckingForUpdates {
+            get {
+                return ResourceManager.GetString("CheckingForUpdates", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to CIFS.
         /// </summary>
-        internal static string CP_Cifs {
+        internal static string Cifs {
             get {
-                return ResourceManager.GetString("CP_Cifs", resourceCulture);
+                return ResourceManager.GetString("Cifs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/Naxiz/NFU/graphs/contributors.
+        /// </summary>
+        internal static string ContributorsUrl {
+            get {
+                return ResourceManager.GetString("ContributorsUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X: {0} Y: {1} W: {2} H: {3}
+        ///{4}.
+        /// </summary>
+        internal static string CoordinatesOverlay {
+            get {
+                return ResourceManager.GetString("CoordinatesOverlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copyright.
+        /// </summary>
+        internal static string Copyright {
+            get {
+                return ResourceManager.GetString("Copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Louis Matthijssen 2014.
+        /// </summary>
+        internal static string CopyrightText {
+            get {
+                return ResourceManager.GetString("CopyrightText", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Counter: {0}.
         /// </summary>
-        internal static string CP_Counter {
+        internal static string Counter {
             get {
-                return ResourceManager.GetString("CP_Counter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Directory.
-        /// </summary>
-        internal static string CP_Directory {
-            get {
-                return ResourceManager.GetString("CP_Directory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Disable debug.
-        /// </summary>
-        internal static string CP_DisableDebug {
-            get {
-                return ResourceManager.GetString("CP_DisableDebug", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Some settings may only take effect after a restart.
-        /// </summary>
-        internal static string CP_EffectAfterRestart {
-            get {
-                return ResourceManager.GetString("CP_EffectAfterRestart", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enable debug.
-        /// </summary>
-        internal static string CP_EnableDebug {
-            get {
-                return ResourceManager.GetString("CP_EnableDebug", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enable WebHook.
-        /// </summary>
-        internal static string CP_EnableWebHook {
-            get {
-                return ResourceManager.GetString("CP_EnableWebHook", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to FTP.
-        /// </summary>
-        internal static string CP_Ftp {
-            get {
-                return ResourceManager.GetString("CP_Ftp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to FTPS (Explicit).
-        /// </summary>
-        internal static string CP_FtpsExplicit {
-            get {
-                return ResourceManager.GetString("CP_FtpsExplicit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Use generated filename.
-        /// </summary>
-        internal static string CP_GeneratedFileName {
-            get {
-                return ResourceManager.GetString("CP_GeneratedFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Handle the Pause key.
-        /// </summary>
-        internal static string CP_HandlePauseKey {
-            get {
-                return ResourceManager.GetString("CP_HandlePauseKey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Handle the Print Screen key.
-        /// </summary>
-        internal static string CP_HandlePrintScreenKey {
-            get {
-                return ResourceManager.GetString("CP_HandlePrintScreenKey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Host (FQDN).
-        /// </summary>
-        internal static string CP_HostFqdn {
-            get {
-                return ResourceManager.GetString("CP_HostFqdn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Host in FQDN format.
-        /// </summary>
-        internal static string CP_HostFqdnFormat {
-            get {
-                return ResourceManager.GetString("CP_HostFqdnFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to example.com.
-        /// </summary>
-        internal static string CP_HostFqdnFormatExample {
-            get {
-                return ResourceManager.GetString("CP_HostFqdnFormatExample", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Key path.
-        /// </summary>
-        internal static string CP_KeyPath {
-            get {
-                return ResourceManager.GetString("CP_KeyPath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Merge screens.
-        /// </summary>
-        internal static string CP_MergeScreens {
-            get {
-                return ResourceManager.GetString("CP_MergeScreens", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Minimize to system tray.
-        /// </summary>
-        internal static string CP_MinimizeToSystemTray {
-            get {
-                return ResourceManager.GetString("CP_MinimizeToSystemTray", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to RunKey doesn&apos;t exist..
-        /// </summary>
-        internal static string CP_NoRunKey {
-            get {
-                return ResourceManager.GetString("CP_NoRunKey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Use original filename.
-        /// </summary>
-        internal static string CP_OriginalFileName {
-            get {
-                return ResourceManager.GetString("CP_OriginalFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Password.
-        /// </summary>
-        internal static string CP_Password {
-            get {
-                return ResourceManager.GetString("CP_Password", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Quick screenshots.
-        /// </summary>
-        internal static string CP_QuickScreenShots {
-            get {
-                return ResourceManager.GetString("CP_QuickScreenShots", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reset.
-        /// </summary>
-        internal static string CP_Reset {
-            get {
-                return ResourceManager.GetString("CP_Reset", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to change RunKey..
-        /// </summary>
-        internal static string CP_RunKeyChangeFailed {
-            get {
-                return ResourceManager.GetString("CP_RunKeyChangeFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Screen {0}.
-        /// </summary>
-        internal static string CP_Screen {
-            get {
-                return ResourceManager.GetString("CP_Screen", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Secret (optional).
-        /// </summary>
-        internal static string CP_Secret {
-            get {
-                return ResourceManager.GetString("CP_Secret", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Server.
-        /// </summary>
-        internal static string CP_Server {
-            get {
-                return ResourceManager.GetString("CP_Server", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Absolute path for SFTP, relative path for FTP and CIFS.
-        /// </summary>
-        internal static string CP_ServerDirectory {
-            get {
-                return ResourceManager.GetString("CP_ServerDirectory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to /home/example.com/files (absolute) example.com/files (relative).
-        /// </summary>
-        internal static string CP_ServerDirectoryExample {
-            get {
-                return ResourceManager.GetString("CP_ServerDirectoryExample", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Absolute path to the public SSH Key (OpenSSH format).
-        /// </summary>
-        internal static string CP_ServerKey {
-            get {
-                return ResourceManager.GetString("CP_ServerKey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to C:\SSH\Keys\id_rsa.
-        /// </summary>
-        internal static string CP_ServerKeyExample {
-            get {
-                return ResourceManager.GetString("CP_ServerKeyExample", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Password for the server, empty for anonymous.
-        /// </summary>
-        internal static string CP_ServerPassword {
-            get {
-                return ResourceManager.GetString("CP_ServerPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to example123!.
-        /// </summary>
-        internal static string CP_ServerPasswordExample {
-            get {
-                return ResourceManager.GetString("CP_ServerPasswordExample", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Public URL pointing to your upload folder.
-        /// </summary>
-        internal static string CP_ServerPublicUrl {
-            get {
-                return ResourceManager.GetString("CP_ServerPublicUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to http://example.com/files/.
-        /// </summary>
-        internal static string CP_ServerPublicUrlExample {
-            get {
-                return ResourceManager.GetString("CP_ServerPublicUrlExample", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Username for the server, empty for anonymous.
-        /// </summary>
-        internal static string CP_ServerUserName {
-            get {
-                return ResourceManager.GetString("CP_ServerUserName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to root.
-        /// </summary>
-        internal static string CP_ServerUserNameExample {
-            get {
-                return ResourceManager.GetString("CP_ServerUserNameExample", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SFTP.
-        /// </summary>
-        internal static string CP_Sftp {
-            get {
-                return ResourceManager.GetString("CP_Sftp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SFTP (SSH Keys).
-        /// </summary>
-        internal static string CP_SftpSshKeys {
-            get {
-                return ResourceManager.GetString("CP_SftpSshKeys", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show password.
-        /// </summary>
-        internal static string CP_ShowPassword {
-            get {
-                return ResourceManager.GetString("CP_ShowPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Start with Windows.
-        /// </summary>
-        internal static string CP_StartWithWindows {
-            get {
-                return ResourceManager.GetString("CP_StartWithWindows", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Settings.
-        /// </summary>
-        internal static string CP_Title {
-            get {
-                return ResourceManager.GetString("CP_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Upload.
-        /// </summary>
-        internal static string CP_Upload {
-            get {
-                return ResourceManager.GetString("CP_Upload", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to URL.
-        /// </summary>
-        internal static string CP_Url {
-            get {
-                return ResourceManager.GetString("CP_Url", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Username.
-        /// </summary>
-        internal static string CP_UserName {
-            get {
-                return ResourceManager.GetString("CP_UserName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Warning.
-        /// </summary>
-        internal static string CP_Warning {
-            get {
-                return ResourceManager.GetString("CP_Warning", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to WebHook.
-        /// </summary>
-        internal static string CP_WebHook {
-            get {
-                return ResourceManager.GetString("CP_WebHook", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Exit {
-            get {
-                object obj = ResourceManager.GetObject("Exit", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("Counter", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Decrypt.
         /// </summary>
-        internal static string Misc_Decrypt {
+        internal static string Decrypt {
             get {
-                return ResourceManager.GetString("Misc_Decrypt", resourceCulture);
+                return ResourceManager.GetString("Decrypt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t delete {0}..
+        /// </summary>
+        internal static string DeleteError {
+            get {
+                return ResourceManager.GetString("DeleteError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Directory.
+        /// </summary>
+        internal static string Directory {
+            get {
+                return ResourceManager.GetString("Directory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable debug.
+        /// </summary>
+        internal static string DisableDebug {
+            get {
+                return ResourceManager.GetString("DisableDebug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Some settings may only take effect after a restart.
+        /// </summary>
+        internal static string EffectAfterRestart {
+            get {
+                return ResourceManager.GetString("EffectAfterRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable debug.
+        /// </summary>
+        internal static string EnableDebug {
+            get {
+                return ResourceManager.GetString("EnableDebug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable WebHook.
+        /// </summary>
+        internal static string EnableWebHook {
+            get {
+                return ResourceManager.GetString("EnableWebHook", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Encrypt.
         /// </summary>
-        internal static string Misc_Encrypt {
+        internal static string Encrypt {
             get {
-                return ResourceManager.GetString("Misc_Encrypt", resourceCulture);
+                return ResourceManager.GetString("Encrypt", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
-        internal static string Misc_Error {
+        internal static string Error {
             get {
-                return ResourceManager.GetString("Misc_Error", resourceCulture);
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit.
+        /// </summary>
+        internal static string Exit {
+            get {
+                return ResourceManager.GetString("Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ExitIcon {
+            get {
+                object obj = ResourceManager.GetObject("ExitIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to {0} failed.
         /// </summary>
-        internal static string Misc_Failed {
+        internal static string Failed {
             get {
-                return ResourceManager.GetString("Misc_Failed", resourceCulture);
+                return ResourceManager.GetString("Failed", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to A fatal error occured. NFU will exit..
         /// </summary>
-        internal static string Misc_FatalError {
+        internal static string FatalError {
             get {
-                return ResourceManager.GetString("Misc_FatalError", resourceCulture);
+                return ResourceManager.GetString("FatalError", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to NFU error.
         /// </summary>
-        internal static string Misc_FatalErrorTitle {
+        internal static string FatalErrorTitle {
             get {
-                return ResourceManager.GetString("Misc_FatalErrorTitle", resourceCulture);
+                return ResourceManager.GetString("FatalErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose one or more files to upload.
+        /// </summary>
+        internal static string FilesTitle {
+            get {
+                return ResourceManager.GetString("FilesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FTP.
+        /// </summary>
+        internal static string Ftp {
+            get {
+                return ResourceManager.GetString("Ftp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FTPS (Explicit).
+        /// </summary>
+        internal static string FtpsExplicit {
+            get {
+                return ResourceManager.GetString("FtpsExplicit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use generated filename.
+        /// </summary>
+        internal static string GeneratedFileName {
+            get {
+                return ResourceManager.GetString("GeneratedFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Handle the Pause key.
+        /// </summary>
+        internal static string HandlePauseKey {
+            get {
+                return ResourceManager.GetString("HandlePauseKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Handle the Print Screen key.
+        /// </summary>
+        internal static string HandlePrintScreenKey {
+            get {
+                return ResourceManager.GetString("HandlePrintScreenKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Host (FQDN).
+        /// </summary>
+        internal static string HostFqdn {
+            get {
+                return ResourceManager.GetString("HostFqdn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Host in FQDN format.
+        /// </summary>
+        internal static string HostFqdnFormat {
+            get {
+                return ResourceManager.GetString("HostFqdnFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to example.com.
+        /// </summary>
+        internal static string HostFqdnFormatExample {
+            get {
+                return ResourceManager.GetString("HostFqdnFormatExample", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} hotkey could not be registered. Is it already in use?.
+        /// </summary>
+        internal static string HotKeyNotRegistered {
+            get {
+                return ResourceManager.GetString("HotKeyNotRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to register hotkey.
+        /// </summary>
+        internal static string HotKeyNotRegisteredTitle {
+            get {
+                return ResourceManager.GetString("HotKeyNotRegisteredTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ESC - Cancel, ENTER - Confirm, F - Fullscreen, C - Toggle controls, Hold CTRL - To clipboard.
+        /// </summary>
+        internal static string HotKeysOverlay {
+            get {
+                return ResourceManager.GetString("HotKeysOverlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IcoMoon.
+        /// </summary>
+        internal static string IcoMoonName {
+            get {
+                return ResourceManager.GetString("IcoMoonName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://icomoon.io.
+        /// </summary>
+        internal static string IcoMoonUrl {
+            get {
+                return ResourceManager.GetString("IcoMoonUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All icons.
+        /// </summary>
+        internal static string IcoMoonUsedFor {
+            get {
+                return ResourceManager.GetString("IcoMoonUsedFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        internal static string Import {
+            get {
+                return ResourceManager.GetString("Import", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/Naxiz/NFU/issues.
+        /// </summary>
+        internal static string IssuesUrl {
+            get {
+                return ResourceManager.GetString("IssuesUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key path.
+        /// </summary>
+        internal static string KeyPath {
+            get {
+                return ResourceManager.GetString("KeyPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You already have the latest version of NFU.
+        /// </summary>
+        internal static string LatestVersion {
+            get {
+                return ResourceManager.GetString("LatestVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/Naxiz/NFU/blob/master/LICENSE.
+        /// </summary>
+        internal static string LicenseUrl {
+            get {
+                return ResourceManager.GetString("LicenseUrl", resourceCulture);
             }
         }
         
@@ -1084,27 +599,472 @@ namespace NFU.Properties {
         ///
         ///Try to enable debug mode in order to solve this issue..
         /// </summary>
-        internal static string Misc_LogNotWriteable {
+        internal static string LogNotWriteable {
             get {
-                return ResourceManager.GetString("Misc_LogNotWriteable", resourceCulture);
+                return ResourceManager.GetString("LogNotWriteable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Merge screens.
+        /// </summary>
+        internal static string MergeScreens {
+            get {
+                return ResourceManager.GetString("MergeScreens", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimize to system tray.
+        /// </summary>
+        internal static string MinimizeToSystemTray {
+            get {
+                return ResourceManager.GetString("MinimizeToSystemTray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A new version of NFU is available.
+        /// </summary>
+        internal static string NewVersion {
+            get {
+                return ResourceManager.GetString("NewVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon NfuIcon {
+            get {
+                object obj = ResourceManager.GetObject("NfuIcon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No files selected.
+        /// </summary>
+        internal static string NoFilesSelected {
+            get {
+                return ResourceManager.GetString("NoFilesSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RunKey doesn&apos;t exist..
+        /// </summary>
+        internal static string NoRunKey {
+            get {
+                return ResourceManager.GetString("NoRunKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use original filename.
+        /// </summary>
+        internal static string OriginalFileName {
+            get {
+                return ResourceManager.GetString("OriginalFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        internal static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quick screenshots.
+        /// </summary>
+        internal static string QuickScreenShots {
+            get {
+                return ResourceManager.GetString("QuickScreenShots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ready.
+        /// </summary>
+        internal static string Ready {
+            get {
+                return ResourceManager.GetString("Ready", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Misc.RegisterHotKey.
         /// </summary>
-        internal static string Misc_RegisterHotKey {
+        internal static string RegisterHotKey {
             get {
-                return ResourceManager.GetString("Misc_RegisterHotKey", resourceCulture);
+                return ResourceManager.GetString("RegisterHotKey", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to RegisterHotKey failed for key {0}.
         /// </summary>
-        internal static string Misc_RegisterHotKeyFailed {
+        internal static string RegisterHotKeyFailed {
             get {
-                return ResourceManager.GetString("Misc_RegisterHotKeyFailed", resourceCulture);
+                return ResourceManager.GetString("RegisterHotKeyFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        internal static string Reset {
+            get {
+                return ResourceManager.GetString("Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reupload screenshot.
+        /// </summary>
+        internal static string ReUploadScreenShot {
+            get {
+                return ResourceManager.GetString("ReUploadScreenShot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to change RunKey..
+        /// </summary>
+        internal static string RunKeyChangeFailed {
+            get {
+                return ResourceManager.GetString("RunKeyChangeFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Screen {0}.
+        /// </summary>
+        internal static string Screen {
+            get {
+                return ResourceManager.GetString("Screen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Screenshot.
+        /// </summary>
+        internal static string ScreenShot {
+            get {
+                return ResourceManager.GetString("ScreenShot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The screenshot has been copied to the clipboard..
+        /// </summary>
+        internal static string ScreenShotCopied {
+            get {
+                return ResourceManager.GetString("ScreenShotCopied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NFU screenshot copied.
+        /// </summary>
+        internal static string ScreenShotCopiedTitle {
+            get {
+                return ResourceManager.GetString("ScreenShotCopiedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Secret (optional).
+        /// </summary>
+        internal static string Secret {
+            get {
+                return ResourceManager.GetString("Secret", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sending WebHook payload....
+        /// </summary>
+        internal static string SendingWebHook {
+            get {
+                return ResourceManager.GetString("SendingWebHook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server.
+        /// </summary>
+        internal static string Server {
+            get {
+                return ResourceManager.GetString("Server", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Absolute path for SFTP, relative path for FTP and CIFS.
+        /// </summary>
+        internal static string ServerDirectory {
+            get {
+                return ResourceManager.GetString("ServerDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /home/example.com/files (absolute) example.com/files (relative).
+        /// </summary>
+        internal static string ServerDirectoryExample {
+            get {
+                return ResourceManager.GetString("ServerDirectoryExample", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Absolute path to the public SSH Key (OpenSSH format).
+        /// </summary>
+        internal static string ServerKey {
+            get {
+                return ResourceManager.GetString("ServerKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C:\SSH\Keys\id_rsa.
+        /// </summary>
+        internal static string ServerKeyExample {
+            get {
+                return ResourceManager.GetString("ServerKeyExample", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password for the server, empty for anonymous.
+        /// </summary>
+        internal static string ServerPassword {
+            get {
+                return ResourceManager.GetString("ServerPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to example123!.
+        /// </summary>
+        internal static string ServerPasswordExample {
+            get {
+                return ResourceManager.GetString("ServerPasswordExample", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public URL pointing to your upload folder.
+        /// </summary>
+        internal static string ServerPublicUrl {
+            get {
+                return ResourceManager.GetString("ServerPublicUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://example.com/files/.
+        /// </summary>
+        internal static string ServerPublicUrlExample {
+            get {
+                return ResourceManager.GetString("ServerPublicUrlExample", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username for the server, empty for anonymous.
+        /// </summary>
+        internal static string ServerUserName {
+            get {
+                return ResourceManager.GetString("ServerUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to root.
+        /// </summary>
+        internal static string ServerUserNameExample {
+            get {
+                return ResourceManager.GetString("ServerUserNameExample", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        internal static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SettingsIcon {
+            get {
+                object obj = ResourceManager.GetObject("SettingsIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SFTP.
+        /// </summary>
+        internal static string Sftp {
+            get {
+                return ResourceManager.GetString("Sftp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SFTP (SSH Keys).
+        /// </summary>
+        internal static string SftpSshKeys {
+            get {
+                return ResourceManager.GetString("SftpSshKeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show password.
+        /// </summary>
+        internal static string ShowPassword {
+            get {
+                return ResourceManager.GetString("ShowPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source on GitHub.
+        /// </summary>
+        internal static string Source {
+            get {
+                return ResourceManager.GetString("Source", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/Naxiz/NFU.
+        /// </summary>
+        internal static string SourceUrl {
+            get {
+                return ResourceManager.GetString("SourceUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NFU relies on the SSH.NET library for SFTP uploads.
+        ///Please download the DLL in the same directory as the NFU executable.
+        ///The download link can be found in the about box..
+        /// </summary>
+        internal static string SshNetMissing {
+            get {
+                return ResourceManager.GetString("SshNetMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing DLL.
+        /// </summary>
+        internal static string SshNetMissingTitle {
+            get {
+                return ResourceManager.GetString("SshNetMissingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SSH.NET.
+        /// </summary>
+        internal static string SshNetName {
+            get {
+                return ResourceManager.GetString("SshNetName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://sshnet.codeplex.com.
+        /// </summary>
+        internal static string SshNetUrl {
+            get {
+                return ResourceManager.GetString("SshNetUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SFTP uploads.
+        /// </summary>
+        internal static string SshNetUsedFor {
+            get {
+                return ResourceManager.GetString("SshNetUsedFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start with Windows.
+        /// </summary>
+        internal static string StartWithWindows {
+            get {
+                return ResourceManager.GetString("StartWithWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click on this icon to open NFU or right click to exit..
+        /// </summary>
+        internal static string StillActive {
+            get {
+                return ResourceManager.GetString("StillActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NFU is still active.
+        /// </summary>
+        internal static string StillActiveTitle {
+            get {
+                return ResourceManager.GetString("StillActiveTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NFU uses the following third party resources (double click to visit).
+        /// </summary>
+        internal static string ThirdPartyResources {
+            get {
+                return ResourceManager.GetString("ThirdPartyResources", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UploadFile.
+        /// </summary>
+        internal static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unsupported data on clipboard..
+        /// </summary>
+        internal static string UnsupportedData {
+            get {
+                return ResourceManager.GetString("UnsupportedData", resourceCulture);
             }
         }
         
@@ -1122,239 +1082,216 @@ namespace NFU.Properties {
         ///
         ///Continue?.
         /// </summary>
-        internal static string Misc_UntrustedCertificate {
+        internal static string UntrustedCertificate {
             get {
-                return ResourceManager.GetString("Misc_UntrustedCertificate", resourceCulture);
+                return ResourceManager.GetString("UntrustedCertificate", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Untrusted certificate.
         /// </summary>
-        internal static string Misc_UntrustedCertificateTitle {
+        internal static string UntrustedCertificateTitle {
             get {
-                return ResourceManager.GetString("Misc_UntrustedCertificateTitle", resourceCulture);
+                return ResourceManager.GetString("UntrustedCertificateTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        ///   Looks up a localized string similar to Update.
         /// </summary>
-        internal static System.Drawing.Icon NFU {
+        internal static string Update {
             get {
-                object obj = ResourceManager.GetObject("NFU", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
+                return ResourceManager.GetString("Update", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NFU is already running. Please close the other instance of NFU..
+        ///   Looks up a localized string similar to There is an update available for NFU..
         /// </summary>
-        internal static string Program_AlreadyRunning {
+        internal static string UpdateAvailable {
             get {
-                return ResourceManager.GetString("Program_AlreadyRunning", resourceCulture);
+                return ResourceManager.GetString("UpdateAvailable", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NFU Already Running.
+        ///   Looks up a localized string similar to NFU update available.
         /// </summary>
-        internal static string Program_AlreadyRunningTitle {
+        internal static string UpdateAvailableTitle {
             get {
-                return ResourceManager.GetString("Program_AlreadyRunningTitle", resourceCulture);
+                return ResourceManager.GetString("UpdateAvailableTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized string similar to Update Check.
         /// </summary>
-        internal static System.Drawing.Bitmap Settings {
+        internal static string UpdateCheck {
             get {
-                object obj = ResourceManager.GetObject("Settings", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("UpdateCheck", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to X: {0} Y: {1} W: {2} H: {3}
-        ///{4}.
+        ///   Looks up a localized string similar to NFU UPDATE.
         /// </summary>
-        internal static string Snipper_Coordinates {
+        internal static string UpdateTitle {
             get {
-                return ResourceManager.GetString("Snipper_Coordinates", resourceCulture);
+                return ResourceManager.GetString("UpdateTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ESC - Cancel, ENTER - Confirm, F - Fullscreen, C - Toggle controls, Hold CTRL - To clipboard.
+        ///   Looks up a localized string similar to Updating NFU....
         /// </summary>
-        internal static string Snipper_HotKeys {
+        internal static string Updating {
             get {
-                return ResourceManager.GetString("Snipper_HotKeys", resourceCulture);
+                return ResourceManager.GetString("Updating", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Merge screens.
+        ///   Looks up a localized string similar to Upload.
         /// </summary>
-        internal static string Snipper_MergeScreens {
+        internal static string Upload {
             get {
-                return ResourceManager.GetString("Snipper_MergeScreens", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Screen {0}.
-        /// </summary>
-        internal static string Snipper_Screen {
-            get {
-                return ResourceManager.GetString("Snipper_Screen", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to CIFS.
-        /// </summary>
-        internal static string Uploader_Cifs {
-            get {
-                return ResourceManager.GetString("Uploader_Cifs", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to FTP(S).
-        /// </summary>
-        internal static string Uploader_Ftps {
-            get {
-                return ResourceManager.GetString("Uploader_Ftps", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sending WebHook payload....
-        /// </summary>
-        internal static string Uploader_SendingWebHook {
-            get {
-                return ResourceManager.GetString("Uploader_SendingWebHook", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SFTP.
-        /// </summary>
-        internal static string Uploader_Sftp {
-            get {
-                return ResourceManager.GetString("Uploader_Sftp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NFU relies on the SSH.NET library for SFTP uploads.
-        ///Please download the DLL in the same directory as the NFU executable.
-        ///The download link can be found in the about box..
-        /// </summary>
-        internal static string Uploader_SshNetMissing {
-            get {
-                return ResourceManager.GetString("Uploader_SshNetMissing", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Missing DLL.
-        /// </summary>
-        internal static string Uploader_SshNetMissingTitle {
-            get {
-                return ResourceManager.GetString("Uploader_SshNetMissingTitle", resourceCulture);
+                return ResourceManager.GetString("Upload", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to The file failed to upload..
         /// </summary>
-        internal static string Uploader_UploadFailed {
+        internal static string UploadFailed {
             get {
-                return ResourceManager.GetString("Uploader_UploadFailed", resourceCulture);
+                return ResourceManager.GetString("UploadFailed", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to NFU upload failed.
         /// </summary>
-        internal static string Uploader_UploadFailedTitle {
+        internal static string UploadFailedTitle {
             get {
-                return ResourceManager.GetString("Uploader_UploadFailedTitle", resourceCulture);
+                return ResourceManager.GetString("UploadFailedTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Uploading... ({0}/{1}).
         /// </summary>
-        internal static string Uploader_Uploading {
+        internal static string Uploading {
             get {
-                return ResourceManager.GetString("Uploader_Uploading", resourceCulture);
+                return ResourceManager.GetString("Uploading", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to The file has been successfully uploaded..
         /// </summary>
-        internal static string Uploader_UploadSuccessful {
+        internal static string UploadSuccessful {
             get {
-                return ResourceManager.GetString("Uploader_UploadSuccessful", resourceCulture);
+                return ResourceManager.GetString("UploadSuccessful", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Upload successful.
         /// </summary>
-        internal static string Uploader_UploadSuccessfulStatus {
+        internal static string UploadSuccessfulStatus {
             get {
-                return ResourceManager.GetString("Uploader_UploadSuccessfulStatus", resourceCulture);
+                return ResourceManager.GetString("UploadSuccessfulStatus", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Upload successful.
         /// </summary>
-        internal static string Uploader_UploadSuccessfulTitle {
+        internal static string UploadSuccessfulTitle {
             get {
-                return ResourceManager.GetString("Uploader_UploadSuccessfulTitle", resourceCulture);
+                return ResourceManager.GetString("UploadSuccessfulTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URL.
+        /// </summary>
+        internal static string Url {
+            get {
+                return ResourceManager.GetString("Url", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Used for.
+        /// </summary>
+        internal static string UsedFor {
+            get {
+                return ResourceManager.GetString("UsedFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        internal static string UserName {
+            get {
+                return ResourceManager.GetString("UserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        internal static string Version {
+            get {
+                return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting for NFU to exit....
+        /// </summary>
+        internal static string WaitingToExit {
+            get {
+                return ResourceManager.GetString("WaitingToExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        internal static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WebHook.
+        /// </summary>
+        internal static string WebHook {
+            get {
+                return ResourceManager.GetString("WebHook", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to {0} (WebHook failed).
         /// </summary>
-        internal static string Uploader_WebHookFailed {
+        internal static string WebHookFailed {
             get {
-                return ResourceManager.GetString("Uploader_WebHookFailed", resourceCulture);
+                return ResourceManager.GetString("WebHookFailed", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Zipping directory....
         /// </summary>
-        internal static string Uploader_ZippingDirectory {
+        internal static string ZippingDirectory {
             get {
-                return ResourceManager.GetString("Uploader_ZippingDirectory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Couldn&apos;t delete {0}..
-        /// </summary>
-        internal static string UploadFile_DeleteError {
-            get {
-                return ResourceManager.GetString("UploadFile_DeleteError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UploadFile.
-        /// </summary>
-        internal static string UploadFile_Title {
-            get {
-                return ResourceManager.GetString("UploadFile_Title", resourceCulture);
+                return ResourceManager.GetString("ZippingDirectory", resourceCulture);
             }
         }
     }

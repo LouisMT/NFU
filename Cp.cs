@@ -1,10 +1,10 @@
 ﻿using Microsoft.Win32;
-using NFU.Properties;
+using Nfu.Properties;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace NFU
+namespace Nfu
 {
     public partial class Cp : Form
     {
@@ -19,10 +19,10 @@ namespace NFU
 
             SetDebugButtonState();
 
-            comboBoxScreen.Items.Add(Resources.CP_MergeScreens);
+            comboBoxScreen.Items.Add(Resources.MergeScreens);
 
             for (int i = 0; i < Screen.AllScreens.Length; i++)
-                comboBoxScreen.Items.Add(String.Format(Resources.CP_Screen, i + 1));
+                comboBoxScreen.Items.Add(String.Format(Resources.Screen, i + 1));
 
             comboBoxType.SelectedIndex = Settings.Default.TransferType;
             textBoxHost.Text = Settings.Default.Host;
@@ -44,7 +44,7 @@ namespace NFU
             }
             catch
             {
-                Misc.HandleError(new Exception(Resources.CP_NoRunKey), Resources.CP_Title, false);
+                Misc.HandleError(new Exception(Resources.NoRunKey), Resources.Settings, false);
             }
 
             comboBoxFilename.SelectedIndex = Settings.Default.Filename;
@@ -59,11 +59,14 @@ namespace NFU
         /// </summary>
         private void CpShown(object sender, EventArgs e)
         {
-            labelCounter.Text = String.Format(Resources.CP_Counter, Settings.Default.Count.ToString("D5"));
+            labelCounter.Text = String.Format(Resources.Counter, Settings.Default.Count.ToString("D5"));
         }
 
         private void ButtonSave(object sender, EventArgs e)
         {
+            // Don't automatically save settings now
+            Program.AutoSaveSettings = false;
+
             Settings.Default.TransferType = comboBoxType.SelectedIndex;
             Settings.Default.Host = textBoxHost.Text;
             Settings.Default.Port = (int)numericUpDownPort.Value;
@@ -92,7 +95,7 @@ namespace NFU
             }
             catch
             {
-                Misc.HandleError(new Exception(Resources.CP_RunKeyChangeFailed), Resources.CP_Title, false);
+                Misc.HandleError(new Exception(Resources.RunKeyChangeFailed), Resources.Settings, false);
             }
 
             Settings.Default.Filename = comboBoxFilename.SelectedIndex;
@@ -104,6 +107,7 @@ namespace NFU
 
             if (Settings.Default.FirstRun) Settings.Default.FirstRun = false;
 
+            Program.AutoSaveSettings = true;
             Settings.Default.Save();
 
             Close();
@@ -128,36 +132,36 @@ namespace NFU
             switch (textBox.Name)
             {
                 case "textBoxHost":
-                    infoTitle = Resources.CP_HostFqdnFormat;
-                    infoText = Resources.CP_HostFqdnFormatExample;
+                    infoTitle = Resources.HostFqdnFormat;
+                    infoText = Resources.HostFqdnFormatExample;
                     break;
 
                 case "textBoxUsername":
-                    infoTitle = Resources.CP_ServerUserName;
-                    infoText = Resources.CP_ServerUserNameExample;
+                    infoTitle = Resources.ServerUserName;
+                    infoText = Resources.ServerUserNameExample;
                     break;
 
                 case "textBoxPassword":
                     if (comboBoxType.SelectedIndex == (int)TransferType.SftpKeys)
                     {
-                        infoTitle = Resources.CP_ServerKey;
-                        infoText = Resources.CP_ServerKeyExample;
+                        infoTitle = Resources.ServerKey;
+                        infoText = Resources.ServerKeyExample;
                     }
                     else
                     {
-                        infoTitle = Resources.CP_ServerPassword;
-                        infoText = Resources.CP_ServerPasswordExample;
+                        infoTitle = Resources.ServerPassword;
+                        infoText = Resources.ServerPasswordExample;
                     }
                     break;
 
                 case "textBoxDirectory":
-                    infoTitle = Resources.CP_ServerDirectory;
-                    infoText = Resources.CP_ServerDirectoryExample;
+                    infoTitle = Resources.ServerDirectory;
+                    infoText = Resources.ServerDirectoryExample;
                     break;
 
                 case "textBoxURL":
-                    infoTitle = Resources.CP_ServerPublicUrl;
-                    infoText = Resources.CP_ServerPublicUrlExample;
+                    infoTitle = Resources.ServerPublicUrl;
+                    infoText = Resources.ServerPublicUrlExample;
                     break;
             }
 
@@ -170,8 +174,8 @@ namespace NFU
         /// </summary>
         private void SettingsHelperClear(object sender, EventArgs e)
         {
-            labelHelpTitle.Text = Resources.CP_Warning;
-            labelHelpText.Text = Resources.CP_EffectAfterRestart;
+            labelHelpTitle.Text = Resources.Warning;
+            labelHelpText.Text = Resources.EffectAfterRestart;
         }
 
         /// <summary>
@@ -180,8 +184,7 @@ namespace NFU
         private void ResetCounter(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Settings.Default.Count = 0;
-            Settings.Default.Save();
-            labelCounter.Text = String.Format(Resources.CP_Counter, "00000");
+            labelCounter.Text = String.Format(Resources.Counter, "00000");
         }
 
         /// <summary>
@@ -195,7 +198,7 @@ namespace NFU
                 case (int)TransferType.FtpsExplicit:
                     numericUpDownPort.Enabled = true;
                     numericUpDownPort.Value = 21;
-                    labelPassword.Text = Resources.CP_Password;
+                    labelPassword.Text = Resources.Password;
                     checkBoxShowPassword.Enabled = true;
                     textBoxPassword.UseSystemPasswordChar = true;
                     break;
@@ -203,7 +206,7 @@ namespace NFU
                 case (int)TransferType.Sftp:
                     numericUpDownPort.Enabled = true;
                     numericUpDownPort.Value = 22;
-                    labelPassword.Text = Resources.CP_Password;
+                    labelPassword.Text = Resources.Password;
                     checkBoxShowPassword.Enabled = true;
                     textBoxPassword.UseSystemPasswordChar = true;
                     break;
@@ -211,7 +214,7 @@ namespace NFU
                 case (int)TransferType.SftpKeys:
                     numericUpDownPort.Enabled = true;
                     numericUpDownPort.Value = 22;
-                    labelPassword.Text = Resources.CP_KeyPath;
+                    labelPassword.Text = Resources.KeyPath;
                     checkBoxShowPassword.Enabled = false;
                     textBoxPassword.UseSystemPasswordChar = false;
                     break;
@@ -219,7 +222,7 @@ namespace NFU
                 case (int)TransferType.Cifs:
                     numericUpDownPort.Enabled = false;
                     numericUpDownPort.Value = 0;
-                    labelPassword.Text = Resources.CP_Password;
+                    labelPassword.Text = Resources.Password;
                     checkBoxShowPassword.Enabled = true;
                     textBoxPassword.UseSystemPasswordChar = true;
                     break;
@@ -237,13 +240,13 @@ namespace NFU
             {
                 // Disable UAC shield
                 Misc.SendMessage(buttonDebug.Handle, 0x160C, 0, 0x0);
-                buttonDebug.Text = Resources.CP_DisableDebug;
+                buttonDebug.Text = Resources.DisableDebug;
             }
             else
             {
                 // Enable UAC shield
                 Misc.SendMessage(buttonDebug.Handle, 0x160C, 0, 0xFFFFFFFF);
-                buttonDebug.Text = Resources.CP_EnableDebug;
+                buttonDebug.Text = Resources.EnableDebug;
             }
         }
 
@@ -255,13 +258,9 @@ namespace NFU
             if (Settings.Default.Debug)
             {
                 Settings.Default.Debug = false;
-                Settings.Default.Save();
             }
             else
             {
-                // Save settings just to be safe
-                Settings.Default.Save();
-
                 ProcessStartInfo startInfo = new ProcessStartInfo
                 {
                     UseShellExecute = true,

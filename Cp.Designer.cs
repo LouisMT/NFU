@@ -1,5 +1,5 @@
 ﻿using System;
-namespace NFU
+namespace Nfu
 {
     partial class Cp
     {
@@ -36,7 +36,7 @@ namespace NFU
             this.textBoxURL = new System.Windows.Forms.TextBox();
             this.checkBoxShowPassword = new System.Windows.Forms.CheckBox();
             this.comboBoxType = new System.Windows.Forms.ComboBox();
-            this.seperatorServer = new NFU.LineSeparator();
+            this.seperatorServer = new Nfu.LineSeparator();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.textBoxUsername = new System.Windows.Forms.TextBox();
             this.textBoxDirectory = new System.Windows.Forms.TextBox();
@@ -49,8 +49,8 @@ namespace NFU
             this.linkLabelReset = new System.Windows.Forms.LinkLabel();
             this.labelCounter = new System.Windows.Forms.Label();
             this.comboBoxFilename = new System.Windows.Forms.ComboBox();
-            this.separatorNFU = new NFU.LineSeparator();
-            this.tabNFU = new System.Windows.Forms.TabPage();
+            this.separatorNfu = new Nfu.LineSeparator();
+            this.tabNfu = new System.Windows.Forms.TabPage();
             this.buttonDebug = new System.Windows.Forms.Button();
             this.checkBoxQuickScreenshots = new System.Windows.Forms.CheckBox();
             this.checkBoxStartWindows = new System.Windows.Forms.CheckBox();
@@ -58,7 +58,7 @@ namespace NFU
             this.comboBoxScreen = new System.Windows.Forms.ComboBox();
             this.checkBoxPause = new System.Windows.Forms.CheckBox();
             this.checkBoxPrintScreen = new System.Windows.Forms.CheckBox();
-            this.seperatorNFU = new NFU.LineSeparator();
+            this.seperatorNfu = new Nfu.LineSeparator();
             this.tabWebHook = new System.Windows.Forms.TabPage();
             this.textBoxWebHookSecret = new System.Windows.Forms.TextBox();
             this.labelWebHookSecret = new System.Windows.Forms.Label();
@@ -72,7 +72,7 @@ namespace NFU
             this.tabServer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).BeginInit();
             this.tabUpload.SuspendLayout();
-            this.tabNFU.SuspendLayout();
+            this.tabNfu.SuspendLayout();
             this.tabWebHook.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,7 +80,7 @@ namespace NFU
             // 
             this.tabControlCP.Controls.Add(this.tabServer);
             this.tabControlCP.Controls.Add(this.tabUpload);
-            this.tabControlCP.Controls.Add(this.tabNFU);
+            this.tabControlCP.Controls.Add(this.tabNfu);
             this.tabControlCP.Controls.Add(this.tabWebHook);
             this.tabControlCP.Location = new System.Drawing.Point(12, 12);
             this.tabControlCP.Name = "tabControlCP";
@@ -109,7 +109,7 @@ namespace NFU
             this.tabServer.Padding = new System.Windows.Forms.Padding(3);
             this.tabServer.Size = new System.Drawing.Size(452, 171);
             this.tabServer.TabIndex = 0;
-            this.tabServer.Text = global::NFU.Properties.Resources.CP_Server;
+            this.tabServer.Text = global::Nfu.Properties.Resources.Server;
             this.tabServer.UseVisualStyleBackColor = true;
             // 
             // numericUpDownPort
@@ -136,7 +136,7 @@ namespace NFU
             this.labelURL.Name = "labelURL";
             this.labelURL.Size = new System.Drawing.Size(29, 13);
             this.labelURL.TabIndex = 12;
-            this.labelURL.Text = global::NFU.Properties.Resources.CP_Url;
+            this.labelURL.Text = global::Nfu.Properties.Resources.Url;
             // 
             // textBoxURL
             // 
@@ -154,7 +154,7 @@ namespace NFU
             this.checkBoxShowPassword.Name = "checkBoxShowPassword";
             this.checkBoxShowPassword.Size = new System.Drawing.Size(101, 17);
             this.checkBoxShowPassword.TabIndex = 11;
-            this.checkBoxShowPassword.Text = global::NFU.Properties.Resources.CP_ShowPassword;
+            this.checkBoxShowPassword.Text = global::Nfu.Properties.Resources.ShowPassword;
             this.checkBoxShowPassword.UseVisualStyleBackColor = true;
             this.checkBoxShowPassword.CheckedChanged += new System.EventHandler(this.CheckBoxShowPassword);
             // 
@@ -163,11 +163,11 @@ namespace NFU
             this.comboBoxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxType.FormattingEnabled = true;
             this.comboBoxType.Items.AddRange(new object[] {
-            global::NFU.Properties.Resources.CP_Ftp,
-            global::NFU.Properties.Resources.CP_FtpsExplicit,
-            global::NFU.Properties.Resources.CP_Sftp,
-            global::NFU.Properties.Resources.CP_SftpSshKeys,
-            global::NFU.Properties.Resources.CP_Cifs});
+            global::Nfu.Properties.Resources.Ftp,
+            global::Nfu.Properties.Resources.FtpsExplicit,
+            global::Nfu.Properties.Resources.Sftp,
+            global::Nfu.Properties.Resources.SftpSshKeys,
+            global::Nfu.Properties.Resources.Cifs});
             this.comboBoxType.Location = new System.Drawing.Point(6, 6);
             this.comboBoxType.Name = "comboBoxType";
             this.comboBoxType.Size = new System.Drawing.Size(440, 21);
@@ -228,7 +228,7 @@ namespace NFU
             this.labelPassword.Name = "labelPassword";
             this.labelPassword.Size = new System.Drawing.Size(53, 13);
             this.labelPassword.TabIndex = 9;
-            this.labelPassword.Text = global::NFU.Properties.Resources.CP_Password;
+            this.labelPassword.Text = global::Nfu.Properties.Resources.Password;
             // 
             // labelDirectory
             // 
@@ -237,7 +237,7 @@ namespace NFU
             this.labelDirectory.Name = "labelDirectory";
             this.labelDirectory.Size = new System.Drawing.Size(49, 13);
             this.labelDirectory.TabIndex = 5;
-            this.labelDirectory.Text = global::NFU.Properties.Resources.CP_Directory;
+            this.labelDirectory.Text = global::Nfu.Properties.Resources.Directory;
             // 
             // labelUsername
             // 
@@ -246,7 +246,7 @@ namespace NFU
             this.labelUsername.Name = "labelUsername";
             this.labelUsername.Size = new System.Drawing.Size(55, 13);
             this.labelUsername.TabIndex = 7;
-            this.labelUsername.Text = global::NFU.Properties.Resources.CP_UserName;
+            this.labelUsername.Text = global::Nfu.Properties.Resources.UserName;
             // 
             // labelHost
             // 
@@ -255,19 +255,19 @@ namespace NFU
             this.labelHost.Name = "labelHost";
             this.labelHost.Size = new System.Drawing.Size(68, 13);
             this.labelHost.TabIndex = 2;
-            this.labelHost.Text = global::NFU.Properties.Resources.CP_HostFqdn;
+            this.labelHost.Text = global::Nfu.Properties.Resources.HostFqdn;
             // 
             // tabUpload
             // 
             this.tabUpload.Controls.Add(this.linkLabelReset);
             this.tabUpload.Controls.Add(this.labelCounter);
             this.tabUpload.Controls.Add(this.comboBoxFilename);
-            this.tabUpload.Controls.Add(this.separatorNFU);
+            this.tabUpload.Controls.Add(this.separatorNfu);
             this.tabUpload.Location = new System.Drawing.Point(4, 22);
             this.tabUpload.Name = "tabUpload";
             this.tabUpload.Size = new System.Drawing.Size(452, 171);
             this.tabUpload.TabIndex = 1;
-            this.tabUpload.Text = global::NFU.Properties.Resources.CP_Upload;
+            this.tabUpload.Text = global::Nfu.Properties.Resources.Upload;
             this.tabUpload.UseVisualStyleBackColor = true;
             // 
             // linkLabelReset
@@ -279,7 +279,7 @@ namespace NFU
             this.linkLabelReset.Size = new System.Drawing.Size(37, 13);
             this.linkLabelReset.TabIndex = 3;
             this.linkLabelReset.TabStop = true;
-            this.linkLabelReset.Text = global::NFU.Properties.Resources.CP_Reset;
+            this.linkLabelReset.Text = global::Nfu.Properties.Resources.Reset;
             this.linkLabelReset.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ResetCounter);
             // 
             // labelCounter
@@ -290,47 +290,47 @@ namespace NFU
             this.labelCounter.Name = "labelCounter";
             this.labelCounter.Size = new System.Drawing.Size(91, 13);
             this.labelCounter.TabIndex = 2;
-            this.labelCounter.Text = String.Format(global::NFU.Properties.Resources.CP_Counter, "00000");
+            this.labelCounter.Text = String.Format(global::Nfu.Properties.Resources.Counter, "00000");
             // 
             // comboBoxFilename
             // 
             this.comboBoxFilename.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFilename.FormattingEnabled = true;
             this.comboBoxFilename.Items.AddRange(new object[] {
-            global::NFU.Properties.Resources.CP_OriginalFileName,
-            global::NFU.Properties.Resources.CP_GeneratedFileName});
+            global::Nfu.Properties.Resources.OriginalFileName,
+            global::Nfu.Properties.Resources.GeneratedFileName});
             this.comboBoxFilename.Location = new System.Drawing.Point(6, 6);
             this.comboBoxFilename.Name = "comboBoxFilename";
             this.comboBoxFilename.Size = new System.Drawing.Size(440, 21);
             this.comboBoxFilename.TabIndex = 0;
             // 
-            // separatorNFU
+            // separatorNfu
             // 
-            this.separatorNFU.Location = new System.Drawing.Point(0, 33);
-            this.separatorNFU.MaximumSize = new System.Drawing.Size(2000, 2);
-            this.separatorNFU.MinimumSize = new System.Drawing.Size(0, 2);
-            this.separatorNFU.Name = "separatorNFU";
-            this.separatorNFU.Size = new System.Drawing.Size(450, 2);
-            this.separatorNFU.TabIndex = 1;
-            this.separatorNFU.TabStop = false;
+            this.separatorNfu.Location = new System.Drawing.Point(0, 33);
+            this.separatorNfu.MaximumSize = new System.Drawing.Size(2000, 2);
+            this.separatorNfu.MinimumSize = new System.Drawing.Size(0, 2);
+            this.separatorNfu.Name = "separatorNfu";
+            this.separatorNfu.Size = new System.Drawing.Size(450, 2);
+            this.separatorNfu.TabIndex = 1;
+            this.separatorNfu.TabStop = false;
             // 
-            // tabNFU
+            // tabNfu
             // 
-            this.tabNFU.Controls.Add(this.buttonDebug);
-            this.tabNFU.Controls.Add(this.checkBoxQuickScreenshots);
-            this.tabNFU.Controls.Add(this.checkBoxStartWindows);
-            this.tabNFU.Controls.Add(this.checkBoxSytemTray);
-            this.tabNFU.Controls.Add(this.comboBoxScreen);
-            this.tabNFU.Controls.Add(this.checkBoxPause);
-            this.tabNFU.Controls.Add(this.checkBoxPrintScreen);
-            this.tabNFU.Controls.Add(this.seperatorNFU);
-            this.tabNFU.Location = new System.Drawing.Point(4, 22);
-            this.tabNFU.Name = "tabNFU";
-            this.tabNFU.Padding = new System.Windows.Forms.Padding(3);
-            this.tabNFU.Size = new System.Drawing.Size(452, 171);
-            this.tabNFU.TabIndex = 2;
-            this.tabNFU.Text = global::NFU.Properties.Resources.AppName;
-            this.tabNFU.UseVisualStyleBackColor = true;
+            this.tabNfu.Controls.Add(this.buttonDebug);
+            this.tabNfu.Controls.Add(this.checkBoxQuickScreenshots);
+            this.tabNfu.Controls.Add(this.checkBoxStartWindows);
+            this.tabNfu.Controls.Add(this.checkBoxSytemTray);
+            this.tabNfu.Controls.Add(this.comboBoxScreen);
+            this.tabNfu.Controls.Add(this.checkBoxPause);
+            this.tabNfu.Controls.Add(this.checkBoxPrintScreen);
+            this.tabNfu.Controls.Add(this.seperatorNfu);
+            this.tabNfu.Location = new System.Drawing.Point(4, 22);
+            this.tabNfu.Name = "tabNfu";
+            this.tabNfu.Padding = new System.Windows.Forms.Padding(3);
+            this.tabNfu.Size = new System.Drawing.Size(452, 171);
+            this.tabNfu.TabIndex = 2;
+            this.tabNfu.Text = global::Nfu.Properties.Resources.AppName;
+            this.tabNfu.UseVisualStyleBackColor = true;
             // 
             // buttonDebug
             // 
@@ -338,7 +338,7 @@ namespace NFU
             this.buttonDebug.Name = "buttonDebug";
             this.buttonDebug.Size = new System.Drawing.Size(133, 23);
             this.buttonDebug.TabIndex = 8;
-            this.buttonDebug.Text = global::NFU.Properties.Resources.CP_EnableDebug;
+            this.buttonDebug.Text = global::Nfu.Properties.Resources.EnableDebug;
             this.buttonDebug.UseVisualStyleBackColor = true;
             this.buttonDebug.Click += new System.EventHandler(this.EnableDisableDebug);
             // 
@@ -349,7 +349,7 @@ namespace NFU
             this.checkBoxQuickScreenshots.Name = "checkBoxQuickScreenshots";
             this.checkBoxQuickScreenshots.Size = new System.Drawing.Size(114, 17);
             this.checkBoxQuickScreenshots.TabIndex = 4;
-            this.checkBoxQuickScreenshots.Text = global::NFU.Properties.Resources.CP_QuickScreenShots;
+            this.checkBoxQuickScreenshots.Text = global::Nfu.Properties.Resources.QuickScreenShots;
             this.checkBoxQuickScreenshots.UseVisualStyleBackColor = true;
             // 
             // checkBoxStartWindows
@@ -360,7 +360,7 @@ namespace NFU
             this.checkBoxStartWindows.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.checkBoxStartWindows.Size = new System.Drawing.Size(117, 17);
             this.checkBoxStartWindows.TabIndex = 7;
-            this.checkBoxStartWindows.Text = global::NFU.Properties.Resources.CP_StartWithWindows;
+            this.checkBoxStartWindows.Text = global::Nfu.Properties.Resources.StartWithWindows;
             this.checkBoxStartWindows.UseVisualStyleBackColor = true;
             // 
             // checkBoxSytemTray
@@ -371,7 +371,7 @@ namespace NFU
             this.checkBoxSytemTray.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.checkBoxSytemTray.Size = new System.Drawing.Size(133, 17);
             this.checkBoxSytemTray.TabIndex = 6;
-            this.checkBoxSytemTray.Text = global::NFU.Properties.Resources.CP_MinimizeToSystemTray;
+            this.checkBoxSytemTray.Text = global::Nfu.Properties.Resources.MinimizeToSystemTray;
             this.checkBoxSytemTray.UseVisualStyleBackColor = true;
             // 
             // comboBoxScreen
@@ -390,7 +390,7 @@ namespace NFU
             this.checkBoxPause.Name = "checkBoxPause";
             this.checkBoxPause.Size = new System.Drawing.Size(131, 17);
             this.checkBoxPause.TabIndex = 2;
-            this.checkBoxPause.Text = global::NFU.Properties.Resources.CP_HandlePauseKey;
+            this.checkBoxPause.Text = global::Nfu.Properties.Resources.HandlePauseKey;
             this.checkBoxPause.UseVisualStyleBackColor = true;
             // 
             // checkBoxPrintScreen
@@ -400,18 +400,18 @@ namespace NFU
             this.checkBoxPrintScreen.Name = "checkBoxPrintScreen";
             this.checkBoxPrintScreen.Size = new System.Drawing.Size(159, 17);
             this.checkBoxPrintScreen.TabIndex = 3;
-            this.checkBoxPrintScreen.Text = global::NFU.Properties.Resources.CP_HandlePrintScreenKey;
+            this.checkBoxPrintScreen.Text = global::Nfu.Properties.Resources.HandlePrintScreenKey;
             this.checkBoxPrintScreen.UseVisualStyleBackColor = true;
             // 
-            // seperatorNFU
+            // seperatorNfu
             // 
-            this.seperatorNFU.Location = new System.Drawing.Point(0, 33);
-            this.seperatorNFU.MaximumSize = new System.Drawing.Size(2000, 2);
-            this.seperatorNFU.MinimumSize = new System.Drawing.Size(0, 2);
-            this.seperatorNFU.Name = "seperatorNFU";
-            this.seperatorNFU.Size = new System.Drawing.Size(450, 2);
-            this.seperatorNFU.TabIndex = 1;
-            this.seperatorNFU.TabStop = false;
+            this.seperatorNfu.Location = new System.Drawing.Point(0, 33);
+            this.seperatorNfu.MaximumSize = new System.Drawing.Size(2000, 2);
+            this.seperatorNfu.MinimumSize = new System.Drawing.Size(0, 2);
+            this.seperatorNfu.Name = "seperatorNfu";
+            this.seperatorNfu.Size = new System.Drawing.Size(450, 2);
+            this.seperatorNfu.TabIndex = 1;
+            this.seperatorNfu.TabStop = false;
             // 
             // tabWebHook
             // 
@@ -424,7 +424,7 @@ namespace NFU
             this.tabWebHook.Name = "tabWebHook";
             this.tabWebHook.Size = new System.Drawing.Size(452, 171);
             this.tabWebHook.TabIndex = 3;
-            this.tabWebHook.Text = global::NFU.Properties.Resources.CP_WebHook;
+            this.tabWebHook.Text = global::Nfu.Properties.Resources.WebHook;
             this.tabWebHook.UseVisualStyleBackColor = true;
             // 
             // textBoxWebHookSecret
@@ -441,7 +441,7 @@ namespace NFU
             this.labelWebHookSecret.Name = "labelWebHookSecret";
             this.labelWebHookSecret.Size = new System.Drawing.Size(84, 13);
             this.labelWebHookSecret.TabIndex = 3;
-            this.labelWebHookSecret.Text = global::NFU.Properties.Resources.CP_Secret;
+            this.labelWebHookSecret.Text = global::Nfu.Properties.Resources.Secret;
             // 
             // labelWebHook
             // 
@@ -450,7 +450,7 @@ namespace NFU
             this.labelWebHook.Name = "labelWebHook";
             this.labelWebHook.Size = new System.Drawing.Size(29, 13);
             this.labelWebHook.TabIndex = 2;
-            this.labelWebHook.Text = global::NFU.Properties.Resources.CP_Url;
+            this.labelWebHook.Text = global::Nfu.Properties.Resources.Url;
             // 
             // textBoxWebHookUrl
             // 
@@ -467,7 +467,7 @@ namespace NFU
             this.checkBoxEnableWebHook.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.checkBoxEnableWebHook.Size = new System.Drawing.Size(111, 17);
             this.checkBoxEnableWebHook.TabIndex = 0;
-            this.checkBoxEnableWebHook.Text = global::NFU.Properties.Resources.CP_EnableWebHook;
+            this.checkBoxEnableWebHook.Text = global::Nfu.Properties.Resources.EnableWebHook;
             this.checkBoxEnableWebHook.UseVisualStyleBackColor = true;
             // 
             // buttonSave
@@ -476,7 +476,7 @@ namespace NFU
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 3;
-            this.buttonSave.Text = global::NFU.Properties.Resources.CP_ButtonSave;
+            this.buttonSave.Text = global::Nfu.Properties.Resources.ButtonSave;
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.ButtonSave);
             // 
@@ -488,7 +488,7 @@ namespace NFU
             this.labelHelpTitle.Name = "labelHelpTitle";
             this.labelHelpTitle.Size = new System.Drawing.Size(54, 13);
             this.labelHelpTitle.TabIndex = 1;
-            this.labelHelpTitle.Text = global::NFU.Properties.Resources.CP_Warning;
+            this.labelHelpTitle.Text = global::Nfu.Properties.Resources.Warning;
             // 
             // labelHelpText
             // 
@@ -497,7 +497,7 @@ namespace NFU
             this.labelHelpText.Name = "labelHelpText";
             this.labelHelpText.Size = new System.Drawing.Size(236, 13);
             this.labelHelpText.TabIndex = 2;
-            this.labelHelpText.Text = global::NFU.Properties.Resources.CP_EffectAfterRestart;
+            this.labelHelpText.Text = global::Nfu.Properties.Resources.EffectAfterRestart;
             // 
             // Cp
             // 
@@ -516,7 +516,7 @@ namespace NFU
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = global::NFU.Properties.Resources.CP_Title;
+            this.Text = global::Nfu.Properties.Resources.Settings;
             this.Shown += new System.EventHandler(this.CpShown);
             this.tabControlCP.ResumeLayout(false);
             this.tabServer.ResumeLayout(false);
@@ -524,8 +524,8 @@ namespace NFU
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).EndInit();
             this.tabUpload.ResumeLayout(false);
             this.tabUpload.PerformLayout();
-            this.tabNFU.ResumeLayout(false);
-            this.tabNFU.PerformLayout();
+            this.tabNfu.ResumeLayout(false);
+            this.tabNfu.PerformLayout();
             this.tabWebHook.ResumeLayout(false);
             this.tabWebHook.PerformLayout();
             this.ResumeLayout(false);
@@ -536,7 +536,7 @@ namespace NFU
         #endregion
 
         private System.Windows.Forms.TabControl tabControlCP;
-        private System.Windows.Forms.TabPage tabNFU;
+        private System.Windows.Forms.TabPage tabNfu;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.TabPage tabServer;
         private System.Windows.Forms.ComboBox comboBoxType;
@@ -556,11 +556,11 @@ namespace NFU
         private System.Windows.Forms.CheckBox checkBoxPrintScreen;
         private System.Windows.Forms.Label labelHelpTitle;
         private System.Windows.Forms.ComboBox comboBoxScreen;
-        private LineSeparator seperatorNFU;
+        private LineSeparator seperatorNfu;
         private System.Windows.Forms.Label labelHelpText;
         private System.Windows.Forms.TabPage tabUpload;
         private System.Windows.Forms.ComboBox comboBoxFilename;
-        private LineSeparator separatorNFU;
+        private LineSeparator separatorNfu;
         private System.Windows.Forms.CheckBox checkBoxSytemTray;
         private System.Windows.Forms.CheckBox checkBoxStartWindows;
         private System.Windows.Forms.LinkLabel linkLabelReset;

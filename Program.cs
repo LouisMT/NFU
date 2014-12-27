@@ -1,11 +1,11 @@
-﻿using NFU.Properties;
+﻿using Nfu.Properties;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace NFU
+namespace Nfu
 {
     public enum TransferType
     {
@@ -22,6 +22,8 @@ namespace NFU
         public static About FormAbout;
         public static Cp FormCp;
 
+        public static bool AutoSaveSettings = true;
+
         private static readonly Mutex Mutex = new Mutex(true, "NFU {537e6f56-11cb-461a-9983-634307543f5b}");
 
         /// <summary>
@@ -37,6 +39,15 @@ namespace NFU
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            // Automatically save settings on change
+            Settings.Default.PropertyChanged += (sender, e) =>
+            {
+                if (AutoSaveSettings)
+                {
+                    Settings.Default.Save();
+                }
+            };
+
             try
             {
                 if (args.Any(a => a == "debug"))
@@ -51,13 +62,12 @@ namespace NFU
                             }
 
                             Settings.Default.Debug = true;
-                            Settings.Default.Save();
                         }
                         catch { }
                     }
 
                     return;
-                }      
+                }
 
                 if (Mutex.WaitOne(TimeSpan.Zero, true))
                 {
@@ -65,13 +75,10 @@ namespace NFU
                     {
                         Settings.Default.Upgrade();
                         Settings.Default.NeedsUpgrade = false;
-                        Settings.Default.Save();
                     }
 
                     if (Screen.AllScreens.Length > Settings.Default.Screen - 1)
                         Settings.Default.Screen = 0;
-
-                    Settings.Default.Save();
 
                     FormCore = new Core();
                     FormAbout = new About();
@@ -87,14 +94,14 @@ namespace NFU
                     if (args.Any(a => a == "minimized"))
                     {
                         FormCore.WindowState = FormWindowState.Minimized;
-                    } 
+                    }
 
                     Application.Run(FormCore);
                 }
                 else
                 {
-                    MessageBox.Show(Resources.Program_AlreadyRunning,
-                        Resources.Program_AlreadyRunningTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(Resources.AlreadyRunning,
+                        Resources.AlreadyRunningTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
             catch (Exception e)

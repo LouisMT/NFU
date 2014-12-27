@@ -1,10 +1,10 @@
-﻿using NFU.Properties;
+﻿using Nfu.Properties;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
-namespace NFU
+namespace Nfu
 {
     public sealed class Snipper : Form
     {
@@ -71,13 +71,13 @@ namespace NFU
             FormBorderStyle = FormBorderStyle.None;
             StartPosition = FormStartPosition.Manual;
 
-            _comboBoxScreen.Items.Add(Resources.Snipper_MergeScreens);
+            _comboBoxScreen.Items.Add(Resources.MergeScreens);
             _comboBoxScreen.Location = new Point(3, 3);
             _comboBoxScreen.DropDownStyle = ComboBoxStyle.DropDownList;
 
             for (int i = 0; i < Screen.AllScreens.Length; i++)
             {
-                _comboBoxScreen.Items.Add(String.Format(Resources.Snipper_Screen, i + 1));
+                _comboBoxScreen.Items.Add(String.Format(Resources.Screen, i + 1));
             }
 
             _comboBoxScreen.SelectedIndexChanged += ScreenIndexChanged;
@@ -289,8 +289,8 @@ namespace NFU
 
                 Rectangle rectangleDisplay = new Rectangle(0, 0, Width, 27);
                 e.Graphics.FillRectangle(bg, rectangleDisplay);
-                e.Graphics.DrawString(String.Format(Resources.Snipper_Coordinates,
-                    _rectangleSelection.X, _rectangleSelection.Y, _rectangleSelection.Width, _rectangleSelection.Height, Resources.Snipper_HotKeys),
+                e.Graphics.DrawString(String.Format(Resources.CoordinatesOverlay,
+                    _rectangleSelection.X, _rectangleSelection.Y, _rectangleSelection.Width, _rectangleSelection.Height, Resources.HotKeysOverlay),
                     new Font("Consolas", 8.25F), fg, rectangleDisplay, new StringFormat() { Alignment = StringAlignment.Center });
             }
         }
@@ -313,7 +313,6 @@ namespace NFU
             {
                 Settings.Default.ShowControls = !Settings.Default.ShowControls;
                 _comboBoxScreen.Visible = Settings.Default.ShowControls;
-                Settings.Default.Save();
                 Invalidate();
                 return true;
             }

@@ -1,4 +1,4 @@
-﻿namespace NFU
+﻿namespace Nfu
 {
     partial class About
     {
@@ -39,9 +39,9 @@
             this.labelVersion = new System.Windows.Forms.Label();
             this.labelLibraries = new System.Windows.Forms.Label();
             this.buttonClose = new System.Windows.Forms.Button();
-            this.lineSeperatorAbout = new NFU.LineSeparator();
+            this.lineSeperatorAbout = new Nfu.LineSeparator();
             this.buttonOpenLog = new System.Windows.Forms.Button();
-            this.lineSeparatorAbout2 = new NFU.LineSeparator();
+            this.lineSeparatorAbout2 = new Nfu.LineSeparator();
             this.linkLabelSource = new System.Windows.Forms.LinkLabel();
             this.buttonChangelog = new System.Windows.Forms.Button();
             this.buttonIssues = new System.Windows.Forms.Button();
@@ -67,15 +67,15 @@
             // 
             // columnName
             // 
-            this.columnName.Text = global::NFU.Properties.Resources.About_Name;
+            this.columnName.Text = global::Nfu.Properties.Resources.Name;
             // 
             // columnURL
             // 
-            this.columnURL.Text = global::NFU.Properties.Resources.About_Url;
+            this.columnURL.Text = global::Nfu.Properties.Resources.Url;
             // 
             // columnFor
             // 
-            this.columnFor.Text = global::NFU.Properties.Resources.About_UsedFor;
+            this.columnFor.Text = global::Nfu.Properties.Resources.UsedFor;
             // 
             // labelName
             // 
@@ -84,7 +84,7 @@
             this.labelName.Name = "labelName";
             this.labelName.Size = new System.Drawing.Size(38, 13);
             this.labelName.TabIndex = 0;
-            this.labelName.Text = global::NFU.Properties.Resources.About_Name;
+            this.labelName.Text = global::Nfu.Properties.Resources.Name;
             // 
             // textBoxName
             // 
@@ -93,7 +93,7 @@
             this.textBoxName.ReadOnly = true;
             this.textBoxName.Size = new System.Drawing.Size(253, 20);
             this.textBoxName.TabIndex = 1;
-            this.textBoxName.Text = global::NFU.Properties.Resources.AppName;
+            this.textBoxName.Text = global::Nfu.Properties.Resources.AppName;
             // 
             // textBoxCopyright
             // 
@@ -102,7 +102,7 @@
             this.textBoxCopyright.ReadOnly = true;
             this.textBoxCopyright.Size = new System.Drawing.Size(410, 20);
             this.textBoxCopyright.TabIndex = 5;
-            this.textBoxCopyright.Text = global::NFU.Properties.Resources.About_CopyrightText;
+            this.textBoxCopyright.Text = global::Nfu.Properties.Resources.CopyrightText;
             // 
             // labelCopyright
             // 
@@ -111,7 +111,7 @@
             this.labelCopyright.Name = "labelCopyright";
             this.labelCopyright.Size = new System.Drawing.Size(54, 13);
             this.labelCopyright.TabIndex = 4;
-            this.labelCopyright.Text = global::NFU.Properties.Resources.About_Copyright;
+            this.labelCopyright.Text = global::Nfu.Properties.Resources.Copyright;
             // 
             // textBoxVersion
             // 
@@ -128,7 +128,7 @@
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(45, 13);
             this.labelVersion.TabIndex = 2;
-            this.labelVersion.Text = global::NFU.Properties.Resources.About_Version;
+            this.labelVersion.Text = global::Nfu.Properties.Resources.Version;
             // 
             // labelLibraries
             // 
@@ -137,7 +137,7 @@
             this.labelLibraries.Name = "labelLibraries";
             this.labelLibraries.Size = new System.Drawing.Size(316, 13);
             this.labelLibraries.TabIndex = 11;
-            this.labelLibraries.Text = global::NFU.Properties.Resources.About_ThirdParty;
+            this.labelLibraries.Text = global::Nfu.Properties.Resources.ThirdPartyResources;
             // 
             // buttonClose
             // 
@@ -146,7 +146,7 @@
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(120, 23);
             this.buttonClose.TabIndex = 16;
-            this.buttonClose.Text = global::NFU.Properties.Resources.About_ButtonClose;
+            this.buttonClose.Text = global::Nfu.Properties.Resources.ButtonClose;
             this.buttonClose.UseVisualStyleBackColor = true;
             // 
             // lineSeperatorAbout
@@ -165,7 +165,7 @@
             this.buttonOpenLog.Name = "buttonOpenLog";
             this.buttonOpenLog.Size = new System.Drawing.Size(119, 23);
             this.buttonOpenLog.TabIndex = 14;
-            this.buttonOpenLog.Text = global::NFU.Properties.Resources.About_ButtonOpenLog;
+            this.buttonOpenLog.Text = global::Nfu.Properties.Resources.ButtonOpenLog;
             this.buttonOpenLog.UseVisualStyleBackColor = true;
             this.buttonOpenLog.Click += new System.EventHandler(this.OpenNfuLog);
             // 
@@ -187,7 +187,7 @@
             this.linkLabelSource.Size = new System.Drawing.Size(92, 13);
             this.linkLabelSource.TabIndex = 15;
             this.linkLabelSource.TabStop = true;
-            this.linkLabelSource.Text = global::NFU.Properties.Resources.About_Source;
+            this.linkLabelSource.Text = global::Nfu.Properties.Resources.Source;
             this.linkLabelSource.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OpenSource);
             // 
             // buttonChangelog
@@ -196,7 +196,7 @@
             this.buttonChangelog.Name = "buttonChangelog";
             this.buttonChangelog.Size = new System.Drawing.Size(98, 23);
             this.buttonChangelog.TabIndex = 6;
-            this.buttonChangelog.Text = global::NFU.Properties.Resources.About_ButtonChangeLog;
+            this.buttonChangelog.Text = global::Nfu.Properties.Resources.ButtonChangeLog;
             this.buttonChangelog.UseVisualStyleBackColor = true;
             this.buttonChangelog.Click += new System.EventHandler(this.OpenChangelog);
             // 
@@ -206,7 +206,7 @@
             this.buttonIssues.Name = "buttonIssues";
             this.buttonIssues.Size = new System.Drawing.Size(98, 23);
             this.buttonIssues.TabIndex = 8;
-            this.buttonIssues.Text = global::NFU.Properties.Resources.About_ButtonIssues;
+            this.buttonIssues.Text = global::Nfu.Properties.Resources.ButtonIssues;
             this.buttonIssues.UseVisualStyleBackColor = true;
             this.buttonIssues.Click += new System.EventHandler(this.OpenIssues);
             // 
@@ -216,7 +216,7 @@
             this.buttonContributors.Name = "buttonContributors";
             this.buttonContributors.Size = new System.Drawing.Size(98, 23);
             this.buttonContributors.TabIndex = 7;
-            this.buttonContributors.Text = global::NFU.Properties.Resources.About_ButtonContributors;
+            this.buttonContributors.Text = global::Nfu.Properties.Resources.ButtonContributors;
             this.buttonContributors.UseVisualStyleBackColor = true;
             this.buttonContributors.Click += new System.EventHandler(this.OpenContributors);
             // 
@@ -226,7 +226,7 @@
             this.buttonLicense.Name = "buttonLicense";
             this.buttonLicense.Size = new System.Drawing.Size(98, 23);
             this.buttonLicense.TabIndex = 9;
-            this.buttonLicense.Text = global::NFU.Properties.Resources.About_ButtonLicense;
+            this.buttonLicense.Text = global::Nfu.Properties.Resources.ButtonLicense;
             this.buttonLicense.UseVisualStyleBackColor = true;
             this.buttonLicense.Click += new System.EventHandler(this.OpenLicense);
             // 
@@ -262,7 +262,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = global::NFU.Properties.Resources.About_Title;
+            this.Text = global::Nfu.Properties.Resources.About;
             this.ResumeLayout(false);
             this.PerformLayout();
 

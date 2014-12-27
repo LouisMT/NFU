@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NFU.Models
+namespace Nfu.Models
 {
     public class WebHook
     {
