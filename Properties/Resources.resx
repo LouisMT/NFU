@@ -540,4 +540,10 @@ Try to enable debug mode in order to solve this issue.</value>
   <data name="Secret" xml:space="preserve">
     <value>Secret (optional)</value>
   </data>
+  <data name="SettingsGone" xml:space="preserve">
+    <value>Settings gone?</value>
+  </data>
+  <data name="SettingsGoneUrl" xml:space="preserve">
+    <value>https://github.com/Naxiz/NFU/wiki/Upgrading#201412272</value>
+  </data>
 </root>

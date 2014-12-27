@@ -913,6 +913,24 @@ namespace Nfu.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Settings gone?.
+        /// </summary>
+        internal static string SettingsGone {
+            get {
+                return ResourceManager.GetString("SettingsGone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/Naxiz/NFU/wiki/Upgrading#201412272.
+        /// </summary>
+        internal static string SettingsGoneUrl {
+            get {
+                return ResourceManager.GetString("SettingsGoneUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap SettingsIcon {

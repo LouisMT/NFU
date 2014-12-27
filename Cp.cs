@@ -285,5 +285,10 @@ namespace Nfu
 
             SetDebugButtonState();
         }
+
+        private void OpenSettingsGoneUrl(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(Resources.SettingsGoneUrl);
+        }
     }
 }

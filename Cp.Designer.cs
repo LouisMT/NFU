@@ -68,6 +68,7 @@ namespace Nfu
             this.buttonSave = new System.Windows.Forms.Button();
             this.labelHelpTitle = new System.Windows.Forms.Label();
             this.labelHelpText = new System.Windows.Forms.Label();
+            this.linkLabelSettingsGone = new System.Windows.Forms.LinkLabel();
             this.tabControlCP.SuspendLayout();
             this.tabServer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).BeginInit();
@@ -499,12 +500,24 @@ namespace Nfu
             this.labelHelpText.TabIndex = 2;
             this.labelHelpText.Text = global::Nfu.Properties.Resources.EffectAfterRestart;
             // 
+            // linkLabelSettingsGone
+            // 
+            this.linkLabelSettingsGone.AutoSize = true;
+            this.linkLabelSettingsGone.Location = new System.Drawing.Point(394, 9);
+            this.linkLabelSettingsGone.Name = "linkLabelSettingsGone";
+            this.linkLabelSettingsGone.Size = new System.Drawing.Size(78, 13);
+            this.linkLabelSettingsGone.TabIndex = 14;
+            this.linkLabelSettingsGone.TabStop = true;
+            this.linkLabelSettingsGone.Text = global::Nfu.Properties.Resources.SettingsGone;
+            this.linkLabelSettingsGone.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OpenSettingsGoneUrl);
+            // 
             // Cp
             // 
             this.AcceptButton = this.buttonSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(484, 250);
+            this.Controls.Add(this.linkLabelSettingsGone);
             this.Controls.Add(this.labelHelpText);
             this.Controls.Add(this.labelHelpTitle);
             this.Controls.Add(this.buttonSave);
@@ -574,6 +587,7 @@ namespace Nfu
         private System.Windows.Forms.Button buttonDebug;
         private System.Windows.Forms.TextBox textBoxWebHookSecret;
         private System.Windows.Forms.Label labelWebHookSecret;
+        private System.Windows.Forms.LinkLabel linkLabelSettingsGone;
 
     }
 }

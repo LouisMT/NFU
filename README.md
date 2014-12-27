@@ -26,6 +26,6 @@ Source code is published under MIT, license is available [here](https://github.c
 
 * Launch Visual Studio 2013
 * Open the solution:  
-  **File** > **Open** > **Project/Solution** > **NFU\NFU.sln**
+  **File** > **Open** > **Project/Solution** > **NFU\Nfu.sln**
 * Build the solution:  
   **Build** > **Build Solution**
