@@ -83,6 +83,9 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="Blurrer.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Core.cs">
       <SubType>Form</SubType>
     </Compile>
