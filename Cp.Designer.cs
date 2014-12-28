@@ -338,7 +338,7 @@ namespace Nfu
             this.buttonDebug.Location = new System.Drawing.Point(313, 142);
             this.buttonDebug.Name = "buttonDebug";
             this.buttonDebug.Size = new System.Drawing.Size(133, 23);
-            this.buttonDebug.TabIndex = 8;
+            this.buttonDebug.TabIndex = 7;
             this.buttonDebug.Text = global::Nfu.Properties.Resources.EnableDebug;
             this.buttonDebug.UseVisualStyleBackColor = true;
             this.buttonDebug.Click += new System.EventHandler(this.EnableDisableDebug);
@@ -360,7 +360,7 @@ namespace Nfu
             this.checkBoxStartWindows.Name = "checkBoxStartWindows";
             this.checkBoxStartWindows.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.checkBoxStartWindows.Size = new System.Drawing.Size(117, 17);
-            this.checkBoxStartWindows.TabIndex = 7;
+            this.checkBoxStartWindows.TabIndex = 5;
             this.checkBoxStartWindows.Text = global::Nfu.Properties.Resources.StartWithWindows;
             this.checkBoxStartWindows.UseVisualStyleBackColor = true;
             // 
@@ -433,7 +433,7 @@ namespace Nfu
             this.textBoxWebHookSecret.Location = new System.Drawing.Point(93, 32);
             this.textBoxWebHookSecret.Name = "textBoxWebHookSecret";
             this.textBoxWebHookSecret.Size = new System.Drawing.Size(353, 20);
-            this.textBoxWebHookSecret.TabIndex = 4;
+            this.textBoxWebHookSecret.TabIndex = 3;
             // 
             // labelWebHookSecret
             // 
@@ -441,7 +441,7 @@ namespace Nfu
             this.labelWebHookSecret.Location = new System.Drawing.Point(3, 35);
             this.labelWebHookSecret.Name = "labelWebHookSecret";
             this.labelWebHookSecret.Size = new System.Drawing.Size(84, 13);
-            this.labelWebHookSecret.TabIndex = 3;
+            this.labelWebHookSecret.TabIndex = 2;
             this.labelWebHookSecret.Text = global::Nfu.Properties.Resources.Secret;
             // 
             // labelWebHook
@@ -450,7 +450,7 @@ namespace Nfu
             this.labelWebHook.Location = new System.Drawing.Point(3, 9);
             this.labelWebHook.Name = "labelWebHook";
             this.labelWebHook.Size = new System.Drawing.Size(29, 13);
-            this.labelWebHook.TabIndex = 2;
+            this.labelWebHook.TabIndex = 0;
             this.labelWebHook.Text = global::Nfu.Properties.Resources.Url;
             // 
             // textBoxWebHookUrl
@@ -467,7 +467,7 @@ namespace Nfu
             this.checkBoxEnableWebHook.Name = "checkBoxEnableWebHook";
             this.checkBoxEnableWebHook.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.checkBoxEnableWebHook.Size = new System.Drawing.Size(111, 17);
-            this.checkBoxEnableWebHook.TabIndex = 0;
+            this.checkBoxEnableWebHook.TabIndex = 4;
             this.checkBoxEnableWebHook.Text = global::Nfu.Properties.Resources.EnableWebHook;
             this.checkBoxEnableWebHook.UseVisualStyleBackColor = true;
             // 
@@ -506,7 +506,7 @@ namespace Nfu
             this.linkLabelSettingsGone.Location = new System.Drawing.Point(394, 9);
             this.linkLabelSettingsGone.Name = "linkLabelSettingsGone";
             this.linkLabelSettingsGone.Size = new System.Drawing.Size(78, 13);
-            this.linkLabelSettingsGone.TabIndex = 14;
+            this.linkLabelSettingsGone.TabIndex = 4;
             this.linkLabelSettingsGone.TabStop = true;
             this.linkLabelSettingsGone.Text = global::Nfu.Properties.Resources.SettingsGone;
             this.linkLabelSettingsGone.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OpenSettingsGoneUrl);
