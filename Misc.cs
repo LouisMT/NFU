@@ -154,6 +154,9 @@ namespace Nfu
         /// <returns>The remote filename.</returns>
         public static string GetRemoteFileName(string filename)
         {
+            string extension = Path.GetExtension(filename);
+            filename = Path.GetFileNameWithoutExtension(filename);
+
             switch (Settings.Default.Filename)
             {
                 case 0:
@@ -164,12 +167,12 @@ namespace Nfu
                     if (Settings.Default.Count == 99999)
                         Settings.Default.Count = 0;
 
-                    filename = String.Format("{0}-{1}{2}", DateTime.Now.ToString("ddMMyyyy"), (++Settings.Default.Count).ToString("D5"), Path.GetExtension(filename));
+                    filename = String.Format("{0}-{1}", DateTime.Now.ToString("ddMMyyyy"), (++Settings.Default.Count).ToString("D5"));
 
                     break;
             }
 
-            return filename;
+            return filename + extension;
         }
 
         /// <summary>
