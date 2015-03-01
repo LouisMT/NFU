@@ -300,7 +300,7 @@ namespace Nfu
         /// </summary>
         protected override bool ProcessCmdKey(ref Message message, Keys keyData)
         {
-            ReturnType = (ModifierKeys == Keys.Control) ? ReturnTypes.Default : ReturnTypes.ToClipboard;
+			ReturnType = (ModifierKeys == Keys.Control) ? ReturnTypes.ToClipboard : ReturnTypes.Default;
             // Remove the control modifier from the keys
             var keys = (keyData & ~Keys.Control);
 
