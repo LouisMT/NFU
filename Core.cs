@@ -297,6 +297,7 @@ namespace Nfu
                 if (tempNfu == null || tempCmd == null)
                 {
                     Misc.HandleError(new Exception(Resources.UpdateFailed), Resources.Update);
+                    return;
                 }
 
                 tempCmd += ".cmd";

@@ -549,7 +549,7 @@ Try to enable debug mode in order to solve this issue.</value>
   <data name="TemporaryFolderFull" xml:space="preserve">
     <value>NFU was unable to create a temporary file. Your temporary folder is probably full.
 
-Please clear your temporary folder and try again, or click cancel to cancel the upload.</value>
+Please clear your temporary folder and try again, or click cancel to cancel the upload (try {0} out of {1}).</value>
   </data>
   <data name="TemporaryFolderFullTitle" xml:space="preserve">
     <value>Temporary folder full</value>

@@ -319,9 +319,10 @@ namespace Nfu
             }
             catch (IOException)
             {
-                DialogResult temporaryFolderDialog = MessageBox.Show(Resources.TemporaryFolderFull, Resources.TemporaryFolderFullTitle, MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+                DialogResult temporaryFolderDialog = MessageBox.Show(String.Format(Resources.TemporaryFolderFull, iteration, Settings.Default.TemporaryFolderRetries),
+                    Resources.TemporaryFolderFullTitle, MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
 
-                if (temporaryFolderDialog == DialogResult.Retry && iteration <= 6)
+                if (temporaryFolderDialog == DialogResult.Retry && iteration <= Settings.Default.TemporaryFolderRetries)
                 {
                     return GetTempFileName(iteration + 1);
                 }

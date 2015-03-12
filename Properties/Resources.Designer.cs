@@ -1062,7 +1062,7 @@ namespace Nfu.Properties {
         /// <summary>
         ///   Looks up a localized string similar to NFU was unable to create a temporary file. Your temporary folder is probably full.
         ///
-        ///Please clear your temporary folder and try again, or click cancel to cancel the upload..
+        ///Please clear your temporary folder and try again, or click cancel to cancel the upload (try {0} out of {1})..
         /// </summary>
         internal static string TemporaryFolderFull {
             get {
