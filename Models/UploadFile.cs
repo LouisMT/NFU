@@ -28,7 +28,7 @@ namespace Nfu.Models
 
             if (state == FileState.Temporary)
             {
-                Path = IOPath.GetTempFileName();
+                Path = Misc.GetTempFileName();
                 FileName = IOPath.ChangeExtension(FileName, extension);
             }
         }

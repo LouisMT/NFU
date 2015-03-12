@@ -164,7 +164,10 @@ namespace Nfu
                 switch (Snipper.ReturnType)
                 {
                     case Snipper.ReturnTypes.Default:
-                        Uploader.UploadImage(_screenshot);
+                        if (!Uploader.UploadImage(_screenshot))
+                        {
+                            Misc.HandleError(new Exception(Resources.UploadFailed), Resources.ScreenShot);
+                        }
                         break;
 
                     case Snipper.ReturnTypes.ToClipboard:
@@ -184,7 +187,10 @@ namespace Nfu
         /// </summary>
         private void ReuploadScreenshot(object sender, EventArgs e)
         {
-            Uploader.UploadImage(_screenshot);
+            if (!Uploader.UploadImage(_screenshot))
+            {
+                Misc.HandleError(new Exception(Resources.UploadFailed), Resources.ScreenShot);
+            }
         }
 
         /// <summary>
@@ -204,11 +210,17 @@ namespace Nfu
             }
             else if (Clipboard.ContainsImage())
             {
-                Uploader.UploadImage(Clipboard.GetImage());
+                if (!Uploader.UploadImage(Clipboard.GetImage()))
+                {
+                    Misc.HandleError(new Exception(Resources.UploadFailed), Resources.Import);
+                }
             }
             else if (Clipboard.ContainsText())
             {
-                Uploader.UploadText(Clipboard.GetText());
+                if (!Uploader.UploadText(Clipboard.GetText()))
+                {
+                    Misc.HandleError(new Exception(Resources.UploadFailed), Resources.Import);
+                }
             }
             else
             {
@@ -279,8 +291,15 @@ namespace Nfu
         {
             try
             {
-                string tempNfu = Path.GetTempFileName();
-                string tempCmd = Path.GetTempFileName() + ".cmd";
+                string tempNfu = Misc.GetTempFileName();
+                string tempCmd = Misc.GetTempFileName();
+
+                if (tempNfu == null || tempCmd == null)
+                {
+                    Misc.HandleError(new Exception(Resources.UpdateFailed), Resources.Update);
+                }
+
+                tempCmd += ".cmd";
 
                 using (WebClient updateClient = new WebClient())
                 {

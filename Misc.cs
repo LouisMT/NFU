@@ -306,5 +306,32 @@ namespace Nfu
 
             return validatedCertificate;
         }
+
+        /// <summary>
+        /// Get a temporary filename, displaying a warning when the temporary folder is full.
+        /// </summary>
+        /// <returns>The temporary filename, or null on failure.</returns>
+        public static string GetTempFileName(int iteration = 1)
+        {
+            try
+            {
+                return Path.GetTempFileName();
+            }
+            catch (IOException)
+            {
+                DialogResult temporaryFolderDialog = MessageBox.Show(Resources.TemporaryFolderFull, Resources.TemporaryFolderFullTitle, MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+
+                if (temporaryFolderDialog == DialogResult.Retry && iteration <= 6)
+                {
+                    return GetTempFileName(iteration + 1);
+                }
+                else if (temporaryFolderDialog == DialogResult.Cancel)
+                {
+                    return null;
+                }
+            }
+
+            return null;
+        }
     }
 }

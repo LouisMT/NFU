@@ -546,4 +546,15 @@ Try to enable debug mode in order to solve this issue.</value>
   <data name="SettingsGoneUrl" xml:space="preserve">
     <value>https://github.com/Naxiz/NFU/wiki/Upgrading#201412272</value>
   </data>
+  <data name="TemporaryFolderFull" xml:space="preserve">
+    <value>NFU was unable to create a temporary file. Your temporary folder is probably full.
+
+Please clear your temporary folder and try again, or click cancel to cancel the upload.</value>
+  </data>
+  <data name="TemporaryFolderFullTitle" xml:space="preserve">
+    <value>Temporary folder full</value>
+  </data>
+  <data name="UpdateFailed" xml:space="preserve">
+    <value>The update has failed.</value>
+  </data>
 </root>

@@ -67,6 +67,10 @@ namespace Nfu
         public static bool UploadImage(Image image)
         {
             UploadFile file = new UploadFile(FileState.Temporary, "png");
+            if (file.Path == null)
+            {
+                return false;
+            }
             image.Save(file.Path);
             return Upload(new[] { file });
         }
@@ -79,6 +83,10 @@ namespace Nfu
         public static bool UploadText(string text)
         {
             UploadFile file = new UploadFile(FileState.Temporary, "txt");
+            if (file.Path == null)
+            {
+                return false;
+            }
             File.WriteAllText(file.Path, text);
             return Upload(new[] { file });
         }
@@ -109,6 +117,11 @@ namespace Nfu
 
                     string zipFileName = String.Format("{0}.zip", file.FileName);
                     UploadFile zipFile = new UploadFile(FileState.Temporary, "zip");
+                    if (zipFile.Path == null)
+                    {
+                        abort = true;
+                        break;
+                    }
 
                     // Delete the temporary file first, because ZipFile.CreateFromDirectory
                     // can't write to an existing file
