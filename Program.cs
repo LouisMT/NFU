@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -38,6 +39,9 @@ namespace Nfu
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // Use TLS 1.2
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             // Automatically save settings on change
             Settings.Default.PropertyChanged += (sender, e) =>
