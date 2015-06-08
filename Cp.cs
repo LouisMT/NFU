@@ -48,6 +48,7 @@ namespace Nfu
             }
 
             comboBoxFilename.SelectedIndex = Settings.Default.Filename;
+            textBoxGeneratedFileNamePattern.Text = Settings.Default.GeneratedFileNamePattern;
 
             textBoxWebHookUrl.Text = Settings.Default.WebHookUrl;
             textBoxWebHookSecret.Text = Misc.Decrypt(Settings.Default.WebHookSecret);
@@ -99,6 +100,7 @@ namespace Nfu
             }
 
             Settings.Default.Filename = comboBoxFilename.SelectedIndex;
+            Settings.Default.GeneratedFileNamePattern = textBoxGeneratedFileNamePattern.Text;
 
             // TODO: Validate URL
             Settings.Default.WebHookUrl = textBoxWebHookUrl.Text;

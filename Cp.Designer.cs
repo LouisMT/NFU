@@ -36,7 +36,6 @@ namespace Nfu
             this.textBoxURL = new System.Windows.Forms.TextBox();
             this.checkBoxShowPassword = new System.Windows.Forms.CheckBox();
             this.comboBoxType = new System.Windows.Forms.ComboBox();
-            this.seperatorServer = new Nfu.LineSeparator();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.textBoxUsername = new System.Windows.Forms.TextBox();
             this.textBoxDirectory = new System.Windows.Forms.TextBox();
@@ -49,7 +48,6 @@ namespace Nfu
             this.linkLabelReset = new System.Windows.Forms.LinkLabel();
             this.labelCounter = new System.Windows.Forms.Label();
             this.comboBoxFilename = new System.Windows.Forms.ComboBox();
-            this.separatorNfu = new Nfu.LineSeparator();
             this.tabNfu = new System.Windows.Forms.TabPage();
             this.buttonDebug = new System.Windows.Forms.Button();
             this.checkBoxQuickScreenshots = new System.Windows.Forms.CheckBox();
@@ -58,7 +56,6 @@ namespace Nfu
             this.comboBoxScreen = new System.Windows.Forms.ComboBox();
             this.checkBoxPause = new System.Windows.Forms.CheckBox();
             this.checkBoxPrintScreen = new System.Windows.Forms.CheckBox();
-            this.seperatorNfu = new Nfu.LineSeparator();
             this.tabWebHook = new System.Windows.Forms.TabPage();
             this.textBoxWebHookSecret = new System.Windows.Forms.TextBox();
             this.labelWebHookSecret = new System.Windows.Forms.Label();
@@ -69,6 +66,12 @@ namespace Nfu
             this.labelHelpTitle = new System.Windows.Forms.Label();
             this.labelHelpText = new System.Windows.Forms.Label();
             this.linkLabelSettingsGone = new System.Windows.Forms.LinkLabel();
+            this.textBoxGeneratedFileNamePattern = new System.Windows.Forms.TextBox();
+            this.labelGeneratedFileNamePattern = new System.Windows.Forms.Label();
+            this.labelPatternCharacters = new System.Windows.Forms.Label();
+            this.seperatorServer = new Nfu.LineSeparator();
+            this.separatorNfu = new Nfu.LineSeparator();
+            this.seperatorNfu = new Nfu.LineSeparator();
             this.tabControlCP.SuspendLayout();
             this.tabServer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).BeginInit();
@@ -175,16 +178,6 @@ namespace Nfu
             this.comboBoxType.TabIndex = 0;
             this.comboBoxType.SelectedIndexChanged += new System.EventHandler(this.TypeIndexChanged);
             // 
-            // seperatorServer
-            // 
-            this.seperatorServer.Location = new System.Drawing.Point(0, 33);
-            this.seperatorServer.MaximumSize = new System.Drawing.Size(2000, 2);
-            this.seperatorServer.MinimumSize = new System.Drawing.Size(0, 2);
-            this.seperatorServer.Name = "seperatorServer";
-            this.seperatorServer.Size = new System.Drawing.Size(450, 2);
-            this.seperatorServer.TabIndex = 1;
-            this.seperatorServer.TabStop = false;
-            // 
             // textBoxPassword
             // 
             this.textBoxPassword.Location = new System.Drawing.Point(83, 119);
@@ -260,6 +253,9 @@ namespace Nfu
             // 
             // tabUpload
             // 
+            this.tabUpload.Controls.Add(this.labelPatternCharacters);
+            this.tabUpload.Controls.Add(this.labelGeneratedFileNamePattern);
+            this.tabUpload.Controls.Add(this.textBoxGeneratedFileNamePattern);
             this.tabUpload.Controls.Add(this.linkLabelReset);
             this.tabUpload.Controls.Add(this.labelCounter);
             this.tabUpload.Controls.Add(this.comboBoxFilename);
@@ -275,7 +271,7 @@ namespace Nfu
             // 
             this.linkLabelReset.AutoSize = true;
             this.linkLabelReset.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabelReset.Location = new System.Drawing.Point(412, 38);
+            this.linkLabelReset.Location = new System.Drawing.Point(410, 64);
             this.linkLabelReset.Name = "linkLabelReset";
             this.linkLabelReset.Size = new System.Drawing.Size(37, 13);
             this.linkLabelReset.TabIndex = 3;
@@ -287,7 +283,7 @@ namespace Nfu
             // 
             this.labelCounter.AutoSize = true;
             this.labelCounter.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCounter.Location = new System.Drawing.Point(3, 38);
+            this.labelCounter.Location = new System.Drawing.Point(313, 64);
             this.labelCounter.Name = "labelCounter";
             this.labelCounter.Size = new System.Drawing.Size(91, 13);
             this.labelCounter.TabIndex = 2;
@@ -304,16 +300,6 @@ namespace Nfu
             this.comboBoxFilename.Name = "comboBoxFilename";
             this.comboBoxFilename.Size = new System.Drawing.Size(440, 21);
             this.comboBoxFilename.TabIndex = 0;
-            // 
-            // separatorNfu
-            // 
-            this.separatorNfu.Location = new System.Drawing.Point(0, 33);
-            this.separatorNfu.MaximumSize = new System.Drawing.Size(2000, 2);
-            this.separatorNfu.MinimumSize = new System.Drawing.Size(0, 2);
-            this.separatorNfu.Name = "separatorNfu";
-            this.separatorNfu.Size = new System.Drawing.Size(450, 2);
-            this.separatorNfu.TabIndex = 1;
-            this.separatorNfu.TabStop = false;
             // 
             // tabNfu
             // 
@@ -403,16 +389,6 @@ namespace Nfu
             this.checkBoxPrintScreen.TabIndex = 3;
             this.checkBoxPrintScreen.Text = global::Nfu.Properties.Resources.HandlePrintScreenKey;
             this.checkBoxPrintScreen.UseVisualStyleBackColor = true;
-            // 
-            // seperatorNfu
-            // 
-            this.seperatorNfu.Location = new System.Drawing.Point(0, 33);
-            this.seperatorNfu.MaximumSize = new System.Drawing.Size(2000, 2);
-            this.seperatorNfu.MinimumSize = new System.Drawing.Size(0, 2);
-            this.seperatorNfu.Name = "seperatorNfu";
-            this.seperatorNfu.Size = new System.Drawing.Size(450, 2);
-            this.seperatorNfu.TabIndex = 1;
-            this.seperatorNfu.TabStop = false;
             // 
             // tabWebHook
             // 
@@ -511,6 +487,62 @@ namespace Nfu
             this.linkLabelSettingsGone.Text = global::Nfu.Properties.Resources.SettingsGone;
             this.linkLabelSettingsGone.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OpenSettingsGoneUrl);
             // 
+            // textBoxGeneratedFileNamePattern
+            // 
+            this.textBoxGeneratedFileNamePattern.Location = new System.Drawing.Point(147, 41);
+            this.textBoxGeneratedFileNamePattern.MaxLength = 25;
+            this.textBoxGeneratedFileNamePattern.Name = "textBoxGeneratedFileNamePattern";
+            this.textBoxGeneratedFileNamePattern.Size = new System.Drawing.Size(300, 20);
+            this.textBoxGeneratedFileNamePattern.TabIndex = 4;
+            // 
+            // labelGeneratedFileNamePattern
+            // 
+            this.labelGeneratedFileNamePattern.AutoSize = true;
+            this.labelGeneratedFileNamePattern.Location = new System.Drawing.Point(3, 44);
+            this.labelGeneratedFileNamePattern.Name = "labelGeneratedFileNamePattern";
+            this.labelGeneratedFileNamePattern.Size = new System.Drawing.Size(138, 13);
+            this.labelGeneratedFileNamePattern.TabIndex = 5;
+            this.labelGeneratedFileNamePattern.Text = global::Nfu.Properties.Resources.GeneratedFileNamePattern;
+            // 
+            // labelPatternCharacters
+            // 
+            this.labelPatternCharacters.AutoSize = true;
+            this.labelPatternCharacters.Location = new System.Drawing.Point(3, 129);
+            this.labelPatternCharacters.Name = "labelPatternCharacters";
+            this.labelPatternCharacters.Size = new System.Drawing.Size(162, 39);
+            this.labelPatternCharacters.TabIndex = 6;
+            this.labelPatternCharacters.Text = global::Nfu.Properties.Resources.GeneratedFileNameCharacters;
+            // 
+            // seperatorServer
+            // 
+            this.seperatorServer.Location = new System.Drawing.Point(0, 33);
+            this.seperatorServer.MaximumSize = new System.Drawing.Size(2000, 2);
+            this.seperatorServer.MinimumSize = new System.Drawing.Size(0, 2);
+            this.seperatorServer.Name = "seperatorServer";
+            this.seperatorServer.Size = new System.Drawing.Size(450, 2);
+            this.seperatorServer.TabIndex = 1;
+            this.seperatorServer.TabStop = false;
+            // 
+            // separatorNfu
+            // 
+            this.separatorNfu.Location = new System.Drawing.Point(0, 33);
+            this.separatorNfu.MaximumSize = new System.Drawing.Size(2000, 2);
+            this.separatorNfu.MinimumSize = new System.Drawing.Size(0, 2);
+            this.separatorNfu.Name = "separatorNfu";
+            this.separatorNfu.Size = new System.Drawing.Size(450, 2);
+            this.separatorNfu.TabIndex = 1;
+            this.separatorNfu.TabStop = false;
+            // 
+            // seperatorNfu
+            // 
+            this.seperatorNfu.Location = new System.Drawing.Point(0, 33);
+            this.seperatorNfu.MaximumSize = new System.Drawing.Size(2000, 2);
+            this.seperatorNfu.MinimumSize = new System.Drawing.Size(0, 2);
+            this.seperatorNfu.Name = "seperatorNfu";
+            this.seperatorNfu.Size = new System.Drawing.Size(450, 2);
+            this.seperatorNfu.TabIndex = 1;
+            this.seperatorNfu.TabStop = false;
+            // 
             // Cp
             // 
             this.AcceptButton = this.buttonSave;
@@ -588,6 +620,9 @@ namespace Nfu
         private System.Windows.Forms.TextBox textBoxWebHookSecret;
         private System.Windows.Forms.Label labelWebHookSecret;
         private System.Windows.Forms.LinkLabel linkLabelSettingsGone;
+        private System.Windows.Forms.Label labelGeneratedFileNamePattern;
+        private System.Windows.Forms.TextBox textBoxGeneratedFileNamePattern;
+        private System.Windows.Forms.Label labelPatternCharacters;
 
     }
 }

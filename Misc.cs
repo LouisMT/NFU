@@ -1,9 +1,11 @@
 ﻿using Nfu.Properties;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net.Security;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
@@ -164,11 +166,7 @@ namespace Nfu
                     break;
 
                 case 1:
-                    if (Settings.Default.Count == 99999)
-                        Settings.Default.Count = 0;
-
-                    filename = String.Format("{0}-{1}", DateTime.Now.ToString("ddMMyyyy"), (++Settings.Default.Count).ToString("D5"));
-
+                    filename = GetGeneratedFileNameByPattern(Settings.Default.GeneratedFileNamePattern);
                     break;
             }
 
@@ -333,6 +331,53 @@ namespace Nfu
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Get a generated filename by a pattern.
+        /// </summary>
+        /// <param name="pattern">The pattern.</param>
+        /// <returns>The generated filename.</returns>
+        public static string GetGeneratedFileNameByPattern(string pattern)
+        {
+            var randomNumber = new Random();
+            var output = new StringBuilder();
+            var availableRandomCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var replaceDictionary = new Dictionary<char, string>
+            {
+                { 's', DateTime.Now.ToString("ss") },
+                { 'm', DateTime.Now.ToString("mm") },
+                { 'h', DateTime.Now.ToString("HH") },
+                { 'D', DateTime.Now.ToString("dd") },
+                { 'M', DateTime.Now.ToString("MM") },
+                { 'Y', DateTime.Now.ToString("yyyy") }
+            };
+
+            var randomCharacterIndex = 0;
+            var randomCharacterCount = pattern.Count(c => c == '%');
+            var randomCharacters = new String(Enumerable.Repeat(availableRandomCharacters, randomCharacterCount).Select(s => s[randomNumber.Next(s.Length)]).ToArray());
+
+            foreach (var character in pattern)
+            {
+                if (character == '%')
+                {
+                    output.Append(randomCharacters[randomCharacterIndex++]);
+                }
+                else if (character == 'C')
+                {
+                    output.Append(++Settings.Default.Count);
+                }
+                else if (replaceDictionary.ContainsKey(character))
+                {
+                    output.Append(replaceDictionary[character]);
+                }
+                else
+                {
+                    output.Append(character);
+                }
+            }
+
+            return output.ToString();
         }
     }
 }

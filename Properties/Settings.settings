@@ -101,5 +101,8 @@
     <Setting Name="TemporaryFolderRetries" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">6</Value>
     </Setting>
+    <Setting Name="GeneratedFileNamePattern" Type="System.String" Scope="User">
+      <Value Profile="(Default)">hms-C-%%%%%</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
