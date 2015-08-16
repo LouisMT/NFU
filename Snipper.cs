@@ -288,10 +288,9 @@ namespace Nfu
                     return;
 
                 // Prevent the info bar from showing on multiple screens
-                Rectangle rectangleDisplay = (_comboBoxScreen.SelectedIndex == 0) ?
-                    new Rectangle(Screen.PrimaryScreen.Bounds.X, Screen.PrimaryScreen.Bounds.Y, Screen.PrimaryScreen.Bounds.Width, 27) :
-                    new Rectangle(Screen.AllScreens[_comboBoxScreen.SelectedIndex].Bounds.X, Screen.AllScreens[_comboBoxScreen.SelectedIndex].Bounds.Y,
-                    Screen.AllScreens[_comboBoxScreen.SelectedIndex].Bounds.Width, 27);
+                Rectangle selectedScreenBounds = (_comboBoxScreen.SelectedIndex == 0) ? 
+                    Screen.PrimaryScreen.Bounds : Screen.AllScreens[_comboBoxScreen.SelectedIndex - 1].Bounds;
+                Rectangle rectangleDisplay = new Rectangle(selectedScreenBounds.X, selectedScreenBounds.Y, selectedScreenBounds.Width, 27);
                 e.Graphics.FillRectangle(bg, rectangleDisplay);
                 e.Graphics.DrawString(String.Format(Resources.CoordinatesOverlay,
                     _rectangleSelection.X, _rectangleSelection.Y, _rectangleSelection.Width, _rectangleSelection.Height, Resources.HotKeysOverlay),
