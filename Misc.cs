@@ -35,7 +35,7 @@ namespace Nfu
         /// </summary>
         private void PaintLineSeparator(object sender, PaintEventArgs e)
         {
-            Graphics g = e.Graphics;
+            var g = e.Graphics;
             g.DrawLine(Pens.DarkGray, new Point(0, 0), new Point(Width, 0));
             g.DrawLine(Pens.White, new Point(0, 1), new Point(Width, 1));
         }
@@ -50,7 +50,7 @@ namespace Nfu
         private static extern bool RegisterHotKey(IntPtr handle, int id, int mode, Keys key);
 
         [DllImport("user32")]
-        public static extern UInt32 SendMessage(IntPtr handle, UInt32 msg, UInt32 wParam, UInt32 lParam);
+        public static extern uint SendMessage(IntPtr handle, uint msg, uint wParam, uint lParam);
 
         [DllImport("advapi32.dll")]
         public static extern bool LogonUser(string username, string domain, string password, int logonType, int logonProvider, ref IntPtr token);
@@ -82,11 +82,11 @@ namespace Nfu
         /// <param name="handle">The handle.</param>
         public static bool RegisterHotKey(Keys key, Action method, int id, IntPtr handle)
         {
-            HotKeyWndProc hotKeyWnd = new HotKeyWndProc();
+            var hotKeyWnd = new HotKeyWndProc();
 
             if (!RegisterHotKey(handle, id, 0, key))
             {
-                HandleError(new Win32Exception(String.Format(Resources.RegisterHotKeyFailed, key)), Resources.RegisterHotKey);
+                HandleError(new Win32Exception(string.Format(Resources.RegisterHotKeyFailed, key)), Resources.RegisterHotKey);
                 return false;
             }
 
@@ -117,7 +117,7 @@ namespace Nfu
             {
                 if (Settings.Default.Debug)
                 {
-                    EventLog.WriteEntry(Resources.AppName, String.Format("[{0}]: {1}\n\n{2}", name, err.Message, err.StackTrace), type);
+                    EventLog.WriteEntry(Resources.AppName, string.Format("[{0}]: {1}\n\n{2}", name, err.Message, err.StackTrace), type);
                 }
             }
             catch
@@ -145,7 +145,7 @@ namespace Nfu
         /// <returns>The error text.</returns>
         public static string HandleErrorStatusText(string name)
         {
-            return String.Format(Resources.Failed, name);
+            return string.Format(Resources.Failed, name);
         }
 
         /// <summary>
@@ -156,13 +156,13 @@ namespace Nfu
         /// <returns>The remote filename.</returns>
         public static string GetRemoteFileName(string filename)
         {
-            string extension = Path.GetExtension(filename);
+            var extension = Path.GetExtension(filename);
             filename = Path.GetFileNameWithoutExtension(filename);
 
             switch (Settings.Default.Filename)
             {
                 case 0:
-                    filename = Regex.Replace(filename.Replace(' ', '_'), "[^a-zA-Z_\\.]*$", String.Empty).Trim();
+                    filename = Regex.Replace(filename.Replace(' ', '_'), "[^a-zA-Z_\\.]*$", string.Empty).Trim();
                     break;
 
                 case 1:
@@ -207,25 +207,25 @@ namespace Nfu
         /// <returns>The encrypted password.</returns>
         public static string Encrypt(string plainPassword)
         {
-            if (String.IsNullOrEmpty(plainPassword))
+            if (string.IsNullOrEmpty(plainPassword))
             {
-                return String.Empty;
+                return string.Empty;
             }
 
             try
             {
-                byte[] initVectorBytes = Encoding.ASCII.GetBytes(Settings.Default.IV);
-                byte[] saltValueBytes = Encoding.ASCII.GetBytes(Settings.Default.SaltValue);
-                byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainPassword);
-                Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(Settings.Default.PassPhrase, saltValueBytes, Settings.Default.PasswordIterations);
-                byte[] keyBytes = password.GetBytes(Settings.Default.KeySize / 8);
-                RijndaelManaged symmetricKey = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7 };
-                ICryptoTransform encryptor = symmetricKey.CreateEncryptor(keyBytes, initVectorBytes);
-                MemoryStream memoryStream = new MemoryStream();
-                CryptoStream cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write);
+                var initVectorBytes = Encoding.ASCII.GetBytes(Settings.Default.IV);
+                var saltValueBytes = Encoding.ASCII.GetBytes(Settings.Default.SaltValue);
+                var plainTextBytes = Encoding.UTF8.GetBytes(plainPassword);
+                var password = new Rfc2898DeriveBytes(Settings.Default.PassPhrase, saltValueBytes, Settings.Default.PasswordIterations);
+                var keyBytes = password.GetBytes(Settings.Default.KeySize / 8);
+                var symmetricKey = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7 };
+                var encryptor = symmetricKey.CreateEncryptor(keyBytes, initVectorBytes);
+                var memoryStream = new MemoryStream();
+                var cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write);
                 cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
                 cryptoStream.FlushFinalBlock();
-                byte[] cipherTextBytes = memoryStream.ToArray();
+                var cipherTextBytes = memoryStream.ToArray();
 
                 memoryStream.Close();
                 cryptoStream.Close();
@@ -246,24 +246,24 @@ namespace Nfu
         /// <returns>The password in plain text.</returns>
         public static string Decrypt(string encryptedPassword)
         {
-            if (String.IsNullOrEmpty(encryptedPassword))
+            if (string.IsNullOrEmpty(encryptedPassword))
             {
-                return String.Empty;
+                return string.Empty;
             }
 
             try
             {
-                byte[] initVectorBytes = Encoding.ASCII.GetBytes(Settings.Default.IV);
-                byte[] saltValueBytes = Encoding.ASCII.GetBytes(Settings.Default.SaltValue);
-                byte[] cipherTextBytes = Convert.FromBase64String(encryptedPassword);
-                Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(Settings.Default.PassPhrase, saltValueBytes, Settings.Default.PasswordIterations);
-                byte[] keyBytes = password.GetBytes(Settings.Default.KeySize / 8);
-                RijndaelManaged symmetricKey = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7 };
-                ICryptoTransform decryptor = symmetricKey.CreateDecryptor(keyBytes, initVectorBytes);
-                MemoryStream memoryStream = new MemoryStream(cipherTextBytes);
-                CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read);
-                byte[] plainTextBytes = new byte[cipherTextBytes.Length];
-                int decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
+                var initVectorBytes = Encoding.ASCII.GetBytes(Settings.Default.IV);
+                var saltValueBytes = Encoding.ASCII.GetBytes(Settings.Default.SaltValue);
+                var cipherTextBytes = Convert.FromBase64String(encryptedPassword);
+                var password = new Rfc2898DeriveBytes(Settings.Default.PassPhrase, saltValueBytes, Settings.Default.PasswordIterations);
+                var keyBytes = password.GetBytes(Settings.Default.KeySize / 8);
+                var symmetricKey = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.PKCS7 };
+                var decryptor = symmetricKey.CreateDecryptor(keyBytes, initVectorBytes);
+                var memoryStream = new MemoryStream(cipherTextBytes);
+                var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read);
+                var plainTextBytes = new byte[cipherTextBytes.Length];
+                var decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
 
                 memoryStream.Close();
                 cryptoStream.Close();
@@ -287,12 +287,12 @@ namespace Nfu
         /// <returns>True if valid, false if invalid.</returns>
         public static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
-            bool validatedCertificate = true;
+            var validatedCertificate = true;
 
             // Check if SSL errors occured and if certificate hash is not trusted
             if (sslPolicyErrors != SslPolicyErrors.None && Settings.Default.TrustedHash != certificate.GetCertHashString())
             {
-                if (MessageBox.Show(String.Format(Resources.UntrustedCertificate, certificate.Subject, certificate.Issuer, certificate.GetCertHashString()), Resources.UntrustedCertificateTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                if (MessageBox.Show(string.Format(Resources.UntrustedCertificate, certificate.Subject, certificate.Issuer, certificate.GetCertHashString()), Resources.UntrustedCertificateTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                 {
                     Settings.Default.TrustedHash = certificate.GetCertHashString();
                 }
@@ -317,7 +317,7 @@ namespace Nfu
             }
             catch (IOException)
             {
-                DialogResult temporaryFolderDialog = MessageBox.Show(String.Format(Resources.TemporaryFolderFull, iteration, Settings.Default.TemporaryFolderRetries),
+                var temporaryFolderDialog = MessageBox.Show(string.Format(Resources.TemporaryFolderFull, iteration, Settings.Default.TemporaryFolderRetries),
                     Resources.TemporaryFolderFullTitle, MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
 
                 if (temporaryFolderDialog == DialogResult.Retry && iteration <= Settings.Default.TemporaryFolderRetries)
@@ -342,7 +342,7 @@ namespace Nfu
         {
             var randomNumber = new Random();
             var output = new StringBuilder();
-            var availableRandomCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            const string availableRandomCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             var replaceDictionary = new Dictionary<char, string>
             {
                 { 's', DateTime.Now.ToString("ss") },
@@ -353,28 +353,43 @@ namespace Nfu
                 { 'Y', DateTime.Now.ToString("yyyy") }
             };
 
+            var nextIsSpecialChar = false;
             var randomCharacterIndex = 0;
-            var randomCharacterCount = pattern.Count(c => c == '%');
-            var randomCharacters = new String(Enumerable.Repeat(availableRandomCharacters, randomCharacterCount).Select(s => s[randomNumber.Next(s.Length)]).ToArray());
+            var randomCharacterCount = pattern.Count(c => c == '?');
+            var randomCharacters = new string(Enumerable.Repeat(availableRandomCharacters, randomCharacterCount).Select(s => s[randomNumber.Next(s.Length)]).ToArray());
 
             foreach (var character in pattern)
             {
-                if (character == '%')
+                if (character == '%' && !nextIsSpecialChar)
                 {
-                    output.Append(randomCharacters[randomCharacterIndex++]);
+                    nextIsSpecialChar = true;
+                    continue;
                 }
-                else if (character == 'C')
+
+                if (nextIsSpecialChar)
                 {
-                    output.Append(++Settings.Default.Count);
-                }
-                else if (replaceDictionary.ContainsKey(character))
-                {
-                    output.Append(replaceDictionary[character]);
+                    switch (character)
+                    {
+                        case '?':
+                            output.Append(randomCharacters[randomCharacterIndex++]);
+                            break;
+                        case 'C':
+                            output.Append(++Settings.Default.Count);
+                            break;
+                        default:
+                            output.Append(replaceDictionary.ContainsKey(character)
+                                ? replaceDictionary[character]
+                                : $"%{character}");
+                            break;
+                    }
                 }
                 else
                 {
                     output.Append(character);
                 }
+
+
+                nextIsSpecialChar = false;
             }
 
             return output.ToString();

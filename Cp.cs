@@ -21,8 +21,8 @@ namespace Nfu
 
             comboBoxScreen.Items.Add(Resources.MergeScreens);
 
-            for (int i = 0; i < Screen.AllScreens.Length; i++)
-                comboBoxScreen.Items.Add(String.Format(Resources.Screen, i + 1));
+            for (var i = 0; i < Screen.AllScreens.Length; i++)
+                comboBoxScreen.Items.Add(string.Format(Resources.Screen, i + 1));
 
             comboBoxType.SelectedIndex = Settings.Default.TransferType;
             textBoxHost.Text = Settings.Default.Host;
@@ -60,7 +60,7 @@ namespace Nfu
         /// </summary>
         private void CpShown(object sender, EventArgs e)
         {
-            labelCounter.Text = String.Format(Resources.Counter, Settings.Default.Count.ToString("D5"));
+            labelCounter.Text = string.Format(Resources.Counter, Settings.Default.Count.ToString("D5"));
         }
 
         private void ButtonSave(object sender, EventArgs e)
@@ -87,7 +87,7 @@ namespace Nfu
                 if (checkBoxStartWindows.Checked)
                 {
                     _autoStartKey.SetValue(Settings.Default.RunKey,
-                        String.Format("\"{0}\" {1}", Application.ExecutablePath, "minimized"));
+                        string.Format("\"{0}\" {1}", Application.ExecutablePath, "minimized"));
                 }
                 else
                 {
@@ -128,7 +128,7 @@ namespace Nfu
         /// </summary>
         private void SettingsHelper(object sender, EventArgs e)
         {
-            TextBox textBox = (TextBox)sender;
+            var textBox = (TextBox)sender;
             string infoTitle = "", infoText = "";
 
             switch (textBox.Name)
@@ -186,7 +186,7 @@ namespace Nfu
         private void ResetCounter(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Settings.Default.Count = 0;
-            labelCounter.Text = String.Format(Resources.Counter, "00000");
+            labelCounter.Text = string.Format(Resources.Counter, "00000");
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Nfu
             }
             else
             {
-                ProcessStartInfo startInfo = new ProcessStartInfo
+                var startInfo = new ProcessStartInfo
                 {
                     UseShellExecute = true,
                     FileName = Application.ExecutablePath,
@@ -271,7 +271,7 @@ namespace Nfu
                     Arguments = "debug"
                 };
 
-                Process process = new Process
+                var process = new Process
                 {
                     StartInfo = startInfo,
                     EnableRaisingEvents = true

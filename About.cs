@@ -22,12 +22,12 @@ namespace Nfu
 
             textBoxVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-            ListViewItem sshNet = new ListViewItem(new[] {
+            var sshNet = new ListViewItem(new[] {
                 Resources.SshNetName,
                 Resources.SshNetUrl,
                 Resources.SshNetUsedFor
             });
-            ListViewItem iconPack = new ListViewItem(new[] {
+            var iconPack = new ListViewItem(new[] {
                 Resources.IcoMoonName,
                 Resources.IcoMoonUrl,
                 Resources.IcoMoonUsedFor

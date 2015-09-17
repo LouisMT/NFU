@@ -66,7 +66,7 @@ namespace Nfu
         /// <returns></returns>
         public static bool UploadImage(Image image)
         {
-            UploadFile file = new UploadFile(FileState.Temporary, "png");
+            var file = new UploadFile(FileState.Temporary, "png");
             if (file.Path == null)
             {
                 return false;
@@ -82,7 +82,7 @@ namespace Nfu
         /// <returns></returns>
         public static bool UploadText(string text)
         {
-            UploadFile file = new UploadFile(FileState.Temporary, "txt");
+            var file = new UploadFile(FileState.Temporary, "txt");
             if (file.Path == null)
             {
                 return false;
@@ -104,10 +104,10 @@ namespace Nfu
         /// </summary>
         static void UploadWorkerHandler(object sender, DoWorkEventArgs a)
         {
-            int currentIndex = 1;
-            bool abort = false;
+            var currentIndex = 1;
+            var abort = false;
 
-            foreach (UploadFile file in _uploadFiles)
+            foreach (var file in _uploadFiles)
             {
                 if (file.Type == FileType.Directory)
                 {
@@ -115,8 +115,8 @@ namespace Nfu
                     _currentStatus = Resources.ZippingDirectory;
                     UploadWorker.ReportProgress(0);
 
-                    string zipFileName = String.Format("{0}.zip", file.FileName);
-                    UploadFile zipFile = new UploadFile(FileState.Temporary, "zip");
+                    var zipFileName = string.Format("{0}.zip", file.FileName);
+                    var zipFile = new UploadFile(FileState.Temporary, "zip");
                     if (zipFile.Path == null)
                     {
                         abort = true;
@@ -134,7 +134,7 @@ namespace Nfu
                     file.Type = FileType.ZippedDirectory;
                 }
 
-                _currentStatus = String.Format(Resources.Uploading, currentIndex, _uploadFiles.Length);
+                _currentStatus = string.Format(Resources.Uploading, currentIndex, _uploadFiles.Length);
                 UploadWorker.ReportProgress(0);
 
                 file.BeforeUpload();
@@ -189,16 +189,16 @@ namespace Nfu
                 _currentStatus = Resources.SendingWebHook;
                 UploadWorker.ReportProgress(0);
 
-                JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
+                var javaScriptSerializer = new JavaScriptSerializer();
 
-                WebHook webHook = new WebHook
+                var webHook = new WebHook
                 {
                     Success = success,
                     Directory = Settings.Default.Directory,
                     Secret = Misc.Decrypt(Settings.Default.WebHookSecret)
                 };
 
-                foreach (UploadFile file in _uploadFiles)
+                foreach (var file in _uploadFiles)
                 {
                     webHook.Files.Add(new WebHookFile
                     {
@@ -207,7 +207,7 @@ namespace Nfu
                     });
                 }
 
-                using (WebClient webClient = new WebClient())
+                using (var webClient = new WebClient())
                 {
                     try
                     {
@@ -216,7 +216,7 @@ namespace Nfu
                     }
                     catch (Exception e)
                     {
-                        _uploadStatus = String.Format(Resources.WebHookFailed, _uploadStatus);
+                        _uploadStatus = string.Format(Resources.WebHookFailed, _uploadStatus);
                         Misc.HandleError(e, Resources.WebHook);
                     }
                 }
@@ -232,17 +232,17 @@ namespace Nfu
         {
             try
             {
-                byte[] buffer = new byte[1024 * 10];
+                var buffer = new byte[1024 * 10];
 
                 FtpWebRequest ftpRequest;
 
-                if (!String.IsNullOrEmpty(Settings.Default.Directory))
+                if (!string.IsNullOrEmpty(Settings.Default.Directory))
                 {
-                    ftpRequest = (FtpWebRequest)WebRequest.Create(String.Format("ftp://{0}:{1}/{2}/{3}", Settings.Default.Host, Settings.Default.Port, Settings.Default.Directory, file.FileName));
+                    ftpRequest = (FtpWebRequest)WebRequest.Create(string.Format("ftp://{0}:{1}/{2}/{3}", Settings.Default.Host, Settings.Default.Port, Settings.Default.Directory, file.FileName));
                 }
                 else
                 {
-                    ftpRequest = (FtpWebRequest)WebRequest.Create(String.Format("ftp://{0}:{1}/{2}", Settings.Default.Host, Settings.Default.Port, file.FileName));
+                    ftpRequest = (FtpWebRequest)WebRequest.Create(string.Format("ftp://{0}:{1}/{2}", Settings.Default.Host, Settings.Default.Port, file.FileName));
                 }
 
                 if (Settings.Default.TransferType == (int)TransferType.FtpsExplicit)
@@ -256,8 +256,8 @@ namespace Nfu
 
                 ftpRequest.Credentials = new NetworkCredential(Settings.Default.Username, Misc.Decrypt(Settings.Default.Password));
 
-                using (FileStream inputStream = File.OpenRead(file.Path))
-                using (Stream outputStream = ftpRequest.GetRequestStream())
+                using (var inputStream = File.OpenRead(file.Path))
+                using (var outputStream = ftpRequest.GetRequestStream())
                 {
                     long totalReadBytesCount = 0;
                     int readBytesCount;
@@ -291,9 +291,9 @@ namespace Nfu
         {
             try
             {
-                 SftpClient client;
+                SftpClient client;
 
-                if (Settings.Default.TransferType == (int) TransferType.SftpKeys)
+                if (Settings.Default.TransferType == (int)TransferType.SftpKeys)
                 {
                     client = new SftpClient(Settings.Default.Host, Settings.Default.Port, Settings.Default.Username, new PrivateKeyFile(Misc.Decrypt(Settings.Default.Password)));
                 }
@@ -302,12 +302,12 @@ namespace Nfu
                     client = new SftpClient(Settings.Default.Host, Settings.Default.Port, Settings.Default.Username, Misc.Decrypt(Settings.Default.Password));
                 }
 
-                using (FileStream inputStream = new FileStream(file.Path, FileMode.Open))
+                using (var inputStream = new FileStream(file.Path, FileMode.Open))
                 using (SftpClient outputStream = client)
                 {
                     outputStream.Connect();
 
-                    if (!String.IsNullOrEmpty(Settings.Default.Directory)) outputStream.ChangeDirectory(Settings.Default.Directory);
+                    if (!string.IsNullOrEmpty(Settings.Default.Directory)) outputStream.ChangeDirectory(Settings.Default.Directory);
 
                     IAsyncResult async = outputStream.BeginUploadFile(inputStream, file.FileName);
                     SftpUploadAsyncResult sftpAsync = async as SftpUploadAsyncResult;
@@ -342,19 +342,19 @@ namespace Nfu
         {
             try
             {
-                byte[] buffer = new byte[1024 * 10];
+                var buffer = new byte[1024 * 10];
 
-                IntPtr token = IntPtr.Zero;
+                var token = IntPtr.Zero;
                 Misc.LogonUser(Settings.Default.Username, Resources.AppName, Misc.Decrypt(Settings.Default.Password), 9, 0, ref token);
-                WindowsIdentity identity = new WindowsIdentity(token);
+                var identity = new WindowsIdentity(token);
 
-                string destPath = (!String.IsNullOrEmpty(Settings.Default.Directory)) ? String.Format(@"\\{0}\{1}\{2}", Settings.Default.Host, Settings.Default.Directory, file.FileName) : String.Format(@"\\{0}\{1}", Settings.Default.Host, file.FileName);
+                var destPath = (!string.IsNullOrEmpty(Settings.Default.Directory)) ? string.Format(@"\\{0}\{1}\{2}", Settings.Default.Host, Settings.Default.Directory, file.FileName) : string.Format(@"\\{0}\{1}", Settings.Default.Host, file.FileName);
 
                 using (identity.Impersonate())
-                using (FileStream inputStream = new FileStream(file.Path, FileMode.Open, FileAccess.Read))
-                using (FileStream outputStream = new FileStream(destPath, FileMode.CreateNew, FileAccess.Write))
+                using (var inputStream = new FileStream(file.Path, FileMode.Open, FileAccess.Read))
+                using (var outputStream = new FileStream(destPath, FileMode.CreateNew, FileAccess.Write))
                 {
-                    long fileLength = inputStream.Length;
+                    var fileLength = inputStream.Length;
                     long totalBytes = 0;
                     int currentBlockSize;
 
@@ -408,9 +408,9 @@ namespace Nfu
             {
                 Misc.ShowInfo(Resources.UploadSuccessfulTitle, Resources.UploadSuccessful);
 
-                List<string> clipboard = _uploadFiles.Select(file => Settings.Default.URL + file.FileName).ToList();
+                var clipboard = _uploadFiles.Select(file => Settings.Default.URL + file.FileName).ToList();
 
-                Clipboard.SetText(String.Join(Environment.NewLine, clipboard));
+                Clipboard.SetText(string.Join(Environment.NewLine, clipboard));
             }
             else
             {

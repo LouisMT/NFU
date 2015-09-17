@@ -99,7 +99,7 @@ namespace Nfu.Models
                 }
                 catch
                 {
-                    Misc.HandleError(new Exception(String.Format(Resources.DeleteError, _path)), Resources.Title, false);
+                    Misc.HandleError(new Exception(string.Format(Resources.DeleteError, _path)), Resources.Title, false);
                 }
             }
         }

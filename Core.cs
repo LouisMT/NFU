@@ -36,13 +36,13 @@ namespace Nfu
 
             if (Settings.Default.HandlePause && !Misc.RegisterHotKey(Keys.Pause, HotKeyPause, 10000, Handle))
             {
-                MessageBox.Show(String.Format(Resources.HotKeyNotRegistered, "Pause"),
+                MessageBox.Show(string.Format(Resources.HotKeyNotRegistered, "Pause"),
                     Resources.HotKeyNotRegisteredTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             if (Settings.Default.HandlePrintScreen && !Misc.RegisterHotKey(Keys.PrintScreen, HotKeyPrintScreen, 20000, Handle))
             {
-                MessageBox.Show(String.Format(Resources.HotKeyNotRegistered, "PrintScreen"),
+                MessageBox.Show(string.Format(Resources.HotKeyNotRegistered, "PrintScreen"),
                     Resources.HotKeyNotRegisteredTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -52,9 +52,10 @@ namespace Nfu
         /// </summary>
         private async void CoreShown(object sender, EventArgs e)
         {
-            TaskScheduler taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+            var taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
 
-            await Task.Run(() => CheckForUpdate()).ContinueWith(u => {
+            await Task.Run(() => CheckForUpdate()).ContinueWith(u =>
+            {
                 if (UpdateAvailable)
                 {
                     buttonUpdate.Enabled = true;
@@ -200,13 +201,13 @@ namespace Nfu
         {
             if (Clipboard.ContainsFileDropList())
             {
-                StringCollection files = Clipboard.GetFileDropList();
+                var files = Clipboard.GetFileDropList();
 
                 Uploader.Upload((from string file in files
-                    select new UploadFile
-                    {
-                        Path = file
-                    }).ToArray());
+                                 select new UploadFile
+                                 {
+                                     Path = file
+                                 }).ToArray());
             }
             else if (Clipboard.ContainsImage())
             {
@@ -224,11 +225,11 @@ namespace Nfu
             }
             else
             {
-                IDataObject dataObject = Clipboard.GetDataObject();
+                var dataObject = Clipboard.GetDataObject();
                 if (dataObject != null)
                 {
-                    Misc.HandleError(new ArgumentException(String.Format(Resources.CannotHandleContentTypes,
-                        String.Join(",", dataObject.GetFormats()))), Resources.Import);
+                    Misc.HandleError(new ArgumentException(string.Format(Resources.CannotHandleContentTypes,
+                        string.Join(",", dataObject.GetFormats()))), Resources.Import);
                 }
                 else
                 {
@@ -268,9 +269,9 @@ namespace Nfu
         {
             try
             {
-                using (WebClient updateClient = new WebClient())
+                using (var updateClient = new WebClient())
                 {
-                    string latestVersion = await updateClient.DownloadStringTaskAsync(new Uri(Settings.Default.VersionUrl));
+                    var latestVersion = await updateClient.DownloadStringTaskAsync(new Uri(Settings.Default.VersionUrl));
 
                     if (latestVersion != Application.ProductVersion)
                     {
@@ -291,8 +292,8 @@ namespace Nfu
         {
             try
             {
-                string tempNfu = Misc.GetTempFileName();
-                string tempCmd = Misc.GetTempFileName();
+                var tempNfu = Misc.GetTempFileName();
+                var tempCmd = Misc.GetTempFileName();
 
                 if (tempNfu == null || tempCmd == null)
                 {
@@ -302,15 +303,15 @@ namespace Nfu
 
                 tempCmd += ".cmd";
 
-                using (WebClient updateClient = new WebClient())
+                using (var updateClient = new WebClient())
                 {
                     updateClient.DownloadFile(Settings.Default.ExecutableUrl, tempNfu);
                 }
 
-                File.WriteAllText(tempCmd, String.Format("@ECHO OFF{3}TITLE {0}{3}ECHO {1}{3}TIMEOUT /T 5{3}ECHO.{3}ECHO {2}{3}COPY /B /Y \"{4}\" \"{5}\"{3}START \"\" \"{5}\"",
+                File.WriteAllText(tempCmd, string.Format("@ECHO OFF{3}TITLE {0}{3}ECHO {1}{3}TIMEOUT /T 5{3}ECHO.{3}ECHO {2}{3}COPY /B /Y \"{4}\" \"{5}\"{3}START \"\" \"{5}\"",
                     Resources.UpdateTitle, Resources.WaitingToExit, Resources.Updating, Environment.NewLine, tempNfu, Application.ExecutablePath));
 
-                ProcessStartInfo startInfo = new ProcessStartInfo
+                var startInfo = new ProcessStartInfo
                 {
                     UseShellExecute = true,
                     FileName = tempCmd,

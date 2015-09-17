@@ -102,7 +102,7 @@
       <Value Profile="(Default)">6</Value>
     </Setting>
     <Setting Name="GeneratedFileNamePattern" Type="System.String" Scope="User">
-      <Value Profile="(Default)">hms-C-%%%%%</Value>
+      <Value Profile="(Default)">%h%m%s-%C-%?%?%?%?%?</Value>
     </Setting>
   </Settings>
 </SettingsFile>

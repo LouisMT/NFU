@@ -34,12 +34,12 @@ namespace Nfu
 
             Program.FormCore.Opacity = 0;
 
-            Rectangle rectangleFullScreen = SystemInformation.VirtualScreen;
+            var rectangleFullScreen = SystemInformation.VirtualScreen;
             _bitmapFullScreen = new Bitmap(rectangleFullScreen.Width, rectangleFullScreen.Height, PixelFormat.Format32bppRgb);
             _offsetX = (rectangleFullScreen.X < 0) ? rectangleFullScreen.X * -1 : 0;
             _offsetY = (rectangleFullScreen.Y < 0) ? rectangleFullScreen.Y * -1 : 0;
 
-            using (Graphics gr = Graphics.FromImage(_bitmapFullScreen))
+            using (var gr = Graphics.FromImage(_bitmapFullScreen))
             {
                 // TODO: Fix this hack
                 // Somehow, the color #0D0B0C (13, 11, 12) becomes a transparent pixel, or a black pixel if there is no alpha channel
@@ -48,9 +48,9 @@ namespace Nfu
                 gr.CopyFromScreen(rectangleFullScreen.X, rectangleFullScreen.Y, 0, 0, _bitmapFullScreen.Size);
             }
 
-            using (Snipper snipper = new Snipper())
+            using (var snipper = new Snipper())
             {
-                DialogResult result = snipper.ShowDialog();
+                var result = snipper.ShowDialog();
                 Program.FormCore.Opacity = 1;
                 IsActive = false;
 
@@ -75,9 +75,9 @@ namespace Nfu
             _comboBoxScreen.Location = new Point(3, 3);
             _comboBoxScreen.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            for (int i = 0; i < Screen.AllScreens.Length; i++)
+            for (var i = 0; i < Screen.AllScreens.Length; i++)
             {
-                _comboBoxScreen.Items.Add(String.Format(Resources.Screen, i + 1));
+                _comboBoxScreen.Items.Add(string.Format(Resources.Screen, i + 1));
             }
 
             _comboBoxScreen.SelectedIndexChanged += ScreenIndexChanged;
@@ -106,9 +106,9 @@ namespace Nfu
             Size = _rectangle.Size;
             Location = _rectangle.Location;
 
-            Bitmap bitmap = new Bitmap(_rectangle.Width, _rectangle.Height, PixelFormat.Format32bppRgb);
+            var bitmap = new Bitmap(_rectangle.Width, _rectangle.Height, PixelFormat.Format32bppRgb);
 
-            using (Graphics gr = Graphics.FromImage(bitmap))
+            using (var gr = Graphics.FromImage(bitmap))
             {
                 gr.DrawImage(_bitmapFullScreen, new Rectangle(0, 0, bitmap.Width, bitmap.Height), new Rectangle(_rectangle.X + _offsetX, _rectangle.Y + _offsetY, _rectangle.Width, _rectangle.Height), GraphicsUnit.Pixel);
             }
@@ -250,7 +250,7 @@ namespace Nfu
 
             _image = new Bitmap(_rectangleSelection.Width, _rectangleSelection.Height, PixelFormat.Format32bppRgb);
 
-            using (Graphics gr = Graphics.FromImage(_image))
+            using (var gr = Graphics.FromImage(_image))
             {
                 gr.DrawImage(BackgroundImage, new Rectangle(0, 0, _image.Width, _image.Height), _rectangleSelection, GraphicsUnit.Pixel);
             }
@@ -268,16 +268,16 @@ namespace Nfu
         {
             using (Brush br = new SolidBrush(Color.FromArgb(120, Color.White)))
             {
-                int x1 = _rectangleSelection.X;
-                int x2 = _rectangleSelection.X + _rectangleSelection.Width;
-                int y1 = _rectangleSelection.Y;
-                int y2 = _rectangleSelection.Y + _rectangleSelection.Height;
+                var x1 = _rectangleSelection.X;
+                var x2 = _rectangleSelection.X + _rectangleSelection.Width;
+                var y1 = _rectangleSelection.Y;
+                var y2 = _rectangleSelection.Y + _rectangleSelection.Height;
                 e.Graphics.FillRectangle(br, new Rectangle(0, 0, x1, Height));
                 e.Graphics.FillRectangle(br, new Rectangle(x2, 0, Width - x2, Height));
                 e.Graphics.FillRectangle(br, new Rectangle(x1, 0, x2 - x1, y1));
                 e.Graphics.FillRectangle(br, new Rectangle(x1, y2, x2 - x1, Height - y2));
             }
-            using (Pen pen = new Pen(Color.Red, 1))
+            using (var pen = new Pen(Color.Red, 1))
             {
                 e.Graphics.DrawRectangle(pen, _rectangleSelection);
             }
@@ -288,11 +288,11 @@ namespace Nfu
                     return;
 
                 // Prevent the info bar from showing on multiple screens
-                Rectangle selectedScreenBounds = (_comboBoxScreen.SelectedIndex == 0) ? 
+                var selectedScreenBounds = (_comboBoxScreen.SelectedIndex == 0) ?
                     Screen.PrimaryScreen.Bounds : Screen.AllScreens[_comboBoxScreen.SelectedIndex - 1].Bounds;
-                Rectangle rectangleDisplay = new Rectangle(selectedScreenBounds.X, selectedScreenBounds.Y, selectedScreenBounds.Width, 27);
+                var rectangleDisplay = new Rectangle(selectedScreenBounds.X, selectedScreenBounds.Y, selectedScreenBounds.Width, 27);
                 e.Graphics.FillRectangle(bg, rectangleDisplay);
-                e.Graphics.DrawString(String.Format(Resources.CoordinatesOverlay,
+                e.Graphics.DrawString(string.Format(Resources.CoordinatesOverlay,
                     _rectangleSelection.X, _rectangleSelection.Y, _rectangleSelection.Width, _rectangleSelection.Height, Resources.HotKeysOverlay),
                     new Font("Consolas", 8.25F), fg, rectangleDisplay, new StringFormat() { Alignment = StringAlignment.Center });
             }

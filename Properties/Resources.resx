@@ -558,9 +558,9 @@ Please clear your temporary folder and try again, or click cancel to cancel the 
     <value>The update has failed.</value>
   </data>
   <data name="GeneratedFileNameCharacters" xml:space="preserve">
-    <value>s = second, m = minute, h = hour
-D = day, M = month, Y = year
-C = count, % = random character</value>
+    <value>%s = second, %m = minute, %h = hour
+%D = day, %M = month, %Y = year
+%C = count, %? = random character</value>
   </data>
   <data name="GeneratedFileNamePattern" xml:space="preserve">
     <value>Generated filename pattern</value>
