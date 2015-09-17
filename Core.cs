@@ -1,7 +1,6 @@
 ﻿using Nfu.Models;
 using Nfu.Properties;
 using System;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;

@@ -94,14 +94,8 @@ namespace Nfu
         /// </summary>
         private void ScreenIndexChanged(object sender, EventArgs e)
         {
-            if (_comboBoxScreen.SelectedIndex == 0)
-            {
-                _rectangle = SystemInformation.VirtualScreen;
-            }
-            else
-            {
-                _rectangle = Screen.AllScreens[_comboBoxScreen.SelectedIndex - 1].Bounds;
-            }
+            _rectangle = _comboBoxScreen.SelectedIndex == 0 ?
+                SystemInformation.VirtualScreen : Screen.AllScreens[_comboBoxScreen.SelectedIndex - 1].Bounds;
 
             Size = _rectangle.Size;
             Location = _rectangle.Location;

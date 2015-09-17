@@ -66,7 +66,7 @@ namespace Nfu
             {
                 if (m.Msg == 0x0312 && m.WParam.ToInt32() == WParam)
                 {
-                    if (HotKeyPass != null) HotKeyPass.Invoke();
+                    HotKeyPass?.Invoke();
                 }
 
                 base.WndProc(ref m);
@@ -117,7 +117,7 @@ namespace Nfu
             {
                 if (Settings.Default.Debug)
                 {
-                    EventLog.WriteEntry(Resources.AppName, string.Format("[{0}]: {1}\n\n{2}", name, err.Message, err.StackTrace), type);
+                    EventLog.WriteEntry(Resources.AppName, $"[{name}]: {err.Message}\n\n{err.StackTrace}", type);
                 }
             }
             catch

@@ -3,7 +3,6 @@ using Nfu.Properties;
 using Renci.SshNet;
 using Renci.SshNet.Sftp;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
@@ -115,7 +114,7 @@ namespace Nfu
                     _currentStatus = Resources.ZippingDirectory;
                     UploadWorker.ReportProgress(0);
 
-                    var zipFileName = string.Format("{0}.zip", file.FileName);
+                    var zipFileName = $"{file.FileName}.zip";
                     var zipFile = new UploadFile(FileState.Temporary, "zip");
                     if (zipFile.Path == null)
                     {
@@ -238,11 +237,11 @@ namespace Nfu
 
                 if (!string.IsNullOrEmpty(Settings.Default.Directory))
                 {
-                    ftpRequest = (FtpWebRequest)WebRequest.Create(string.Format("ftp://{0}:{1}/{2}/{3}", Settings.Default.Host, Settings.Default.Port, Settings.Default.Directory, file.FileName));
+                    ftpRequest = (FtpWebRequest)WebRequest.Create($"ftp://{Settings.Default.Host}:{Settings.Default.Port}/{Settings.Default.Directory}/{file.FileName}");
                 }
                 else
                 {
-                    ftpRequest = (FtpWebRequest)WebRequest.Create(string.Format("ftp://{0}:{1}/{2}", Settings.Default.Host, Settings.Default.Port, file.FileName));
+                    ftpRequest = (FtpWebRequest)WebRequest.Create($"ftp://{Settings.Default.Host}:{Settings.Default.Port}/{file.FileName}");
                 }
 
                 if (Settings.Default.TransferType == (int)TransferType.FtpsExplicit)
@@ -291,26 +290,19 @@ namespace Nfu
         {
             try
             {
-                SftpClient client;
-
-                if (Settings.Default.TransferType == (int)TransferType.SftpKeys)
-                {
-                    client = new SftpClient(Settings.Default.Host, Settings.Default.Port, Settings.Default.Username, new PrivateKeyFile(Misc.Decrypt(Settings.Default.Password)));
-                }
-                else
-                {
-                    client = new SftpClient(Settings.Default.Host, Settings.Default.Port, Settings.Default.Username, Misc.Decrypt(Settings.Default.Password));
-                }
+                var client = Settings.Default.TransferType == (int)TransferType.SftpKeys ?
+                    new SftpClient(Settings.Default.Host, Settings.Default.Port, Settings.Default.Username, new PrivateKeyFile(Misc.Decrypt(Settings.Default.Password))) :
+                    new SftpClient(Settings.Default.Host, Settings.Default.Port, Settings.Default.Username, Misc.Decrypt(Settings.Default.Password));
 
                 using (var inputStream = new FileStream(file.Path, FileMode.Open))
-                using (SftpClient outputStream = client)
+                using (var outputStream = client)
                 {
                     outputStream.Connect();
 
                     if (!string.IsNullOrEmpty(Settings.Default.Directory)) outputStream.ChangeDirectory(Settings.Default.Directory);
 
-                    IAsyncResult async = outputStream.BeginUploadFile(inputStream, file.FileName);
-                    SftpUploadAsyncResult sftpAsync = async as SftpUploadAsyncResult;
+                    var async = outputStream.BeginUploadFile(inputStream, file.FileName);
+                    var sftpAsync = async as SftpUploadAsyncResult;
 
                     while (sftpAsync != null && !sftpAsync.IsCompleted)
                     {
@@ -348,7 +340,9 @@ namespace Nfu
                 Misc.LogonUser(Settings.Default.Username, Resources.AppName, Misc.Decrypt(Settings.Default.Password), 9, 0, ref token);
                 var identity = new WindowsIdentity(token);
 
-                var destPath = (!string.IsNullOrEmpty(Settings.Default.Directory)) ? string.Format(@"\\{0}\{1}\{2}", Settings.Default.Host, Settings.Default.Directory, file.FileName) : string.Format(@"\\{0}\{1}", Settings.Default.Host, file.FileName);
+                var destPath = (!string.IsNullOrEmpty(Settings.Default.Directory)) ?
+                    $@"\\{Settings.Default.Host}\{Settings.Default.Directory}\{file.FileName}" :
+                    $@"\\{Settings.Default.Host}\{file.FileName}";
 
                 using (identity.Impersonate())
                 using (var inputStream = new FileStream(file.Path, FileMode.Open, FileAccess.Read))

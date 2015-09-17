@@ -87,7 +87,7 @@ namespace Nfu
                 if (checkBoxStartWindows.Checked)
                 {
                     _autoStartKey.SetValue(Settings.Default.RunKey,
-                        string.Format("\"{0}\" {1}", Application.ExecutablePath, "minimized"));
+                        $"\"{Application.ExecutablePath}\" {"minimized"}");
                 }
                 else
                 {

@@ -90,10 +90,13 @@ namespace Nfu
 
                     FormCore.Setup();
 
-                    if (Settings.Default.FirstRun) FormCore.Load += (sender, e) =>
+                    if (Settings.Default.FirstRun)
+                    {
+                        FormCore.Load += (sender, e) =>
                         {
                             FormCp.ShowDialog();
                         };
+                    }
 
                     if (args.Any(a => a == "minimized"))
                     {
