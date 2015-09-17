@@ -307,8 +307,14 @@ namespace Nfu
                     updateClient.DownloadFile(Settings.Default.ExecutableUrl, tempNfu);
                 }
 
-                File.WriteAllText(tempCmd, string.Format("@ECHO OFF{3}TITLE {0}{3}ECHO {1}{3}TIMEOUT /T 5{3}ECHO.{3}ECHO {2}{3}COPY /B /Y \"{4}\" \"{5}\"{3}START \"\" \"{5}\"",
-                    Resources.UpdateTitle, Resources.WaitingToExit, Resources.Updating, Environment.NewLine, tempNfu, Application.ExecutablePath));
+                File.WriteAllText(tempCmd, $"@ECHO OFF{Environment.NewLine}" +
+                                           $"TITLE {Resources.UpdateTitle}{Environment.NewLine}" +
+                                           $"ECHO {Resources.WaitingToExit}{Environment.NewLine}" +
+                                           $"TIMEOUT /T 5{Environment.NewLine}" +
+                                           $"ECHO.{Environment.NewLine}" +
+                                           $"ECHO {Resources.Updating}{Environment.NewLine}" +
+                                           $"COPY /B /Y \"{tempNfu}\" \"{Application.ExecutablePath}\"{Environment.NewLine}" +
+                                           $"START \"\" \"{Application.ExecutablePath}\"");
 
                 var startInfo = new ProcessStartInfo
                 {

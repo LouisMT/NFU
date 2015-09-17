@@ -40,8 +40,8 @@ namespace Nfu
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Use TLS 1.2
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            // Use TLS 1.2, TLS 1.1 and TLS 1.0
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
             // Automatically save settings on change
             Settings.Default.PropertyChanged += (sender, e) =>
